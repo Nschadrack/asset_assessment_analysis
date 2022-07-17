@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-g@8)(2(6#m#i$^t9fd12i4(y^5q)^v$y(s9mg1xs8z(e83hbv^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '10.43.4.177']
 
 
 # Application definition
@@ -42,6 +42,11 @@ INSTALLED_APPS = [
     'rest_framework',
     #defined apps
     'assets_management',
+    'users_management',
+    'assets_movement',
+    'requests_management',
+    'dashboard',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +86,7 @@ TEMPLATES = [
 # }
 
 WSGI_APPLICATION = 'a3_backend.wsgi.application'
+AUTH_USER_MODEL = 'users_management.User'
 
 
 # Database

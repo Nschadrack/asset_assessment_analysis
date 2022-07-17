@@ -1,0 +1,21 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+    </div>
+    <div id="car_body_data">
+        <div id="computer_update_form_div">
+            <form id="car_new_form" method="post" action="">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Why are you rejecting?</legend>	
+                    <div class="form-group">
+                       <textarea name="rejection_note" required></textarea>
+                    </div>
+                    <input type="submit" value="Submit"/>
+                </fieldset>						
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,182 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">{{switch.category|upper}}:  {{ switch.hostname|upper }}</p>
+        <a href="{% url 'assets_management:switches-list' %}" id="price_back_to_car_list">Back to switches list</a>
+    </div>
+    <div id="car_body_data">				
+        <div id="car_prices">
+            <div id="car_viewed_for_prices" class="car_viewed_for_services_prices">
+                <div>
+                    <p><strong>Serial number: </strong>{{ switch.serial_number|upper }}</p>
+                    <p><strong>Manufacturer: </strong>{{ switch.manufacturer|upper }}</p>
+                    <p><strong>Purchase price: </strong>{{ switch.purchase_price }} Rwf</p>
+                    {% if switch.asset_sold %}
+                        <p><strong>Sale price: </strong>{{ switch.sale_price }} Rwf</p>
+                        <p><strong>Sold date: </strong>{{ switch.sold_date }}</p>
+                    {% endif %}
+                    {% if switch.in_store %}
+                        <p><strong>Location: </strong>{{ switch.which_store|replace|upper }} Stock</p>
+                    {% else %}
+                        <p><strong>Currently: </strong>{{ switch.which_store|replace|upper }}
+                    {% endif %}
+                    <p><strong>Recorded date: </strong>{{ switch.recorded_date }}</p>
+                </div>
+                <div>
+                    <p><strong>Model: </strong>{{ switch.model|upper }}</p>
+                    <p><strong>Host IP: </strong>{{ switch.host_ip }}</p>
+                    <p><strong>Entry date in the bank: </strong>{{ switch.entry_date_in_bank }}</p>
+                    {% if switch.usage_start_date %}
+                        <p><strong>Usage start date: </strong>{{ switch.usage_start_date }}</p>
+                    {% endif %}
+                    <p><strong>Warranty time: </strong>{{ switch.warranty_time_formated }}</p>
+                    <p><strong>Lifetime: </strong>{{ switch.lifetime_formated }}</p>
+                    {% if switch.version %}
+                        <p><strong>Switch version: </strong>{{ switch.version }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <p><strong>Tag number: </strong>{% if switch.tag_number %}{{ switch.tag_number}} {% else %}{% endif %}</p>                  
+                    <p><strong>In use: </strong>{% if switch.in_use %}YES{% else %}NO{% endif %}</p>
+                    <p><strong>Functions: </strong>{% if switch.still_functions %}YES{% else %}NO{% endif %}</p>
+                    <p><strong>Status: </strong>{{ switch.status|replace|upper }}</p>
+                </div>
+            </div>
+            <div id="current_price_list" class="current_price_price_archive_price">
+                <h4>List of all current prices assigned to this car</h4>
+                <button id="view_price_archive_button" onclick='showGroupPriceArchive("block")'>show price archives</button>
+                <form>
+                    <select>
+                        <option value="all services" selected>All services</option>
+                        <option value="wedding services">Wedding services</option>
+                        <option value="wedding services">Wedding services</option>
+                        <option value="wedding services">Wedding services</option>
+                        <option value="wedding services">Wedding services</option>
+                    </select>
+                    <select>
+                        <option value="From" selected disabled>From</option>
+                        <option value="Gasabo">Gasabo</option>
+                        <option value="Rusizi">Rusizi</option>
+                    </select>
+                    <select>
+                        <option value="To" selected disabled>To</option>
+                        <option value="Gasabo">Gasabo</option>
+                        <option value="Rusizi">Rusizi</option>
+                    </select>
+                    <select>
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="all">All records</option>
+                    </select>
+                    <input type="submit" value="view"/>
+                </form>						
+                <table>
+                    <thead>
+                        <th>Code</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Price</th>
+                        <th>Service</th>
+                        <th>Recorded date</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12</td>
+                            <td>Gasabo</td>
+                            <td>Rusizi</td>
+                            <td>30000 Rwf</td>
+                            <td>Wedding service</td>
+                            <td>20-08-2020</td>
+                            <td><a href="#">Delete this price</a></td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Gasabo</td>
+                            <td>Rusizi</td>
+                            <td>30000 Rwf</td>
+                            <td>Wedding service</td>
+                            <td>20-08-2020</td>
+                            <td><a href="#">Delete this price</a></td>
+                        </tr>
+                    </tbody>
+                </table>						
+            </div>
+            <div id="price_archive_list" class="current_price_price_archive_price">
+                <h4>List of all prices which were assigned to this car before (price archive)</h4>
+                <button id="hide_price_archives" onclick="showGroupPriceArchive('none')">Hide price archives</button>
+                <form>
+                    <select>
+                        <option value="all services" selected>All services</option>
+                        <option value="wedding services">Wedding services</option>
+                        <option value="wedding services">Wedding services</option>
+                        <option value="wedding services">Wedding services</option>
+                        <option value="wedding services">Wedding services</option>
+                    </select>
+                    <select>
+                        <option value="From" selected disabled>From</option>
+                        <option value="Gasabo">Gasabo</option>
+                        <option value="Rusizi">Rusizi</option>
+                    </select>
+                    <select>
+                        <option value="To" selected disabled>To</option>
+                        <option value="Gasabo">Gasabo</option>
+                        <option value="Rusizi">Rusizi</option>
+                    </select>
+                    <select>
+                        <option value="last used date" selected disabled>Last date used</option>
+                        <option value="Gasabo">20-10-2020</option>
+                        <option value="Gasabo">12-08-2020</option>
+                        <option value="Gasabo">05-07-2020</option>
+                    </select>
+                    <select>
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="all">All records</option>
+                    </select>
+                    <input type="submit" value="view"/>
+                </form>
+                <table>
+                    <thead>
+                        <th>Code</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Price</th>
+                        <th>Service</th>
+                        <th>Recorded date</th>
+                        <th>Last date used</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12</td>
+                            <td>Gasabo</td>
+                            <td>Rusizi</td>
+                            <td>30000 Rwf</td>
+                            <td>Wedding service</td>
+                            <td>20-08-2020</td>
+                            <td>20-11-2020</td>
+                            <td><a href="#">Reuse this price</a></td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Gasabo</td>
+                            <td>Rusizi</td>
+                            <td>30000 Rwf</td>
+                            <td>Wedding service</td>
+                            <td>20-08-2020</td>
+                            <td>20-11-2020</td>
+                            <td><a href="#">Reuse this price</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>					
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">#{{ category|upper }} : {% if user_group.name %}{{ user_group.name }}{% else %}{{ user_group.username }}{% endif %}</p>
+        <a href="{% url list_url %}" id="price_back_to_car_list">Back to {{category|lower}}s list</a>
+    </div>
+    <div id="car_body_data">				
+        <p>Do you really want to delete this <b>{{ category }}: {% if user_group.name %}{{ user_group.name }}{% else %}{{user_group.first_name|upper}}  {{ user_group.last_name|upper }} with User ID: {{ user_group.username }}{% endif %}?</b></p>
+        <p>This cannot be undone since it will delete permanently</p>
+        <a href="{% url delete_url_name user_group_id 'delete' %}" class="delete_button">Delete</a>
+        <a href="{% url cancel_url_name user_group_id %}" class="update_button">Cancel</a>
+    </div>
+{% endblock %}

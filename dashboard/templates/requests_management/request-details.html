@@ -1,0 +1,59 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">{{ requet.request_type|upper }} REQUEST DETAILS</p>
+        <a href="{% url 'requests_management:requests-list' %}" id="price_back_to_car_list">Back to requests list</a>
+    </div>
+    <div id="car_body_data">				
+        <div id="car_prices">
+            <div id="car_viewed_for_prices" class="car_viewed_for_services_prices">
+                <div>
+                    <p><strong>Request Status: </strong>{{ requet.status|upper }}</p>
+                    <p><strong>Request Category: </strong> {{ requet.request_type|upper|replace }}</p>   
+                    <p><strong>Request Opened Date: </strong> {{ requet.opened_date|date:"d-m-Y H:i" }}</p>  
+                    {% if requet.status.lower == "rejected" %}
+                    <p><strong>Rejection Note:</strong></P>
+                    <p>{{ requet.rejection_note }}</p><br/>
+                    {% endif %}               
+                </div>
+                <div>
+                    <p><strong>Approver Full name: </strong>{{ requet.approver.first_name|upper }} {{ requet.approver.last_name|upper }}</p>
+                    <p><strong>Approver USER ID: </strong>{{ requet.approver.username|upper }}</p>
+                    <p><strong>Approver Phone Number: </strong>{{ requet.approver.phone_number }}</p>
+                    <p><strong>Approver E-mail: </strong>{{ requet.approver.email|upper }}</p>							
+                </div>
+                <div>
+                    <p><strong>Assigner Full name: </strong>{{ requet.assigner.first_name|upper }} {{ requet.assigner.last_name|upper }}</p>
+                    <p><strong>Assigner USER ID: </strong>{{ requet.assigner.username|upper }}</p>
+                    <p><strong>Assigner Phone Number: </strong>{{ requet.assigner.phone_number }}</p>
+                    <p><strong>Assigner E-mail: </strong>{{ requet.assigner.email|upper }}</p>
+                </div>	
+            </div>
+            <div id="current_price_list" class="table-data">
+                <div>
+                    <p><strong>Request Status: </strong>{{ requet.status|upper }}</p>
+                    <p><strong>Request Category: </strong> {{ requet.request_type|upper|replace }}</p>   
+                    <p><strong>Request Opened date: </strong> {{ requet.opened_date|date:"d-m-Y H:i" }}</p>  
+                    {% if requet.status.lower == "rejected" %}
+                    <p><strong>Rejection Note:</strong></P><br/>
+                    <p>{{ requet.rejection_note }}</p><br/>
+                    {% endif %}               
+                </div>
+                <div>
+                    <p><strong>Request Approver Full name: </strong>{{ requet.approver.first_name|upper }} {{ requet.approver.last_name|upper }}</p>
+                    <p><strong>Request Approver ID: </strong>{{ requet.approver.username|upper }}</p>
+                    <p><strong>Request Approver Phone number: </strong>{{ requet.approver.phone_number }}</p>
+                    <p><strong>Request Approver E-mail: </strong>{{ requet.approver.email|upper }}</p>							
+                </div>
+                <div>
+                    <p><strong>Request Assigner Full name: </strong>{{ requet.assigner.first_name|upper }} {{ requet.assigner.last_name|upper }}</p>
+                    <p><strong>Request Assigner ID: </strong>{{ requet.assigner.username|upper }}</p>
+                    <p><strong>Request Assigner Phone number: </strong>{{ requet.assigner.phone_number }}</p>
+                    <p><strong>Request Assigner E-mail: </strong>{{ requet.assigner.email|upper }}</p>
+                </div>					
+            </div>				
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <a href="{% url 'assets_management:computer-detail' computer_id %}" id="price_back_to_car_list">Back to computer details</a>
+    </div>
+    <div id="car_body_data">
+        <div id="computer_update_form_div">
+            <form id="car_new_form" method="post" action="">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Recording computer handover information in the system</legend>	
+                    <div class="form-group">
+                        <label for="assignee">CHOOSE ASSIGNEE</label>
+                        <input list="assignees" name="assignee" id="assignee" required/>
+                        <datalist id="assignees">
+                            {% for user in users %}
+                                <option value="{{user.username}} - {{ user.first_name|upper }} {{ user.last_name|upper }}">
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label for="assignee">CHOOSE LOCATION</label>
+                        <input list="branches" name="branch" id="branch" required/>
+                        <datalist id="branches">
+                            {% for branch in branches %}
+                                <option value="{{branch.name}}">
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label>SPECIFY EXACT LOCATION</label>
+                        <input type="text" maxlength="60" name="exact_location" required/>
+                    </div>
+                    <div class="form-group">
+                        <p>Require movement from head office:</p>                      
+                        <label for="require_movement_yes">Yes
+                             <input type="radio" id="require_movement_yes" name="require_movement" value="on"/>
+                        </label> 
+                        <label for="require_movement_no">No
+                            <input type="radio" id="require_movement_no" name="require_movement" value="off"/>
+                        </label> 
+                    </div>
+                    <input type="submit" value="Save new record"/>
+                </fieldset>						
+            </form>
+        </div>
+    </div>
+{% endblock %}

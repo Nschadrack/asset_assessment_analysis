@@ -1,0 +1,48 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">List of Groups</p>
+        <button id="car_title_header_and_new_btn_button">+ new group</button>
+    </div>
+    <div id="car_body_data">
+        <div id="car_table_data" class="table-data">
+            <table>
+                <thead>
+                    <th>#ID</th>
+                    <th>NAME</th>
+                    <th>DATE CREATED</th>
+                    <th colspan="4">ACTIONS</th>
+                </thead>
+                <tbody>
+                    {% for group in groups %}
+                        <tr>
+                            <td>{{ group.group_id }}</td>
+                            <td>{{ group.name }}</td>
+                            <td>{{ group.date_created|date:"d-m-Y"}}</td>
+                            <td><a href="{% url 'users_management:group-detail' group.group_id %}" class="view_button">view details</a></td>
+                            <td><a href="{% url 'users_management:group-update-detail' group.group_id 'update' %}" class="update_button">update</a></td>
+                            <td><a href="{% url 'users_management:group-update-detail' group.group_id 'confirm_delete' %}" class="delete_button">delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+        <div id="car_new_form_div">
+            <form id="car_new_form" method="post" action="">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Registering a new group in the system</legend>	
+
+                    <div class="form-group">
+                        <label>GROUP NAME</label>
+                        <input type="text" maxlength="50" name="name" required/>
+                    </div>
+                    <input type="submit" value="Save new group"/>
+                </fieldset>						
+            </form>
+        </div>
+    </div>
+{% endblock %}

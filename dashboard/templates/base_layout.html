@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+	<script src="{% static 'js/main.js' %}"></script>
+
+    <title>Safe journey - company - dashboard</title>
+  </head>
+  <body>
+    <div id="aside_navigation">
+		<div id="sfjourney_aside_logo">
+			<img src="{% static 'images/equity_logo.jpg' %}" id="aside_logo" class="aside-header-data"/>
+			<p class="aside-header-data">Enterprise Asset Management</p>
+		</div>
+		<div id="aside_navigations">
+			<a href="{% url 'dashboard:overall' %}">Dashboard</a>
+			<a href="{% url 'assets_management:computers-list' %}">Computers</a>
+			<a href="{% url 'assets_management:printers-list' %}">Printers</a>
+			<a href="{% url 'assets_management:scanners-list' %}">Scanners</a>
+			<a href="{% url 'assets_management:screens-list' %}">Screens</a>
+			<a href="{% url 'assets_management:biometrics-list' %}">Biometric devices</a>
+			<a href="{% url 'assets_management:avaya-list' %}">Avaya</a>
+			<a href="{% url 'assets_management:note-counters-list' %}">Note counters</a>
+			<a href="{% url 'assets_management:atms-list' %}">ATMs</a>
+			<a href="{% url 'assets_management:generators-list' %}">Generators</a>
+			<a href="{% url 'assets_management:switches-list' %}">Switches</a>
+			<a href="{% url 'assets_management:routers-list' %}">Routers</a>
+			<a href="{% url 'assets_management:firewalls-list' %}">Firewalls</a>
+			<a href="{% url 'assets_management:nodes-list' %}">Physical servers</a>
+			<a href="{% url 'assets_management:applications-list' %}">System hosted & applications</a>
+			<a href="{% url 'users_management:users-list' %}">Users</a>
+			<a href="{% url 'users_management:groups-list' %}">Groups</a>
+			<a href="{% url 'requests_management:requests-list' %}">Requests</a>
+			<a href="{% url 'account:logout_user' %}">Sign out</a>
+			<a href="#">Notifications <span class="aside-navigation-spans">0</span></a>
+			<a href="#">Settings</a>
+			<a href="#">Help & Support</a>
+		</div>
+	</div>
+	<div id="main_load">
+		<div id="main_load_header">
+			<p>main load header</p>
+		</div>
+		<div id="main_load_data">
+			{% block main_data_load %}
+
+            {% endblock %}
+		</div>
+	</div>
+  </body>
+</html>

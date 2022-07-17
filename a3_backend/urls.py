@@ -16,8 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
+    path('', include('account.urls', namespace='account')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
+    path('dashboard/', include('dashboard.urls', namespace='dashboard')),
     path('assets_management/', include('assets_management.urls', namespace='assets_management')),
+    path('users_management/', include('users_management.urls', namespace='users_management')),
+    path('assets_consolidation', include('assets_movement.urls', namespace='assets_movement')),
+    path('requests_management/', include('requests_management.urls', namespace='requests_management')),
 ]

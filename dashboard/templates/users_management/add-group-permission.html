@@ -1,0 +1,67 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">#GROUP:  {{ group.name}}</p>
+        <a href="{% url 'users_management:groups-list' %}" id="price_back_to_car_list">Back to groups list</a>
+    </div>
+    <div id="car_body_data">				
+        <div id="car_prices">
+            <div id="current_price_list" class="table-data">
+                <h4>Add new member to {{ group.name }} group</h4>
+                <a  href="{% url 'users_management:group-detail' group.group_id %}" id="view_price_archive_button">Back to group details</a>
+                {% if group_permissions_num_to_add > 0 %}						
+                    <form>
+                        <select>
+                            <option value="all services" selected>All services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                        </select>
+                        <select>
+                            <option value="From" selected disabled>From</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="To" selected disabled>To</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="all">All records</option>
+                        </select>
+                        <input type="submit" value="view"/>
+                    </form>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <table class="table-data">
+                            <thead>
+                                <th>SELECT PERMISSIONS TO ADD</th>
+                                <th>PERMISSION NAME</th>
+                                <th><button type="submit" class="view_button" style="color:white">Add selected permissions</button></th>
+                            </thead>
+                            <tbody>
+                                {% for perm in permissions_not_added %}
+                                    <tr>
+                                        <td><input type="checkbox" id="{{perm.codename}}" name="{{ perm.codename }}" value="{{ perm.id }}"></td>
+                                        <td><label for="{{perm.codename}}">{{perm.name}}</label></td>  
+                                        <td></td>                                     
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </form>
+                {% else %}
+                    <p>No available permissions to be added</p>
+                {% endif %}						
+            </div>					
+        </div>
+    </div>
+{% endblock %}

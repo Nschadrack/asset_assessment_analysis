@@ -1,0 +1,40 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">#USER:  {{ user.username}}</p>
+        <a href="{% url 'users_management:users-list' %}" id="price_back_to_car_list">Back to users list</a>
+    </div>
+    <div id="car_body_data">
+        <div id="computer_update_form_div">
+            <form id="car_new_form" method="post" action="">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Updating user information in the system</legend>	
+                    <div class="form-group">
+                        <label>USER ID</label>
+                        <input type="text"  maxlength="7" minlength="7" name="username" value="{{ user.username }}" required readonly/>
+                    </div>
+                    <div class="form-group">
+                        <label>FIRSTNAME</label>
+                        <input type="text" maxlength="60" name="first_name" value="{{ user.first_name }}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>LASTNAME</label>
+                        <input type="text"  maxlength="60" name="last_name" required value="{{ user.last_name }}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>E-MAIL</label>
+                        <input type="email"  maxlength="100" name="email" value="{{ user.email }}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>PHONE NUMBER</label>
+                        <input type="text" maxlength="12" minlength="12" name="phone_number" value="{{ user.phone_number }}" required/>
+                    </div>
+                    <input type="submit" value="Update user information"/>
+                </fieldset>						
+            </form>
+        </div>
+    </div>
+{% endblock %}

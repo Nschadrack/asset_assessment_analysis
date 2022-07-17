@@ -1,0 +1,94 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">List of Users</p>
+        <button id="car_title_header_and_new_btn_button">+ new user</button>
+    </div>
+    <div id="car_body_data">
+        <div id="car_table_data" class="table-data">
+            <table>
+                <thead>
+                    <th>USERNAME</th>
+                    <th>FIRSTNAME</th>
+                    <th>LASTNAME</th>
+                    <th>E-MAIL</th>
+                    <th>PHONE NUMBER</th>
+                    <th>STATUS</th>
+                    <th>SUPER USER</th>
+                    <th>DATE JOINED</th>
+                    <th colspan="4">ACTIONS</th>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.first_name|upper }}</td>
+                            <td>{{ user.last_name|upper }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phone_number}}</td>
+                            {% if user.is_active %}
+                                <td>Active</td>
+                            {% else %}
+                                <td>Inactive</td>
+                            {% endif %}
+                            {% if user.is_superuser %}
+                                <td>Yes</td>
+                            {% else %}
+                                <td>No</td>
+                            {% endif %}
+                            <td>{{ user.date_joined|date:"d-m-Y H:i"}}</td>
+                            {% if user.is_active %}
+                                <td><a href="#" class="publish_button">Deactivate</a></td>
+                            {% else %}
+                                <td><a href="#" class="publish_button">Activate</a></td>
+                            {% endif %}                          
+                            <td><a href="{% url 'users_management:user-detail' user.username %}" class="view_button">view details</a></td>
+                            <td><a href="{% url 'users_management:user-detail-update' user.username 'update' %}" class="update_button">update</a></td>
+                            <td><a href="{% url 'users_management:user-detail-update' user.username 'confirm_delete' %}" class="delete_button">delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+        <div id="car_new_form_div">
+            <form id="car_new_form" method="post" action="">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Registering a new user in the system</legend>	
+                    <div class="form-group">
+                        <label>USER ID</label>
+                        <input type="text"  maxlength="7" minlength="7" name="username" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>FIRSTNAME</label>
+                        <input type="text" maxlength="60" name="first_name" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>LASTNAME</label>
+                        <input type="text"  maxlength="60" name="last_name" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>E-MAIL</label>
+                        <input type="email"  maxlength="100" name="email" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>PHONE NUMBER</label>
+                        <input type="text" maxlength="12" minlength="12" name="phone_number" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>PASSWORD</label>
+                        <input type="password"  minlength="10" name="password" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>RETYPE PASSWORD</label>
+                        <input type="password"  minlength="10" name="password2" required/>
+                    </div>
+                    <input type="submit" value="Save new user"/>
+                </fieldset>						
+            </form>
+        </div>
+    </div>
+{% endblock %}

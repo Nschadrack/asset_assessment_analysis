@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 
@@ -10,15 +11,15 @@ class CommonAsset(models.Model):
      by other models
     """
     STORES = (
-        ('Procurement', 'Procurement'),
+        ('PROCUREMENT', 'Procurement'),
         ('IT', 'IT'),
-        ('Muhanga DR', 'Muhanga DR'),
-        ('Not in store', 'Not in store')
+        ('MUHANGA-DR', 'Muhanga DR'),
+        ('NOT-IN-STORE', 'Not in store')
     )
     STATUES = (
-        ('WORKING GOOD', 'WORKING GOOD'),
-        ('WORKING BAD', 'WORKING BAD'),
-        ('NOT WORKING', 'NOT WORKING'),
+        ('WORKING-GOOD', 'WORKING GOOD'),
+        ('WORKING-BAD', 'WORKING BAD'),
+        ('NOT-WORKING', 'NOT WORKING'),
         ('NEW', 'NEW')
     )
 
@@ -26,10 +27,9 @@ class CommonAsset(models.Model):
     serial_number = models.CharField(verbose_name='Serial number', max_length=40, db_column='serial_number', null=False, blank=False, unique=True,
                                     error_messages={'unique': 'Computer with serial number is already exists'})
     model = models.CharField(verbose_name='Model', max_length=100, db_column='model', null=False, blank=False)
-    tag_number = models.CharField(verbose_name='Tag number', max_length=40, db_column='tag_number', null=True, blank=True, unique=True,
-                                error_messages={'unique': 'Computer with tag number is already exists'})
+    tag_number = models.CharField(verbose_name='Tag number', max_length=40, db_column='tag_number', null=True, blank=True)
     purchase_price = models.PositiveIntegerField(verbose_name='Purchase price', db_column='purchase_price', null=False, blank=False)
-    recorded_date = models.DateTimeField(verbose_name='Recorded date', db_column='recorded_date', null=False, blank=False, auto_now_add=True)
+    recorded_date = models.DateTimeField(verbose_name='Recorded date', db_column='recorded_date', null=False, blank=False, default=datetime.now())
     entry_date_in_bank = models.DateField(verbose_name='Entry date in bank', db_column='entry_date_in_bank', null=False, blank=False)
     usage_start_date = models.DateTimeField(verbose_name='Usage start date', db_column='usage_start_date', null=True, blank=True, editable=False)
     warranty_time = models.PositiveIntegerField(verbose_name='Warranty time in months', db_column='warranty_time', null=False, blank=False)
@@ -45,7 +45,7 @@ class CommonAsset(models.Model):
     sale_price = models.PositiveIntegerField(verbose_name='Sale price', db_column='sale_price', null=True, blank=True)
     in_use = models.BooleanField(verbose_name='In use', default=False, db_column='in_use')
     still_functions = models.BooleanField(verbose_name='Still functions', db_column='still_functions', default=True)
-    status = models.CharField(verbose_name='Working status', max_length=15, db_column='status', default='NEW', choices=STATUES)
+    status = models.CharField(verbose_name='Working status', max_length=15, db_column='status', choices=STATUES)
     
 
     class Meta:
@@ -80,7 +80,6 @@ class CommonAsset(models.Model):
             else:
                 self.warranty_time_formated = years
     
-
     @property
     def set_lifetime_formated(self):
         if self.lifetime < 12:
@@ -103,6 +102,16 @@ class CommonAsset(models.Model):
     
 
     def save(self, *args, **kwargs):
+        if self.which_store == "NOT-IN-STORE":
+            self.in_store = False
+        else:
+            self.in_store = True
+
+        if self.status == "NOT-WORKING":
+            self.still_functions = False 
+        else:
+            self.still_functions = True
+
         self.set_warranty_time_formated
         self.set_lifetime_formated
         super().save(*args, **kwargs)
@@ -118,9 +127,9 @@ class ComputerLapDeskTop(CommonAsset):
         ('DESKTOP', 'DESKTOP')
     )
     STORAGE_TYPES = (
-        ('HARD DISK', 'HARD DISK'),
+        ('HARD-DISK', 'HARD DISK'),
         ('SSD', 'SSD'),
-        ('HARD DISK + SSD', 'HARD DISK + SSD')
+        ('HARD-DISK-+-SSD', 'HARD DISK + SSD')
     )
     MEASUREMENTS = (
         ('MB', 'MB'),
@@ -133,11 +142,11 @@ class ComputerLapDeskTop(CommonAsset):
         ('OTHER', 'OTHER')
     )
     PROCESSOR_TYPES = (
-        ('Single Core', 'Single Core'),
-        ('Dual Core', 'Dual Core'),
-        ('Quad Core', 'Quad Core'),
-        ('Hexa Core', 'Hexa Core'),
-        ('Octa Core', 'Octa Core'),
+        ('Single-Core', 'Single Core'),
+        ('Dual-Core', 'Dual Core'),
+        ('Quad-Core', 'Quad Core'),
+        ('Hexa-Core', 'Hexa Core'),
+        ('Octa-Core', 'Octa Core'),
         ('Deca Core', 'Deca Core')
     )
     PROCESSOR_SPEED_MEASUREMENTS = (
@@ -167,16 +176,12 @@ class ComputerLapDeskTop(CommonAsset):
 
     class Meta:
         db_table = 'computers'
+        verbose_name = _('computer')
+        verbose_name_plural = _('computers')
         
     def __str__(self) -> str:
         return f"{self.category} : {self.hostname}"
     
-    def set_symantic_installed(self, value):
-        if value.upper() == "YES":
-            self.symantic_installed = True 
-        elif value.upper() == "NO":
-            self.symantic_installed = False 
-        self.save()
 
 ############################################# Printers and scanners ########################################
 class PrinterScanner(CommonAsset):
@@ -188,12 +193,24 @@ class PrinterScanner(CommonAsset):
         ('SCANNER', 'SCANNER')
     )
     CATEGORY_TYPES = (
-        ('STATEMENT PRINTER', 'STATEMENT PRINTER'),
-        ('CARD PRINTER', 'CARD PRINTER'),
-        ('CHEQUE PRINTER', 'CHEQUE PRINTER'),
-        ('PAPER PRINTER', 'PAPER PRINTER'),
-        ('CHEQUE SCANNER', 'CHEQUE SCANNER'),
-        ('ACCOUNT OPENING SCANNER', 'ACCOUNT OPEN SCANNER'),
+        ('STATEMENT-PRINTER', 'STATEMENT PRINTER'),
+        ('CARD-PRINTER', 'CARD PRINTER'),
+        ('CHEQUE-PRINTER', 'CHEQUE PRINTER'),
+        ('PAPER-PRINTER', 'PAPER PRINTER'),
+        ('CHEQUE-SCANNER', 'CHEQUE SCANNER'),
+        ('ACCOUNT-OPENING-SCANNER', 'ACCOUNT OPEN SCANNER'),
+        ('OTHER', 'OTHER')
+    )
+    PRINTER_CATEGORY_TYPES = (
+        ('STATEMENT-PRINTER', 'STATEMENT PRINTER'),
+        ('CARD-PRINTER', 'CARD PRINTER'),
+        ('CHEQUE-PRINTER', 'CHEQUE PRINTER'),
+        ('PAPER-PRINTER', 'PAPER PRINTER'),
+        ('OTHER', 'OTHER')
+    )
+    SCANNER_CATEGORY_TYPES = (
+        ('CHEQUE-SCANNER', 'CHEQUE SCANNER'),
+        ('ACCOUNT-OPENING-SCANNER', 'ACCOUNT OPEN SCANNER'),
         ('OTHER', 'OTHER')
     )
     CONNECTION_TYPES = (
@@ -207,12 +224,13 @@ class PrinterScanner(CommonAsset):
     category_type = models.CharField(verbose_name='Printer/scanner type', max_length=30, db_column='type', null=False, blank=False, choices=CATEGORY_TYPES)
     other_type_name = models.CharField(verbose_name='Other type name', max_length=40, db_column='other_type_name', null=True, blank=True)
     connection_type = models.CharField(verbose_name='Connection type', max_length=20, db_column='connection_type', null=False, blank=False, choices=CONNECTION_TYPES)
-    host_ip = models.CharField(verbose_name='Host IP', max_length=20, db_column='host_ip', null=True, blank=True, unique=True, 
-                                error_messages={'unique': 'Printer or Scanner with host IP is already exists'})
-    version = models.CharField(verbose_name='Version', max_length=15, db_column='version', null=True, blank=True)
+    host_ip = models.CharField(verbose_name='Host IP', max_length=20, db_column='host_ip', null=True, blank=True)
+    version = models.CharField(verbose_name='Version', max_length=65, db_column='version', null=True, blank=True)
 
     class Meta:
         db_table = 'printers_scanners'
+        verbose_name = _('printer/scanner')
+        verbose_name_plural = _('printers/scanners')
     
     def __str__(self) -> str:
         return f"{self.category} : {self.category_type}"
@@ -248,14 +266,16 @@ class BioVayaNoteCounterGenerator(CommonAsset):
     CATEGORIES = (
         ('BIO', 'BIO'),
         ('AVAYA', 'AVAYA'),
-        ('NOTE COUNTER', 'NOTE COUNTER'),
+        ('NOTE-COUNTER', 'NOTE COUNTER'),
         ('GENERATOR', 'GENERATOR')
     )
     category = models.CharField(verbose_name='Category', max_length=15, db_column='category', null=False, blank=False, choices=CATEGORIES)
-    version = models.CharField(verbose_name='Version', max_length=15, db_column='version', null=True, blank=True)
+    version = models.CharField(verbose_name='Version', max_length=65, db_column='version', null=True, blank=True)
 
     class Meta:
         db_table = 'bio_avaya_note_counter_generator'
+        verbose_name = _('biometric/avaya/note counter/generator')
+        verbose_name_plural = _('biometrics/avaya/note_counters/generators')
 
     def __str__(self) -> str:
         return f"{self.category}"
@@ -269,7 +289,7 @@ class Atm(CommonAsset):
     hostname = models.CharField(verbose_name='Hostname', max_length=40, db_column='hostname', null=False, blank=False)
     os_installed = models.CharField(verbose_name='OS Installed', max_length=60, db_column='os_installed', null=False, blank=False)
     host_ip = models.CharField(verbose_name='Host IP', max_length=20, db_column='host_ip', null=True, blank=True)
-    version = models.CharField(verbose_name='Version', max_length=15, db_column='version', null=True, blank=True)
+    version = models.CharField(verbose_name='Version', max_length=65, db_column='version', null=True, blank=True)
 
     def add_usage_start_date(self, date_passed_in):
         self.usage_start_date = date_passed_in
@@ -293,14 +313,15 @@ class SwitchRouterFirewall(CommonAsset):
         ('FIREWALL', 'FIREWALL')
     )
     hostname = models.CharField(verbose_name='Hostname', max_length=40, db_column='hostname', null=False, blank=False)
-    service_ip = models.CharField(verbose_name='Service IP', max_length=20, db_column='service_ip', null=False, blank=False, unique=True,
-                                error_messages={'unique': 'Router or Switch or Firewall with service IP is already exists'})
+    host_ip = models.CharField(verbose_name='Host IP', max_length=20, db_column='host_ip', null=True, blank=True)
     category = models.CharField(verbose_name='Category', max_length=15, db_column='category', null=False, blank=False, choices=CATEGORIES)
     manufacturer = models.CharField(verbose_name='Manufacturer', max_length=60, db_column='manufacturer', null=True, blank=True)
-    version = models.CharField(verbose_name='Version', max_length=15, db_column='version', null=True, blank=True)
+    version = models.CharField(verbose_name='Version', max_length=65, db_column='version', null=True, blank=True)
 
     class Meta:
         db_table = 'switch_router_firewall'
+        verbose_name = _('switch/router/firewall')
+        verbose_name_plural = _('switches/routers/firewalls')
     
     def add_usage_start_date(self, date_passed_in):
         self.usage_start_date = date_passed_in
@@ -316,7 +337,7 @@ class PhysicalNode(CommonAsset):
     The model for Physical Node which inherits CommonAsset
     """
     hostname = models.CharField(verbose_name='Hostname', max_length=40, db_column='hostname', null=False, blank=False)
-    service_ip = models.CharField(verbose_name='Service IP', max_length=20, db_column='service_ip', null=False, blank=False)
+    host_ip = models.CharField(verbose_name='Host IP', max_length=20, db_column='host_ip', null=True, blank=True)
     vendor = models.CharField(verbose_name='Vendor', max_length=60, db_column='vendor', null=False, blank=False)
     role = models.CharField(verbose_name='Role', max_length=40, db_column='role', null=True, blank=True)
     os_installed = models.CharField(verbose_name='Os Installed', max_length=100, db_column='os_installed', null=False, blank=False)
@@ -324,6 +345,8 @@ class PhysicalNode(CommonAsset):
 
     class Meta:
         db_table = 'physical_nodes'
+        verbose_name = _('physical server')
+        verbose_name_plural = _('physical servers')
    
     def add_usage_start_date(self, date_passed_in):
         self.usage_start_date = date_passed_in
@@ -338,29 +361,41 @@ class SystemHostedApplication(models.Model):
     """
     The model for dealing with System hosted and applications
     """
+    STATUES = (
+        ('WORKING-GOOD', 'WORKING GOOD'),
+        ('WORKING-BAD', 'WORKING BAD'),
+        ('NOT-WORKING', 'NOT WORKING'),
+        ('NEW', 'NEW')
+    )
+
     asset_id = models.BigAutoField(verbose_name='Asset id', primary_key=True, db_column='asset_id', null=False, blank=False)
     serial_number = models.CharField(verbose_name='Serial number', max_length=60, db_column='serial_number', null=False, blank=False, unique=True,
                                     error_messages={'unique': 'System host or application with serial number is already exists'})
     model = models.CharField(verbose_name='Model', max_length=100, db_column='model', null=False, blank=False)
-    recorded_date = models.DateTimeField(verbose_name='Recorded date', db_column='recorded_date', null=False, blank=False, auto_now_add=True)
-    usage_start_date = models.DateTimeField(verbose_name='Usage start date', db_column='usage_start_date', null=True, blank=True, editable=False)
+    recorded_date = models.DateTimeField(verbose_name='Recorded date', db_column='recorded_date', null=False, blank=False, default=datetime.now())
+    usage_start_date = models.DateField(verbose_name='Usage start date', db_column='usage_start_date', null=True, blank=True, editable=True)
     supporting_time = models.PositiveIntegerField(verbose_name='Supporting time in months', db_column='support_time', null=False, blank=False)
     supporting_time_formated = models.CharField(verbose_name='Formatted supporting time', max_length=60, db_column='formatted_support', null=False,
                                               blank=False, editable=False)
     in_use = models.BooleanField(verbose_name='In use', default=False, db_column='in_use')
     hostname = models.CharField(verbose_name='Hostname', max_length=40, db_column='hostname', null=False, blank=False)
-    service_ip = models.CharField(verbose_name='Service IP', max_length=20, db_column='service_ip', null=False, blank=False)
+    host_ip = models.CharField(verbose_name='Host IP', max_length=20, db_column='host_ip', null=True, blank=True)
     role = models.CharField(verbose_name='Role', max_length=40, db_column='role', null=True, blank=True)
     os_installed = models.CharField(verbose_name='Os Installed', max_length=100, db_column='os_installed', null=False, blank=False)
     installation_year = models.PositiveIntegerField(verbose_name='Year of installation', null=False, blank=False)
+    vendor = models.CharField(verbose_name='Vendor', max_length=60, db_column='vendor', null=True, blank=True)
+    status = models.CharField(verbose_name='Working status', max_length=15, db_column='status', choices=STATUES, default="NEW")
+    still_functions = models.BooleanField(verbose_name='Still functions', db_column='still_functions', default=True)
 
     class Meta:
         db_table = 'system_hosted_applications'
+        verbose_name = _('system hosted application')
+        verbose_name_plural = _('system hosted applications')
 
-    def add_usage_start_date(self, date_passed_in):
-        self.usage_start_date = date_passed_in
-        self.save()
 
+    def set_status(self, new_status):
+            self.status = new_status
+            self.save()
     @property
     def set_supporting_time_formated(self):
         if self.supporting_time < 12:
@@ -384,4 +419,11 @@ class SystemHostedApplication(models.Model):
 
     def save(self, *args, **kwargs):
         self.set_supporting_time_formated
+        if self.status == "NOT-WORKING":
+            self.still_functions = False
+        else:
+            self.still_functions = True
         super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"System hosted and Application: {self.hostname}"

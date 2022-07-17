@@ -1,0 +1,198 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">{{ computer.category|title }} Name: {{ computer.hostname|upper }}</p>
+        <a href="{% url 'assets_management:computers-list' %}" id="price_back_to_car_list">Back to computers list</a>
+    </div>
+    <div id="car_body_data">				
+        <div id="car_prices">
+            <div id="car_viewed_for_prices" class="car_viewed_for_services_prices">
+                <div>
+                    <p><strong>Serial number: </strong>{{ computer.serial_number|upper }}</p>
+                    <p><strong>Storage type: </strong> {{ computer.storage_type|upper|replace }}</p>
+                    {% if computer.storage_type|upper|replace == "HARD DISK + SSD" %}
+                        <p><strong>SSD size: </strong> {{ computer.ssd_size }} {{ computer.ssd_measure|upper }}</p>
+                        <p><strong>Hard disk size: </strong> {{ computer.harddisk_size }} {{ computer.harddisk_measure|upper }}</p>
+                    {% elif computer.storage_type|upper|replace == "HARD DISK" %}
+                        <p><strong>Hard disk size: </strong> {{ computer.harddisk_size }} {{ computer.harddisk_measure|upper }}</p>
+                    {% else %}
+                        <p><strong>SSD size: </strong> {{ computer.ssd_size }} {{ computer.ssd_measure|upper }}</p>
+                    {% endif %}
+                    <p><strong>Purchase price: </strong>{{ computer.purchase_price }} Rwf</p>
+                    {% if computer.asset_sold %}
+                        <p><strong>Sale price: </strong>{{ computer.sale_price }} Rwf</p>
+                        <p><strong>Sold date: </strong>{{ computer.sold_date }}</p>
+                    {% endif %}
+                    {% if computer.in_store %}
+                        <p><strong>Location: </strong>{{ computer.which_store|replace|upper }} Stock</p>
+                    {% else %}
+                        <p><strong>Currently: </strong>{{ computer.which_store|replace|upper }}
+                    {% endif %}
+                    <p><strong>Symantic installed: </strong>{% if computer.symantic_installed %}YES{% else %}NO{% endif %}</p> 
+                </div>
+                <div>
+                    <p><strong>Model: </strong>{{ computer.model|upper }}</p>
+                    <p><strong>Memory(RAM): </strong>{{ computer.memory_size }} {{ computer.memory_measure }}</p>
+                    <p><strong>Processor: </strong>{{ computer.processor_manufacturer|title }} {{ computer.processor_type|replace|title }}</p>
+                    <p><strong>Processor speed: </strong>{{ computer.process_speed }} {{ computer.processor_speed_measure }}</p>							
+                    <p><strong>Processor name: </strong>{{ computer.processor_name }}</p>
+                    <p><strong>Entry date in the bank: </strong>{{ computer.entry_date_in_bank }}</p>
+                    <p><strong>Recorded date: </strong>{{ computer.recorded_date }}</p>
+                    {% if computer.usage_start_date %}
+                        <p><strong>Usage start date: </strong>{{ computer.usage_start_date }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <p><strong>Tag number: </strong>{% if computer.tag_number %}{{ computer.tag_number}} {% else %}" "{% endif %}</p>
+                    <p><strong>Operating system installed: </strong>{{ computer.os_installed|title }}</p>
+                    <p><strong>Warranty time: </strong>{{ computer.warranty_time_formated }}</p>
+                    <p><strong>Lifetime: </strong>{{ computer.lifetime_formated }}</p>
+                    <p><strong>In use: </strong>{% if computer.in_use %}YES{% else %}NO{% endif %}</p>
+                    <p><strong>Functions: </strong>{% if computer.still_functions %}YES{% else %}NO{% endif %}</p>
+                    <p><strong>Status: </strong>{{ computer.status|replace|upper }}</p>
+                </div>
+            </div>
+            <div id="current_price_list" class="table-data">
+                <h4>List of users who has used this computer</h4>
+                <a  href="{% url 'assets_movement:computer-assign' computer.asset_id %}" id="view_price_archive_button">+ new user record</a>
+                {% if assignments_num > 0 %}						
+                    <form>
+                        <select>
+                            <option value="all services" selected>All services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                        </select>
+                        <select>
+                            <option value="From" selected disabled>From</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="To" selected disabled>To</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="all">All records</option>
+                        </select>
+                        <input type="submit" value="view"/>
+                    </form>
+                    <table class="table-data">
+                        <thead>
+                            <th>USER ID</th>
+                            <th>FIRST NAME</th>
+                            <th>LAST NAME</th>
+                            <th>CONTACT INFO</td>
+                            <th>DEPARTMENT/LOCATION</th>
+                            <th>EXACT LOCATION</th>
+                            <th>APPROVAL STATUS</th>
+                            <th>RETURNED</th>
+                            <th>RECORDED DATE</th>
+                            <th>RECEIVED DATE</th>
+                            <th>RETURNED DATE</th>
+                            <th>MOVED FROM HEAD OFFICE</th>
+                            <th>STATUS</th>
+                        </thead>
+                        <tbody>
+                            {% for assign in computer_users %}
+                                <tr>
+                                    <td>{{ assign.assignee.username }}</td>
+                                    <td>{{ assign.assignee.first_name|upper }}</td>
+                                    <td>{{ assign.assignee.last_name|upper }}</td>
+                                    <td>{{ assign.assignee.phone_number }}</td>
+                                    <td>{{ assign.branch|upper }}</td>
+                                    <td>{{ assign.exact_location|upper }}</td>
+                                    <td>{{ assign.approval_status|title }}</td>
+                                    {% if assign.returned %}
+                                        <td>YES</td>
+                                    {% else %}
+                                        <td>NO</td>
+                                    {% endif %}
+                                    <td>{{ assign.date_assigned|date:"d-m-Y H:i" }}</td>
+                                    <td>{{ assign.date_approved|date:"d-m-Y H:i" }}</td>
+                                    <td>{{ assign.returned_date|date:"d-m-Y H:i" }}</td>
+                                    {% if assign.external_movement_required %}
+                                        <td>YES</td>
+                                    {% else %}
+                                        <td>NO</td>
+                                    {% endif %}
+                                    <td>{{ assign.status|title }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>This computer has never been used</p>
+                {% endif %}						
+            </div>
+            <div id="price_archive_list" class="table-data">
+                {% comment %} <h4>{{ group.name }} group has {{group_permissions_num}} {% if group_permissions_num > 1 %} permissions{% else %} permission{% endif %} </h4> {% endcomment %}
+                <h4>Maintenance history on this computer</h4>
+                <a href="#" id="hide_price_archives">+ new maintenance record</a>
+                {% comment %} {% if group_permissions_num > 0 %} {% endcomment %}
+                    <form>
+                        <select>
+                            <option value="all services" selected>All services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                        </select>
+                        <select>
+                            <option value="From" selected disabled>From</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="To" selected disabled>To</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="last used date" selected disabled>Last date used</option>
+                            <option value="Gasabo">20-10-2020</option>
+                            <option value="Gasabo">12-08-2020</option>
+                            <option value="Gasabo">05-07-2020</option>
+                        </select>
+                        <select>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="all">All records</option>
+                        </select>
+                        <input type="submit" value="view"/>
+                    </form>
+                    <table class="table-data">
+                        <thead>
+                            <th>#ID</th>
+                            <th>CODENAME</th>
+                            <th>PERMISSION NAME</th>
+                            <th>DATE ADDED</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            {% comment %} {% for perm in group_permissions %} {% endcomment %}
+                                <tr>
+                                    <td>CODENAME</td>
+                                    <td>CODENAME</td>
+                                    <td>CODENAME</td>
+                                    <td>CODENAME</td>
+                                    <td><a href="#" class="delete_button">remove</a></td>
+                                </tr>
+                            {% comment %} {% endfor %} {% endcomment %}
+                        </tbody>
+                    </table>
+                {% comment %} {% endif %} {% endcomment %}
+            </div>					
+        </div>
+    </div>
+{% endblock %}

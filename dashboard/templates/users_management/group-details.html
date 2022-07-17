@@ -1,0 +1,142 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">#GROUP:  {{ group.name}}</p>
+        <a href="{% url 'users_management:groups-list' %}" id="price_back_to_car_list">Back to groups list</a>
+    </div>
+    <div id="car_body_data">				
+        <div id="car_prices">
+            <div id="current_price_list" class="table-data">
+                <h4>{{ group.name }} group has {{group_members_num}} {% if group_members_num > 1 %} members{% else %} member{% endif %} </h4>
+                <a  href="{% url 'users_management:membership'  group.group_id %}" id="view_price_archive_button">+ new group member</a>
+                {% if group_members_num > 0 %}						
+                    <form>
+                        <select>
+                            <option value="all services" selected>All services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                        </select>
+                        <select>
+                            <option value="From" selected disabled>From</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="To" selected disabled>To</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="all">All records</option>
+                        </select>
+                        <input type="submit" value="view"/>
+                    </form>
+                    <table class="table-data">
+                        <thead>
+                            <th>USERNAME</th>
+                            <th>FIRSTNAME</th>
+                            <th>LASTNAME</th>
+                            <th>E-MAIL</th>
+                            <th>PHONE NUMBER</th>
+                            <th>STATUS</th>
+                            <th>SUPER USER</th>
+                            <th>DATE JOINED GROUP</th>
+                            <th colspan="2">ACTIONS</th>
+                        </thead>
+                        <tbody>
+                            {% for member in group_members %}
+                                <tr>
+                                    <td>{{ member.user.username }}</td>
+                                    <td>{{ member.user.first_name|upper }}</td>
+                                    <td>{{ member.user.last_name|upper }}</td>
+                                    <td>{{ member.user.email }}</td>
+                                    <td>{{ member.user.phone_number}}</td>
+                                    {% if member.user.is_active %}
+                                        <td>Active</td>
+                                    {% else %}
+                                        <td>Inactive</td>
+                                    {% endif %}
+                                    {% if member.user.is_supermember.user %}
+                                        <td>Yes</td>
+                                    {% else %}
+                                        <td>No</td>
+                                    {% endif %}
+                                    <td>{{ member.user.date_joined|date:"d-m-Y"}}</td>
+                                    <td><a href="{% url 'users_management:user-detail' member.user.username %}" class="view_button">view details</a></td>
+                                    <td><a href="{% url 'users_management:remove-member'  group.group_id member.user.username 'remove' %}" class="delete_button">remove</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}						
+            </div>
+            <div id="price_archive_list" class="table-data">
+                <h4>{{ group.name }} group has {{group_permissions_num}} {% if group_permissions_num > 1 %} permissions{% else %} permission{% endif %} </h4>
+                <a href="{% url 'users_management:group-permissions' group.group_id %}" id="hide_price_archives">+ new group permission</a>
+                {% if group_permissions_num > 0 %}
+                    <form>
+                        <select>
+                            <option value="all services" selected>All services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                        </select>
+                        <select>
+                            <option value="From" selected disabled>From</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="To" selected disabled>To</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="last used date" selected disabled>Last date used</option>
+                            <option value="Gasabo">20-10-2020</option>
+                            <option value="Gasabo">12-08-2020</option>
+                            <option value="Gasabo">05-07-2020</option>
+                        </select>
+                        <select>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="all">All records</option>
+                        </select>
+                        <input type="submit" value="view"/>
+                    </form>
+                    <table class="table-data">
+                        <thead>
+                            <th>#ID</th>
+                            <th>CODENAME</th>
+                            <th>PERMISSION NAME</th>
+                            <th>DATE ADDED</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            {% for perm in group_permissions %}
+                                <tr>
+                                    <td>{{ perm.permission.id }}</td>
+                                    <td>{{ perm.permission.codename }}</td>
+                                    <td>{{ perm.permission.name }}</td>
+                                    <td>{{ perm.date_added|date:"d-m-Y" }}</td>
+                                    <td><a href="{% url 'users_management:remove-group-permissions' group.group_id perm.permission.id %}" class="delete_button">remove</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>					
+        </div>
+    </div>
+{% endblock %}

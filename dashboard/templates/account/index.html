@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+	<script src="{% static 'js/main.js' %}"></script>
+
+    <title>Equity Bank Rwanda Enterprise Asset Management</title>
+  </head>
+  <body>
+	<main class="index">
+        <div class="sections section-one">
+            <img src="{% static 'images/equity_logo.jpg' %}" class="index-logo"/>
+            <p class="index-logo">Enterprise Asset Management</p>
+            <h4>You're welcome to Equity Bank Rwanda Enterprise Asset Management</h4>
+        </div>
+        <div class="sctions section-two">
+            <form class="onboarding-forms login-form" method="POST" action="{% url 'account:login' %}">
+                {% csrf_token %}
+                <legend>Alreay have an account login</legend>	
+                <div class="form-group">
+                    <label class="form-group-label">USER ID</label><br/>
+                    <input type="text"  maxlength="7" minlength="7" name="username" class="form-group-control-input" required autocomplete="off"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">PASSWORD</label><br/>
+                    <input type="password" name="password" class="form-group-control-input" required autocomplete="off"/>
+                </div>
+                <input type="submit" value="Login"/>
+            </form>
+            <form class="onboarding-forms register-form" method="POST" action="{% url 'account:create_account' %}">
+                {% csrf_token %}
+                <legend>If you're a new user open an account here</legend>	
+                <div class="form-group">
+                    <label class="form-group-label">USER ID</label><br/>
+                    <input type="text"  maxlength="7" minlength="7" name="username" class="form-group-control-input" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">FIRSTNAME</label><br/>
+                    <input type="text" maxlength="60" name="first_name" class="form-group-control-input" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">LASTNAME</label><br/>
+                    <input type="text"  maxlength="60" name="last_name" class="form-group-control-input" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">E-MAIL</label><br/>
+                    <input type="email"  maxlength="100" name="email" class="form-group-control-input" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">PHONE NUMBER</label><br/>
+                    <input type="text" maxlength="12" minlength="12" name="phone_number" class="form-group-control-input" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">PASSWORD</label><br/>
+                    <input type="password"  minlength="10" name="password" class="form-group-control-input" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-group-label">RETYPE PASSWORD</label><br/>
+                    <input type="password"  minlength="10" name="password2" class="form-group-control-input" required/>
+                </div>
+                <input type="submit" value="Open an account"/>
+            </form>
+        </div>
+	</main>
+  </body>
+</html>

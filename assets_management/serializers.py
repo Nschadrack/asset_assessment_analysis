@@ -5,7 +5,7 @@ from .models import (ComputerLapDeskTop, PrinterScanner, Screen, BioVayaNoteCoun
 
 
 def return_model_fields(model):
-    fields = ['url']
+    fields = []
     fields.extend([field.name for field in model._meta.get_fields()])
 
     return fields
@@ -27,22 +27,16 @@ class BuildCommonAttributeInstance:
         self.__instance.entry_date_in_bank = self.__validated_data.get('entry_date_in_bank', self.__instance.entry_date_in_bank)
         self.__instance.warranty_time = self.__validated_data.get('warranty_time', self.__instance.warranty_time)
         self.__instance.lifetime = self.__validated_data.get('lifetime', self.__instance.lifetime)
-        self.__instance.in_store = self.__validated_data.get('in_store', self.__instance.in_store)
         self.__instance.which_store = self.__validated_data.get('which_store', self.__instance.which_store)
         self.__instance.asset_sold = self.__validated_data.get('asset_sold', self.__instance.asset_sold)
         self.__instance.sold_date = self.__validated_data.get('sold_date', self.__instance.sold_date)
         self.__instance.sale_price = self.__validated_data.get('sale_price', self.__instance.sale_price)
-        self.__instance.in_use = self.__validated_data.get('in_use', self.__instance.in_use)
-        self.__instance.still_functions = self.__validated_data.get('still_functions', self.__instance.still_functions)
-
         self.__instance.set_status(self.__validated_data.get('status', self.__instance.status))
 
         return self.__instance
 
 
-class ComputerLapDeskTopSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
-        view_name='assets_management:computer-detail')
+class ComputerLapDeskTopSerializer(serializers.ModelSerializer):
     class Meta:
         model = ComputerLapDeskTop
         fields = return_model_fields(ComputerLapDeskTop)
@@ -62,7 +56,7 @@ class ComputerLapDeskTopSerializer(serializers.HyperlinkedModelSerializer):
         instance.harddisk_size = validated_data.get('harddisk_size', instance.harddisk_size)
         instance.ssd_size = validated_data.get('ssd_size', instance.ssd_size)
         instance.harddisk_measure = validated_data.get('harddisk_measure', instance.harddisk_measure)
-        instance.ssd_measure = validated_data.get('serial_number', instance.serial_number)
+        instance.ssd_measure = validated_data.get('ssd_measure', instance.ssd_measure)
         instance.memory_size = validated_data.get('memory_size', instance.memory_size)
         instance.memory_measure = validated_data.get('memory_measure', instance.memory_measure)
         instance.processor_manufacturer = validated_data.get('processor_manufacturer', instance.processor_manufacturer)
@@ -71,24 +65,19 @@ class ComputerLapDeskTopSerializer(serializers.HyperlinkedModelSerializer):
         instance.processor_speed_measure = validated_data.get('processor_speed_measure', instance.processor_speed_measure)
         instance.processor_name = validated_data.get('processor_name', instance.processor_name)
 
-        if instance.symantic_installed:
-            symantic = "YES"
-        else:
-            symantic = "NO"
-        instance.set_symantic_installed(validated_data.get('symantic_installed', symantic))
+        instance.symantic_installed = validated_data.get('symantic_installed', instance.symantic_installed)
 
         instance.os_installed = validated_data.get('os_installed', instance.os_installed)
+
         instance.save()
 
         return instance
     
 
-
-
-class PrinterScannerSerializer(serializers.HyperlinkedModelSerializer):
+class PrinterScannerSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrinterScanner
-        fields = ['__all__']
+        fields = return_model_fields(PrinterScanner)
     
     def create(self, validated_data):
         return PrinterScanner.objects.create(**validated_data)
@@ -109,11 +98,10 @@ class PrinterScannerSerializer(serializers.HyperlinkedModelSerializer):
         return instance
 
 
-
-class ScreenSerializer(serializers.HyperlinkedModelSerializer):
+class ScreenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Screen 
-        fields = ['__all__']
+        fields = return_model_fields(Screen)
     
     def create(self, validated_data):
         return Screen.objects.create(**validated_data)
@@ -131,11 +119,10 @@ class ScreenSerializer(serializers.HyperlinkedModelSerializer):
         return instance
 
 
-
-class BioVayaNoteCounterGeneratorSerializer(serializers.HyperlinkedModelSerializer):
+class BioVayaNoteCounterGeneratorSerializer(serializers.ModelSerializer):
     class Meta:
         model = BioVayaNoteCounterGenerator
-        fields = ['__all__']
+        fields = return_model_fields(BioVayaNoteCounterGenerator)
     
     def create(self, validated_data):
         return BioVayaNoteCounterGenerator.objects.create(**validated_data)
@@ -152,10 +139,10 @@ class BioVayaNoteCounterGeneratorSerializer(serializers.HyperlinkedModelSerializ
         return instance
 
 
-class AtmSerializer(serializers.HyperlinkedModelSerializer):
+class AtmSerializer(serializers.ModelSerializer):
     class Meta:
         model = Atm 
-        fields = ['__all__']
+        fields = return_model_fields(Atm)
     
     def create(self, validated_data):
         return Atm.objects.create(**validated_data)
@@ -177,20 +164,20 @@ class AtmSerializer(serializers.HyperlinkedModelSerializer):
         return instance
 
 
-class SwitchRouterFirewallSerializer(serializers.HyperlinkedModelSerializer):
+class SwitchRouterFirewallSerializer(serializers.ModelSerializer):
     class Meta:
         model = SwitchRouterFirewall
-        fields = ['__all__']
+        fields = return_model_fields(SwitchRouterFirewall)
 
     def create(self, validated_data):
-        return SwitchRouterFirewall.obecjs.create(**validated_data)
+        return SwitchRouterFirewall.objects.create(**validated_data)
     
     def update(self, instance, validated_data):
         common_attr = BuildCommonAttributeInstance(instance=instance, validated_data=validated_data)
         instance = common_attr.build_instance()
 
         instance.hostname = validated_data.get('hostname', instance.hostname)
-        instance.service_ip = validated_data.get('service_ip', instance.service_ip)
+        instance.host_ip = validated_data.get('host_ip', instance.host_ip)
         instance.category = validated_data.get('category', instance.category)
         instance.manufacturer = validated_data.get('manufacturer', instance.manufacturer)
         instance.version = validated_data.get('version', instance.version)
@@ -202,20 +189,20 @@ class SwitchRouterFirewallSerializer(serializers.HyperlinkedModelSerializer):
         return instance
 
 
-class PhysicalNodeSerializer(serializers.HyperlinkedModelSerializer):
+class PhysicalNodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PhysicalNode
-        fields = ['__all__']
+        fields = return_model_fields(PhysicalNode)
     
     def create(self, validated_data):
-        return PhysicalNode.obejcts.create(**validated_data)
+        return PhysicalNode.objects.create(**validated_data)
     
     def update(self, instance, validated_data):
         common_attr = BuildCommonAttributeInstance(instance=instance, validated_data=validated_data)
         instance = common_attr.build_instance()
 
         instance.hostname = validated_data.get('hostname', instance.hostname)
-        instance.service_ip = validated_data.get('service_ip', instance.service_ip)
+        instance.host_ip = validated_data.get('host_ip', instance.host_ip)
         instance.vendor = validated_data.get('vendor', instance.vendor)
         instance.role = validated_data.get('role', instance.role)
         instance.os_installed = validated_data.get('os_installed', instance.os_installed)
@@ -227,12 +214,12 @@ class PhysicalNodeSerializer(serializers.HyperlinkedModelSerializer):
         return instance
 
 
-class SystemHostedApplicationSerializer(serializers.HyperlinkedModelSerializer):
+class SystemHostedApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = SystemHostedApplication
-        fields = ['__all__']
+        fields = return_model_fields(SystemHostedApplication)
     
-    def create(self, validated_data):
+    def create(self,  validated_data):
         return SystemHostedApplication.objects.create(**validated_data)
     
     def update(self, instance, validated_data):
@@ -241,12 +228,12 @@ class SystemHostedApplicationSerializer(serializers.HyperlinkedModelSerializer):
         instance.supporting_time = validated_data.get('supporting_time', instance.supporting_time)
         instance.in_use = validated_data.get('in_use', instance.in_use)
         instance.hostname = validated_data.get('hostname', instance.hostname)
-        instance.service_ip = validated_data.get('service_ip', instance.service_ip)
+        instance.host_ip = validated_data.get('host_ip', instance.host_ip)
         instance.role = validated_data.get('role', instance.role)
         instance.os_installed = validated_data.get('os_installed', instance.os_installed)
         instance.installation_year = validated_data.get('installation_year', instance.installation_year)
-
-        instance.add_usage_start_date(validated_data.get('usage_start_date', instance.usage_start_date))
+        self.instance.set_status(validated_data.get('status', self.instance.status))
+        instance.usage_start_date = validated_data.get('usage_start_date', instance.usage_start_date)
         instance.save()
 
         return instance

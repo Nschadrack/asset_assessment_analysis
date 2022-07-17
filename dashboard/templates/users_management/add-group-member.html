@@ -1,0 +1,85 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">#GROUP:  {{ group.name}}</p>
+        <a href="{% url 'users_management:groups-list' %}" id="price_back_to_car_list">Back to groups list</a>
+    </div>
+    <div id="car_body_data">				
+        <div id="car_prices">
+            <div id="current_price_list" class="table-data">
+                <h4>Add new member to {{ group.name }} group</h4>
+                <a  href="{% url 'users_management:group-detail' group.group_id %}" id="view_price_archive_button">Back to group details</a>
+                {% if group_members_num_to_add > 0 %}						
+                    <form>
+                        <select>
+                            <option value="all services" selected>All services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                        </select>
+                        <select>
+                            <option value="From" selected disabled>From</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="To" selected disabled>To</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="all">All records</option>
+                        </select>
+                        <input type="submit" value="view"/>
+                    </form>
+                    <table class="table-data">
+                        <thead>
+                            <th>USERNAME</th>
+                            <th>FIRSTNAME</th>
+                            <th>LASTNAME</th>
+                            <th>E-MAIL</th>
+                            <th>PHONE NUMBER</th>
+                            <th>STATUS</th>
+                            <th>SUPER USER</th>
+                            <th>DATE JOINED GROUP</th>
+                            <th colspan="2">ACTIONS</th>
+                        </thead>
+                        <tbody>
+                            {% for user in not_members %}
+                                <tr>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.first_name|upper }}</td>
+                                    <td>{{ user.last_name|upper }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.phone_number}}</td>
+                                    {% if user.is_active %}
+                                        <td>Active</td>
+                                    {% else %}
+                                        <td>Inactive</td>
+                                    {% endif %}
+                                    {% if user.is_supermember.user %}
+                                        <td>Yes</td>
+                                    {% else %}
+                                        <td>No</td>
+                                    {% endif %}
+                                    <td>{{ user.date_joined|date:"d-m-Y"}}</td>
+                                    <td><a href="{% url 'users_management:user-detail' user.username %}" class="view_button">view details</a></td>
+                                    <td><a href="{% url 'users_management:add-member'  group.group_id user.username %}" class="delete_button">add member</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No available users to be added</p>
+                {% endif %}						
+            </div>					
+        </div>
+    </div>
+{% endblock %}

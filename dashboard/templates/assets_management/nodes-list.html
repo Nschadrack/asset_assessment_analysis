@@ -1,0 +1,131 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">List of Physical Nodes</p>
+        <button id="car_title_header_and_new_btn_button">+ new node</button>
+    </div>
+    <div id="car_body_data">
+        <div id="car_table_data" class="table-data">
+            <table>
+                <thead>
+                    <th>MODEL</th>
+                    <th>SERIAL NUMBER</th>
+                    <th>HOST NAME</th>
+                    <th>HOST IP</th>
+                    <th>ROLE</th>
+                    <th>INSTALLATION YEAR</th>
+                    <th>TAG NUMBER</th>
+                    <th>WORKING STATUS</th>
+                    <th>VENDOR</th>
+                    <th>OPERATING SYSTEM INSTALLED</th>
+                    <th>DATE ENTERED THE BANK</th>
+                    <th>RECORDED DATE</th>
+                    <th colspan="4">ACTIONS</th>
+                </thead>
+                <tbody>
+                    {% for node in nodes %}
+                        <tr>
+                            <td>{{ node.model|upper }}</td>
+                            <td>{{ node.serial_number|upper }}</td>
+                            <td>{{ node.hostname|upper }}</td>
+                            <td>{{ node.host_ip }}</td>
+                            <td>{{ node.role|upper }}</td>
+                            <td>{{ node.installation_year }}</td>
+                            <td>{{ node.tag_number|upper }}</td>
+                            <td>{{ node.status|replace|upper }}</td>
+                            <td>{{ node.vendor|upper }}</td>
+                            <td>{{ node.os_installed|upper }}</td>
+                            <td>{{ node.entry_date_in_bank }}</td>
+                            <td>{{ node.recorded_date }}</td>
+                            <td><a href="#" class="publish_button">publish</a></td>
+                            <td><a href="{% url 'assets_management:node-detail' node.asset_id %}" class="view_button">view details</a></td>
+                            <td><a href="{% url 'assets_management:node-detail-update' node.asset_id 'update' %}" class="update_button">update</a></td>
+                            <td><a href="{% url 'assets_management:node-detail-update' node.asset_id 'confirm_delete' %}" class="delete_button">delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+        <div id="car_new_form_div">
+            <div>
+                <h4>Before filling out the form for recording a new Physical node, here is the explaination of some fields for supporting you to fill out with required and correct data about Physical node</h4>
+                <p><strong>SERIAL NUMBER:</strong> These are series of characters used to identify a Physical node</p>
+                <p><strong>Tag number:</strong>This is a series of characters which identifies each asset of an organization</p>
+                <p><strong>Entry date in the bank: </strong>The date when the bank has received the Physical node from supplier</p>
+                <p><strong>Warranty time(in months): </strong>The time given by the supplier to the bank for Physical node to be returned back if it doesn't meet the specifications</p>
+                <p><strong>Life time (in months): </strong>The time the Physical node is supposed to be used and after that time the computer should not be reliable(provided by the manufacturer and shuould be followed)</p>
+                <p><strong>Store: </strong>If the Physical node is in stock which stock where it is stored</p>
+                <p><strong>Purchase price(RWF): </strong>Amount that spent while buying Physical node</p>
+                <p><strong>Sell price: </strong>If the Physical node was sold, at which price it was sold</strong>.</p>
+                <p><strong>Working status: </strong>Behaviour of the Physical node while being used</p>
+                <p><strong>Category: </strong>The type of Physical node whether TV or monitor</p>
+                <p><strong>Physical node size: </strong>The size of the Physical node in inches</p>
+            </div>
+            <form id="car_new_form" method="post" action="">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Recording a new Physical node device in the system</legend>	
+                    <div class="form-group">
+                        <select required name="which_store">
+                            <option value="STORE" selected disabled>Choose store where Physical node is stored</option>
+                            {% for VALUE, STORE in STORES %}
+                                <option value={{ VALUE }}>{{ STORE }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select required name="status">
+                            <option value="STORE" selected disabled>Choose working status of Physical node</option>
+                            {% for VALUE, STATUS in STATUES %}
+                                <option value={{ VALUE }}>{{ STATUS }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Physical node serial number" maxlength="40" minlength="4" name="serial_number" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Physical node model" maxlength="100" name="model" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Physical node vendor" maxlength="60" name="vendor" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Physical node name" maxlength="40" name="hostname" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Physical node host IP" maxlength="20" name="host_ip" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Physical node tag number" maxlength="40" name="tag_number"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Physical node role" maxlength="40" name="role"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Operating system installed on node" maxlength="100" name="os_installed"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" placeholder="Physical node installation year" min="2010" name="installation_year"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" placeholder="Physical node purchase price" min="5000" name="purchase_price" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" placeholder="Entry date in the bank" name="entry_date_in_bank" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" placeholder="Physical node warranty time(in months)" min="0" name="warranty_time" required/>
+                    </div>	
+                    <div class="form-group">
+                        <input type="number" placeholder="Physical node life time(in months)" min="0" name="lifetime" required/>
+                    </div>
+                    <input type="submit" value="Save new node"/>
+                </fieldset>						
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,233 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">{{ computer.category|title }} Name: {{ computer.hostname|upper }}</p>
+        <a href="{% url 'assets_management:computers-list' %}" id="price_back_to_car_list">Back to computers list</a>
+    </div>
+    <div id="car_body_data">
+        <div id="computer_update_form_div">
+            <div>
+                <h4>Before filling out the form for recording a new computer, here is the explaination of some fields for supporting you to fill out with required and correct data about computer</h4>
+                <p><strong>SERIAL NUMBER:</strong> These are series of characters used to identify a computer, open command prompt as administrator: type <b style="background-color: yellow; font-style: italic">wmic bios get serialnumber</b> press Enter</p>
+                <p><strong>Model:</strong> This shows version and manafacturer of the computer </p>
+                <p><strong>Tag number:</strong>This is a series of characters which identifies each asset of an organization</p>
+                <p><strong>Entry date in the bank: </strong>The date when the bank has received the computer from supplier</p>
+                <p><strong>Warranty time(in months): </strong>The time given by the supplier to the bank for computer to be returned back if it doesn't meet the specifications</p>
+                <p><strong>Life time (in months): </strong>The time the computer is supposed to be used and after that time the computer should not be reliable(provided by the manufacturer and shuould be followed)</p>
+                <p><strong>Store: </strong>If the computer is in stock which stock where it is stored</p>
+                <p><strong>Purchase price(RWF): </strong>Amount that spent while buying computer</p>
+                <p><strong>Sell price: </strong>If the computer was sold, at which price it was sold</strong>.</p>
+                <p><strong>Working status: </strong>Behaviour of the computer while being used</p>
+                <p><strong>Category: </strong>Whether it is Laptop or Desktop</p>
+                <p><strong>Storage type: </strong>The type of stroge for storing data whether it is HARD DISK, SSD or it has both 
+                <p><strong>Processor manufacturer: </strong>The manufacturer of the processor can AMD, Intel or other</p>
+                <p><strong>Processor type: </strong>The number of cores does the processor has</p>
+                <p><strong>Processor speed: </strong>The speed of processor sum up all speeds together for all cores in Herthz</p>
+                <p><strong>Processor name: </strong>The full name of processor e.g intel pentium, i7-10510U</p>
+                <p><strong>Symantic installed: </strong>Specifying whether the computer has symantic installed</p>
+                <p><strong>Operating system: </strong>The operating system installed in the computer</p> 
+            </div>
+            <form id="car_new_form" method="post" action="">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Updating computer information in the system</legend>					
+                    <div class="form-group">
+                        <label>Choose computer category</label>
+                        <select required name="category">
+                            <option value="{{computer.category }}" selected>{{ computer.category|replace|upper }}</option>
+                            {% for VALUE, CATEGORY in COMPUTER_CATEGORIES %}
+                                {% if computer.category.upper != VALUE %}
+                                    <option value="{{ VALUE }}">{{ CATEGORY }}</option> 
+                                {% endif %} 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose storage type</label>
+                        <select required name="storage_type">
+                            <option value="{{ computer.storage_type }}" selected>{{ computer.storage_type|replace|upper }}</option>
+                            {% for VALUE, TYPE in STORAGE_TYPES %} 
+                                {% if computer.storage_type != VALUE %}
+                                    <option value="{{ VALUE }}">{{ TYPE }}</option> 
+                                {% endif %}  
+                            {% endfor %}                          
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose hard disk measurement</label>
+                        <select required name="harddisk_measure">
+                            <option value="{{ computer.harddisk_measure }}" selected>{{ computer.harddisk_measure|replace|upper }} </option>
+                            {% for VALUE, MEASUREMENT in MEASUREMENTS %}
+                                {% if computer.harddisk_measure != VALUE %}
+                                    <option value="{{ VALUE }}">{{ MEASUREMENT }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>                   
+                    <div class="form-group">
+                        <label>Storage capacity of hard disk</label>
+                        <input type="number"  min="0" name="harddisk_size" value="{{ computer.harddisk_size }}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose SSD measurement</label>
+                        <select required name="ssd_measure">
+                            <option value="{{ computer.ssd_measure }}" selected>{{ computer.ssd_measure|replace|upper }}</option>
+                            {% for VALUE, MEASUREMENT in MEASUREMENTS %}
+                                {% if computer.ssd_measure != VALUE %}
+                                    <option value="{{ VALUE }}">{{ MEASUREMENT }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                     <div class="form-group">
+                        <label>Storage capacity of SSD</label>
+                        <input type="number"   min="0" name="ssd_size" value="{{ computer.ssd_size }}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose RAM measurement</label>
+                        <select required name="memory_measure">
+                            <option value="{{ computer.memory_measure }}" selected>{{ computer.memory_measure }}</option>
+                            {% for VALUE, MEASUREMENT in MEASUREMENTS %}
+                                {% if computer.memory_measure != VALUE %}
+                                    <option value="{{ VALUE }}">{{ MEASUREMENT }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Storage capacity of RAM</label>
+                        <input type="number"  min="0" name="memory_size" value="{{ computer.memory_size }}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose processor manufacturer</label>
+                        <select required name="processor_manufacturer">
+                            <option value="{{ computer.processor_manufacturer }}" selected>{{ computer.processor_manufacturer|replace|upper }}</option>
+                            {% for VALUE, MANUFACTURER in PROCESSOR_MANUFACTURES %}
+                                {% if computer.processor_manufacturer != VALUE %}
+                                    <option value="{{ VALUE }}">{{ MANUFACTURER }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose processor type</label>
+                        <select required name="processor_type">
+                            <option value="{{ computer.processor_type }}" selected>{{ computer.processor_type|replace|upper }}</option>
+                            {% for VALUE, TYPE in PROCESSOR_TYPES %}
+                                {% if  computer.processor_type != VALUE %}
+                                    <option value="{{ VALUE }}">{{ TYPE }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose processor speed measurement</label>
+                        <select required name="processor_speed_measure">
+                            <option value="{{ computer.processor_speed_measure }}" selected>{{ computer.processor_speed_measure|replace|upper }}</option>
+                            {% for VALUE, MEASUREMENT in PROCESSOR_SPEED_MEASUREMENTS %}
+                                {% if computer.processor_speed_measure != VALUE %}
+                                    <option value="{{ VALUE }}">{{ MEASUREMENT }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Speed capacity of processor</label>
+                        <input type="number"  min="0" step="0.1" name="process_speed" value="{{ computer.process_speed }}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Name of processor</label>
+                        <input type="text"  maxlength="40" name="processor_name" value="{{ computer.processor_name }}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Name of computer</label>
+                        <input type="text"  maxlength="40" name="hostname" value="{{ computer.hostname }}" required/>
+                    </div>
+                    <div class="form-group">
+                        <p>Symantic installed?:</p>                      
+                        <label for="symantic_yes">Yes
+                             <input type="radio" id="symantic_yes" name="symantic_installed" {% if computer.symantic_installed %} checked {% endif %}/>
+                        </label> 
+                        <label for="symantic_no">No
+                            <input type="radio" id="symantic_no" name="symantic_installed" {% if not computer.symantic_installed %} checked {% endif %}/>
+                        </label> 
+                    </div>
+                    <div class="form-group">
+                        <p>Was the computer sold?:</p>                      
+                        <label for="asset_sold_yes">Yes
+                             <input type="radio" id="asset_sold_yes" name="asset_sold" {% if computer.asset_sold %} checked {% endif %}/>
+                        </label> 
+                        <label for="asset_sold_no">No
+                            <input type="radio" id="asset_sold_no" name="asset_sold" {% if not computer.asset_sold %} checked {% endif %}/>
+                        </label> 
+                    </div>
+                    <div class="form-group">
+                        <label>Computer sale date</label>
+                        <input type="date" name="sold_date" value="{{computer.sold_date|date:'Y-m-d'}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Computer sale price</label>
+                        <input type="number" name="sale_price" value="{{ computer.sale_price }}"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose store where computer is stored</label>
+                        <select required name="which_store">
+                            <option value="{{ computer.which_store }}" selected>{{ computer.which_store|replace|upper }}</option>
+                            {% for VALUE, STORE in STORES %}
+                                {% if computer.which_store != VALUE %}
+                                    <option value="{{ VALUE }}">{{ STORE }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Choose working status of computer</label>
+                        <select required name="status">
+                            <option value="{{ computer.status }}" selected>{{ computer.status|replace|upper }}</option>
+                            {% for VALUE, STATUS in STATUES %}
+                                {% if computer.status != VALUE %}
+                                    <option value="{{ VALUE }}">{{ STATUS }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Name of operating system installed</label>
+                        <input type="text" maxlength="60" name="os_installed" value="{{ computer.os_installed }}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Computer serial number</label>
+                        <input type="text" maxlength="40" minlength="4" name="serial_number" value="{{ computer.serial_number }}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Computer model</label>
+                        <input type="text" maxlength="100" name="model" value="{{ computer.model }}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Computer tag number</label>
+                        <input type="text" maxlength="40" name="tag_number" value="{{ computer.tag_number }}"/>
+                    </div>
+                    <div class="form-group"></label>
+                        <label>Computer purchase price
+                        <input type="number" min="50000" name="purchase_price" value="{{ computer.purchase_price }}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Entry date in the bank</label>
+                        <input type="date" name="entry_date_in_bank" value="{{computer.entry_date_in_bank|date:'Y-m-d'}}" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Computer warranty time(in months)</label>
+                        <input type="number" min="0" name="warranty_time"  value="{{ computer.warranty_time }}" required/>
+                    </div>	
+                    <div class="form-group">
+                        <label>Computer life time(in months)</label>
+                        <input type="number" min="0" name="lifetime" value="{{ computer.lifetime }}" required/>
+                    </div>
+                    <input type="submit" value="Update computer information"/>
+                </fieldset>						
+            </form>
+        </div>
+    </div>
+{% endblock %}

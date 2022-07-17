@@ -1,0 +1,806 @@
+/* variables declaration */
+:root{
+	--aside_bg: #222831;
+	--aside_fg: rgba(244,244,244, 0.9);
+	--aside_fg_hover_a: #111;
+	--aside_bg_hover_a: #fff;
+	--aside_border_color: rgba(244, 244, 244, 0.3);
+	--main_bg: #e8e8e8;
+	--main_fg: black;
+	--main_header_bg: white;
+	--scroll_bar_color: #888;
+	--aside-navigation-span-bg: #55f;
+	--navy_car: #000080;
+	--peru_car: #cd853f;
+	--darkGreen: #0a290a;
+	--darkRed: rgb(126, 24, 4);
+	--darkRedHover:rgb(116, 24, 4);
+	--table_tr_background_color: rgb(230, 230, 230);
+}
+*{
+	box-sizing: border-box;
+	font-family:Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 12px;
+}
+table tr{
+	cursor: pointer;
+}
+table th, table td{
+	white-space: nowrap;
+}
+/* width */
+::-webkit-scrollbar {
+  background-color: var(--scroll_bar_color);
+}
+::-webkit-scrollbar:horizontal{
+	height: 8px;
+}
+::-webkit-scrollbar:vertical{
+	width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: var(--scroll_bar_color);
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: var(--aside_border_color);
+  border-radius: 5px;
+}
+
+body{
+	margin: 0px;
+	padding: 0px;
+
+}
+
+#aside_navigation{
+	float: left;
+	width: 19%;
+	height: 100vh;
+	background-color: var(--darkRed);
+	color: var(--aside_fg);
+	margin: 0px;
+	padding: 0px;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+}
+#main_load{
+	float: right;
+	width: 81%;
+	height: 100vh;
+	background-color: var(--main_bg);
+	color: var(--main_fg);
+	margin: 0px;
+	padding: 0px;
+}
+#main_load_header{
+	width: 100%;
+	height: 6%;
+	background-color: var(--darkRed);
+	margin:0px;
+	margin-top: 0px;
+	padding: 5px 15px;
+	/* position: absolute; */
+	top: 0px;
+	right: 0px;
+	left: 19%;
+}
+#main_load_data{
+	width: 100%;
+	height: 94%;
+	background-color: var(--aside_bg_hover_a);
+	padding: 5px 15px;
+}
+#sfjourney_aside_logo{
+	width: 100%;
+	height: 6%;
+	padding: 0px 12px;
+	padding-right: 0px;
+	margin: 0px;
+	margin-top: 0px;
+	background-color: var(--aside_bg_hover_a);
+}
+.aside-header-data{
+	float: left;
+}
+#sfjourney_aside_logo img{
+	width: 15%;
+	height: 100%;
+}
+#sfjourney_aside_logo p{
+	width: 78%;
+	color: var(--darkRed);
+	font-size: 12px;
+	padding-left: 10px;
+	font-weight: bold;
+}
+#aside_navigations{
+	width: 100%;
+	height: 94%;	
+}
+#aside_navigations:hover{
+	overflow-y: auto;
+}
+
+#aside_navigations a{
+	width: 100%;
+	padding: 12px;
+	display: block;
+	font-size: 12px;
+	border-top: 1px solid var(--aside_border_color);
+	text-decoration: none;
+	font-family: inherit;
+	color: var(--aside_fg);
+	font-weight: normal;
+	text-transform: capitalize;
+}
+#aside_navigations a:hover{
+	background-color: var(--darkRedHover); 
+	color: inherit;
+}
+.aside-navigation-spans{
+	background-color: var(--aside-navigation-span-bg);
+	border-radius: 10px;
+	padding: 3px 6px;
+	font-weight: bold;
+	font-family: sans-serif;
+	font-size: 12px;
+}
+/*_____________________________ done with main template body ____________*/
+
+/* styling company cars massive cars(group) */
+#car_title_header_and_new_btn{
+	height: 5%;	
+}
+
+#car_title_header_and_new_btn p{
+	float: left;
+	padding-top: 5px;
+	font-size: 14px;
+	width: auto;
+	height: 100%;
+	margin-top: 0px;
+	font-weight: bold;
+}
+#car_title_header_and_new_btn button{
+	float: right;
+	width: auto;
+	height: 100%;
+	background-color: var(--navy_car);
+	border: none;
+	color: var(--aside_fg);
+	font-weight: bold;
+	font-size: 12px;
+	border-radius: 0px;
+	outline: none;
+	margin-top: 0px;
+}
+/* #car_body_data{
+	height: 90%;
+	width: 100%;
+	
+} */
+#car_table_data{
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	display: block;
+}
+.table-data{
+	width: 100%;
+	height: auto;
+	border: 1px solid var(--table_tr_background_color);
+	border-radius: 5px;
+}
+/* #car_table_data table{
+	width: 100%;
+	height: auto;
+	border: 1px solid var(--table_tr_background_color);
+	border-radius: 5px;
+} */
+
+.table-data thead th{
+	background-color: var(--aside_bg);
+	color: var(--aside_fg);
+	font-size: 12px;
+	text-align: left;
+}
+.table-data th,.table-data td, .table-data table{
+	text-align: center;
+	border-collapse: collapse;
+}
+.table-data table th, .table-data table td{
+	padding: 10px;
+	font-size: 12px;
+	white-space: nowrap;
+	text-align: left;
+}
+.table-data table tr {
+	background-color: var(--aside_bg_hover_a);
+	color: var(--aside_fg_hover_a);
+}
+.table-data table tr:nth-child(even){
+	background-color: var(--table_tr_background_color);
+	border-bottom: 1px solid var(--aside_bg);
+}
+.table-data table tr .view_button{
+	border: 1px solid var(--navy_car);
+	background-color: inherit;
+	color: var(--navy_car);
+}
+.table-data table tr .view_button:hover {
+	background-color: var(--navy_car);
+	color: var(--aside_bg_hover_a);
+}
+.table-data table tr button, .table-data table tr a{
+	border: none;
+	border-radius: 3px;
+	padding: 5px;
+	outline: none;
+	color: var(--aside_fg);
+	font-weight: normal;
+	text-decoration: none;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+.table-data table tr .update_button{
+	background-color:inherit;
+	border: 1px solid var(--peru_car);
+	color: var(--peru_car);
+}
+.table-data table tr .update_button:hover{
+	background-color: var(--peru_car);
+	color: var(--aside_bg_hover_a);
+}
+.table-data table tr .delete_button{
+	background-color: inherit;
+	border: 1px solid var(--darkRed);
+	color: var(--darkRed);
+}
+.table-data table tr .delete_button:hover {
+	background-color: var(--darkRed);
+	color: var(--aside_bg_hover_a);
+}
+.table-data table tr .publish_button{
+	background-color: inherit;
+	border: 1px solid var(--darkGreen);
+	color: var(--darkGreen);
+}
+.table-data table tr .publish_button:hover {
+	background-color: var(--darkGreen);
+	color: var(--aside_bg_hover_a);
+}
+
+/* styling new form car */
+#car_new_form_div{
+	height: 98%;
+	width: 100%;
+	overflow: auto;
+	background-color: var(--aside_fg);
+	display: none;
+}
+#computer_update_form_div {
+	height: 98%;
+	width: 100%;
+	overflow: auto;
+	background-color: var(--aside_fg);
+	display: block;
+}
+#computer_update_form_div div {
+	width: 45%;
+	height: auto;
+	overflow: auto;
+	margin: 15px auto;
+	border-radius: 3px;
+	padding: 10px;
+	float: right;
+}
+#car_new_form_div div{
+	width:45%;
+	height: auto;
+	overflow: auto;
+	margin: 15px auto;
+	border-radius: 3px;
+	padding: 10px;
+	float: right;
+}
+#computer_update_form_div{
+	border-radius: 10px;
+}
+#car_new_form{
+	width: 52%;
+	height: auto;
+	overflow: auto;
+	margin: 15px auto;
+	margin-left: 20px;
+	padding: 10px;
+	float: left;
+	border-radius: 10px;
+}
+#car_new_form select{
+	border-radius: 3px;
+	padding: 5px;
+	outline: none;
+	border: none;
+	border-bottom: 1px solid var(--scroll_bar_color);
+	width: 100%;
+	font-size: 12px;
+	color: #888;
+	margin-top: 15px;
+}
+#car_new_form input{
+	border-radius: 3px;
+	padding: 5px;
+	outline: none;
+	border: none;
+	border-bottom: 1px solid var(--scroll_bar_color);
+	width: 100%;
+	font-size: 12px;
+	color: #888;
+}
+#car_new_form textarea{
+	width: 100%;
+	height: 150px;
+	color: #888;
+	font-size: 12px;
+	border: 2px solid var(--scroll_bar_color);
+	border-radius: 5px;
+	outline: none;
+	padding: 5px;
+}
+#car_new_form_div legend, #computer_update_form_div legend{
+	font-weight: bold;
+	margin-bottom: 0px;
+	font-size: 14px;
+}
+#car_new_form .form-group{
+	margin-bottom: 0px;
+	width: 100%;
+}
+#car_new_form_div fieldset{
+	border-radius: 5px;
+	border: 2px solid var(--scroll_bar_color);
+	width: 100%;
+}
+
+#car_new_form input[type="submit"]{
+	width: auto;
+	padding: 8px;
+	border: none;
+	background-color: var(--navy_car);
+	color: var(--aside_fg);
+	margin-top: 15px;
+	margin-left: 10px;
+}
+#cancel_operation{
+	width: 40%;
+	padding: 8px;
+	font-size: 18px;
+	border: none;
+	border-radius: 3px;
+	float: right;
+	background-color: var(--peru_car);
+	color: var(--aside_fg);
+	outline: none;
+	margin-top: 15px;
+	text-align: center;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+/*  styling car services page */
+#car_services{
+	height: 98%;
+	width: 100%;
+	overflow: auto;
+	background-color: var(--aside_fg);
+	display: block;
+	padding: 10px;
+}
+.car_viewed_for_services_prices{
+	background-color: var(--aside_bg_hover_a);
+	padding: 1px 10px;
+	color: var(--aside_fg_hover_a);
+	font-weight: normal;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	min-height: 250px;
+	max-height: 300px;
+}
+.car_viewed_for_services_prices div{
+	float: left;
+	width: 32%;
+	margin-right: 10px;
+	cursor: pointer;
+}
+.car_viewed_for_services_prices p{
+	font-size: 12px;
+}
+#car_services .car_services_list_new_form{
+	float: left;
+}
+#price_back_to_car_list{
+	float: right;
+	font-size: 12px;
+	padding: 8px 10px;
+	margin-top: 0px;
+	font-weight: normal;
+	border: none;
+	border-radius: 0px;
+	background-color: var(--navy_car);
+	color: var(--aside_fg);
+	text-decoration: none;
+}
+ #car_services_list{
+	width: 55%;
+}
+
+#car_services_new_form{
+	width: 44%;
+	margin-left: 1%;
+}
+
+#car_services_new_form form{
+	width: 70%;
+	margin: 0px;
+	border: 2px solid var(--scroll_bar_color);
+	padding: 10px;
+	border-radius: 5px;
+	float: left;
+}
+#car_services_new_form form select{
+	width: 100%;
+	margin: 5px auto;
+	outline: none;
+	border-radius: 5px;
+	border: 1px solid var(--scroll_bar_color);
+	font-size: 14px;
+	padding: 10px;
+}
+#car_services_new_form input{
+	margin: 10px auto;
+	margin-top: 40px;
+	display: block;
+	outline: none;
+	border-radius: 5px;
+	border: 1px solid var(--scroll_bar_color);
+	font-size: 14px;
+	padding: 10px;
+	background-color: var(--peru_car);
+	font-weight: bold;
+}
+
+/* styling car prices page */
+#car_prices{
+	height: 98%;
+	width: 100%;
+	overflow: auto;
+	background-color: var(--main_bg);
+	display: block;
+	padding: 10px;
+}
+
+.current_price_price_archive_price select, .current_price_price_archive_price input{
+	border-radius: 5px;
+	padding: 5px;
+	font-size: 14px;
+	font-weight: bold;
+	outline: none;
+}
+
+#current_price_list{
+	width: 100%;
+	background-color: var(--aside_bg_hover_a);
+	padding: 5px 15px;
+	margin-top: 10px;
+}
+
+#view_price_archive_button{
+	float: right;
+	font-weight: bold;
+	font-size: 12px;
+	border-radius: 0px;
+	border: none;
+	outline: none;
+	padding: 5px 10px;
+	background-color: var(--peru_car);
+	color: var(--aside_fg);
+	margin-right: 10px;
+	margin-top: -30px;
+}
+#price_archive_list{
+	width: 100%;
+	margin-top: 20px;
+	padding: 15px;
+	background-color: var(--aside_bg_hover_a);
+	display: block;
+}
+#hide_price_archives{
+	float: right;
+	font-weight: bold;
+	font-size: 12px;
+	border-radius: 0px;
+	border: none;
+	outline: none;
+	padding: 5px 10px;
+	background-color: var(--darkRedHover);
+	color: var(--aside_fg);
+	margin-right: 10px;
+	margin-top: -30px;
+}
+
+/* styling group car detailed info */
+#pay_car_registration_fee_btn{
+	float: right;
+	color: var(--aside_fg);
+	background-color: var(--darkRed);
+	border-radius: 3px;
+	text-decoration: none;
+	font-size: 16px;
+	padding: 7px 10px;
+	margin: 0px;
+	margin-top: -4px;
+	font-weight: bold;
+}
+#paid_car_registration_fee{
+	float: right;
+	font-size: 14px;
+	padding: 8px 30px;
+	margin-top: -5px;
+	font-weight: bold;
+	border: none;
+	border-radius: 3px;
+	background-color: var(--navy_car);
+	color: var(--aside_fg);
+	text-decoration: none;
+}
+#car_detailed_info{
+	width: 47%;
+	height: 98%;
+	padding: 0px;
+	overflow: auto;
+	float: left;
+	margin: 0px;
+}
+#car_address_images{
+	width: 52%;
+	height: 100%;
+	padding: 10px;
+	overflow: auto;	
+	float: right;
+}
+#car_actual_detailed_info{
+	padding: 0px 10px;
+	margin-bottom: 10px;
+}
+#car_actual_detailed_info p{
+	font-weight: bold;
+	font-size: 16px;
+	
+}
+#car_actual_detailed_info span{
+	font-weight: normal;
+	background-color: var(--main_header_bg);
+	padding: 2px 15px;
+	margin-left: 0px;
+	font-size: 1.1em;
+	white-space: nowrap;
+}
+#car_description_div{
+	padding-top: 10px;
+}
+#car_description_div h4{
+	text-align: center;
+}
+#car_description_div p{
+	margin-top: -15px;
+	font-weight: normal;
+	text-align: justify;
+	white-space: collapse;
+	background-color: var(--main_header_bg);
+	padding: 10px;
+}
+#car_approval_declined_comments{
+	border-top: 3px solid var(--scroll_bar_color);
+	padding: 10px;
+	margin-bottom: 10px;
+}
+#car_approval_declined_comments p{
+	margin-top: -15px;
+	font-weight: normal;
+	text-align: justify;
+	white-space: collapse;
+	background-color: var(--main_header_bg);
+	padding: 10px;
+}
+#car_approval_declined_comments h4{
+	text-align: center;
+}
+#address_location_table{
+	height: 50%;
+}
+#address_location_table table{
+	height: 100%;
+	font-size: 16px;
+	margin-bottom: 25px;
+}
+#address_location_table a{
+	background-color: var(--peru_car);
+	padding: 5px;
+	border-radius: 3px;
+	border: none;
+	text-decoration: none;
+	font-size: 18px;
+	font-weight: bold;
+}
+#address_location_table .delete{
+	background-color: var(--darkRed);
+}
+#para_current_location{
+	font-weight: bold;
+	font-size: 16px;
+}
+#para_current_location span{
+	background-color: var(--main_header_bg);
+	padding: 5px 10px;
+}
+#add_new_car_location{
+	padding: 10px 25px;
+	font-weight: bold;
+	background-color: var(--navy_car);
+	color: var(--aside_fg);
+	border: none;
+	outline: none;
+	border-radius: 3px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+#list_of_car_images{
+	border-top: 3px solid var(--scroll_bar_color);
+	margin-top: 10px;
+}
+#car_images_div{
+	width: 100%;
+}
+#car_images_div div{
+	float: left;
+	width: 48%;
+	height: 270px;
+	margin-right: 10px;
+	overflow: hidden;
+}
+#car_images_div img{
+	width: 100%;
+	height: 220px;
+}
+#car_images_div button{
+	width: 80%;
+	height: 30px;
+	margin: 5px auto;
+	display: block;
+	border-radius: 3px;
+	outline: none;
+	border: none;
+	background-color: var(--navy_car);
+	color: var(--aside_fg);
+	font-size: 12px;
+	padding: 10px;
+}
+#car_images_div  .update_car_picture_btn, #car_plate_number_image .update_car_picture_btn{
+	background-color: var(--peru_car);
+}
+#car_plate_number_image img{
+	width: 50%;
+	max-height: 220px;
+	margin: 5px auto;
+	display: block;
+}
+#car_plate_number_image button{
+	width: 55%;
+	height: 30px;
+	margin: 15px auto;
+	display: block;
+	border-radius: 3px;
+	outline: none;
+	border: none;
+	background-color: var(--navy_car);
+	color: var(--aside_fg);
+	font-size: 12px;
+	padding: 10px;
+}
+
+/* ############################### index page ###################### */
+main{
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+main:hover{
+	overflow-y: scroll;
+}
+.section-one{
+	height: 10vh;
+	width: 100vw;
+	background-color: var(--aside_bg_hover_a);
+	padding-right: 70px;
+}
+.section-two{
+	background-color: var(--darkRed);
+	height: 90vh;
+	width: 100vw;
+	padding-left: 100px;
+	padding-top: 20px;
+}
+.onboarding-forms{
+	float: left;
+	width: 30%;
+	padding: 20px 20px;
+	/* border: 1px solid gray; */
+	border-radius: 10px;
+}
+.register-form{
+	margin-left: 30%;
+}
+.onboarding-forms .form-group{
+	padding: 10px;
+}
+.form-group-control-input{
+	border-radius: 10px;
+	padding: 10px;
+	width: 100%;
+	margin-top: 5px;
+	border:1px solid gray;
+}
+.form-group-control-input:focus{
+	outline: none;
+}
+.onboarding-forms input[type="submit"]{
+	padding: 10px;
+	border-radius: 10px;
+	border: 2px solid var(--aside-navigation-span-bg);
+	background-color: none;
+	width: 95%;
+	margin: auto;
+	margin-top: 20px;
+	display: block;
+}
+.onboarding-forms input[type="submit"]:hover{
+	background-color: var(--aside-navigation-span-bg);
+	font-weight: bold;
+}
+.form-group-label{
+	width: 100%;
+	font-weight: bold;
+}
+.onboarding-forms legend{
+	margin-bottom: 20px;
+	margin-left: 10px;
+	font-weight: bold;
+}
+.index-logo{
+	float: left;
+}
+.section-one img{
+	height: 100%;
+	width: 7%;
+}
+.section-one p{
+	margin-left: 20px;
+	margin-top: 30px;
+	font-weight: bold;
+	color: var(--darkRedHover);
+}
+.section-one h4{
+	float: right;
+	margin-top: 30px;
+	font-style: italic;
+}
+
+
+
