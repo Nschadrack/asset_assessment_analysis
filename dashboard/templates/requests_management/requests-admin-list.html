@@ -1,0 +1,48 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">List of Requests</p>
+    </div>
+    <div id="car_body_data">
+        <div id="car_table_data" class="table-data">
+            {% if requests_num > 0 %}
+                <table>
+                    <thead>
+                        <th>REQUEST TYPE</th>
+                        <th>STATUS</th>
+                        <th>APPROVER</th>
+                        <th>APPROVER PHONE NUMBER</th>
+                        <th>APPROVER E-MAIL</th>
+                        <th>OPENED DATE</th>
+                        <td>APPROVED/REJECTED DATE</th>
+                        <th>STATUS</th>
+                        <th colspan="2">ACTIONS</th>
+                    </thead>
+                    <tbody>
+                        {% for req in requests %}
+                            <tr>
+                                <td>{{ req.request_type|upper }}</td>
+                                <td>{{ req.status|upper }}</td>
+                                <td>{{ req.approver.first_name|upper }} {{ req.assigner.last_name|upper }}</td>
+                                <td>{{ req.approver.phone_number}}</td>
+                                <td>{{ req.approver.email|upper}}</td>
+                                <td>{{ req.opened_date|date:"d-m-Y H:i"}}</td> 
+                                <td>{{ req.opened_date|date:"d-m-Y H:i"}}</td>                        
+                                <td><a href="{% url 'requests_management:request-admin-detail' req.request_id %}" class="view_button">view details</a></td>
+                                {% if req.status.lower == "pending" %}
+                                    <td><a href="{% url 'requests_management:request-view-or-delete' req.request_id 'delete' %}" class="delete_button">Delete</a></td>
+                                {% else %}
+                                    <td><a href="{% url 'requests_management:request-view-or-delete' req.request_id 'delete' %}" class="delete_button" disabled>Delete</a></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>You have no pending requests</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -139,6 +139,26 @@ body{
 	font-weight: normal;
 	text-transform: capitalize;
 }
+#aside_navigations section{
+	background-color: var(--aside_bg);
+	display: none;
+}
+#aside_navigations button {
+	width: 100%;
+	padding: 12px;
+	display: block;
+	border: none;
+	font-size: 12px;
+	border-top: 1px solid var(--aside_border_color);
+	text-decoration: none;
+	font-family: inherit;
+	color: var(--aside_fg);
+	font-weight: normal;
+	text-align: left;
+	text-transform: capitalize;
+	background-color: var(--darkRedHover);
+	outline: none;
+}
 #aside_navigations a:hover{
 	background-color: var(--darkRedHover); 
 	color: inherit;
@@ -741,11 +761,19 @@ main:hover{
 	float: left;
 	width: 30%;
 	padding: 20px 20px;
-	/* border: 1px solid gray; */
 	border-radius: 10px;
+}
+.onboarding-forms p{
+	margin-left: 10px;
+	margin-top: 20px;
+	font-weight: bold;
+}
+.onboarding-forms p:hover{
+	cursor: pointer;
 }
 .register-form{
 	margin-left: 30%;
+	display: none;
 }
 .onboarding-forms .form-group{
 	padding: 10px;

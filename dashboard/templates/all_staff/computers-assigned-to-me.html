@@ -1,0 +1,89 @@
+{% extends "base_all_staff_layout.html" %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_body_data">				
+        <div id="car_prices">
+            <div id="current_price_list" class="table-data">
+                <h4>List of computers I used</h4>
+                {% if assignments_num > 0 %}						
+                    <form>
+                        <select>
+                            <option value="all services" selected>All services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                        </select>
+                        <select>
+                            <option value="From" selected disabled>From</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="To" selected disabled>To</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="all">All records</option>
+                        </select>
+                        <input type="submit" value="view"/>
+                    </form>
+                    <table class="table-data">
+                        <thead>
+                            <th>COMPUTER CATEGORY</th>
+                            <th>MODEL</th>
+                            <th>COMPUTER NAME</th>
+                            <th>TAG NUMBER</td>
+                            <th>DEPARTMENT</th>
+                            <th>EXACT LOCATION</th>
+                            <th>RETURNED</th>
+                            <th>RECEIVED DATE</th>
+                            <th>RETURNED DATE</th>
+                            <th>MOVED FROM HEAD OFFICE</th>
+                            <th>STATUS</th>
+                            <th>SYMANTIC INSTALLED</th>
+                        </thead>
+                        <tbody>
+                            {% for assign in computer_users %}
+                                <tr>
+                                    <td>{{ assign.computer.category|upper }}</td>
+                                    <td>{{ assign.computer.model|upper  }}</td>
+                                    <td>{{ assign.computer.hostname|upper  }}</td>
+                                    <td>{{ assign.computer.tag_number|upper  }}</td>
+                                    <td>{{ assign.branch|upper }}</td>
+                                    <td>{{ assign.exact_location|upper }}</td>
+                                    {% if assign.returned %}
+                                        <td>YES</td>
+                                    {% else %}
+                                        <td>NO</td>
+                                    {% endif %}
+                                    <td>{{ assign.date_approved|date:"d-m-Y H:i" }}</td>
+                                    <td>{{ assign.returned_date|date:"d-m-Y H:i" }}</td>
+                                    {% if assign.external_movement_required %}
+                                        <td>YES</td>
+                                    {% else %}
+                                        <td>NO</td>
+                                    {% endif %}
+                                    <td>{{ assign.status|title }}</td>
+                                    {% if assign.computer.symantic_installed %}
+                                        <td>YES</td>
+                                    {% else %}
+                                        <td>NO</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No computer assigned to you yet</p>
+                {% endif %}						
+            </div>				
+        </div>
+    </div>
+{% endblock %}

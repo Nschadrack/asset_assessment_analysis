@@ -18,7 +18,7 @@
             <h4>You're welcome to Equity Bank Rwanda Enterprise Asset Management</h4>
         </div>
         <div class="sctions section-two">
-            <form class="onboarding-forms login-form" method="POST" action="{% url 'account:login' %}">
+            <form class="onboarding-forms login-form" method="POST" action="{% url 'account:login' %}" id="login-form">
                 {% csrf_token %}
                 <legend>Alreay have an account login</legend>	
                 <div class="form-group">
@@ -30,10 +30,11 @@
                     <input type="password" name="password" class="form-group-control-input" required autocomplete="off"/>
                 </div>
                 <input type="submit" value="Login"/>
+                <p onclick="showUserRegistrationForm()">Open an account if you're new</p>
             </form>
-            <form class="onboarding-forms register-form" method="POST" action="{% url 'account:create_account' %}">
+            <form class="onboarding-forms register-form" method="POST" action="{% url 'account:create_account' %}" id="registration-form">
                 {% csrf_token %}
-                <legend>If you're a new user open an account here</legend>	
+                <legend>Fill out the form below to open an account</legend>	
                 <div class="form-group">
                     <label class="form-group-label">USER ID</label><br/>
                     <input type="text"  maxlength="7" minlength="7" name="username" class="form-group-control-input" required/>

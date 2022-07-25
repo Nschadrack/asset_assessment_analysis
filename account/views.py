@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from users_management.views import get_user, get_user_by_email, find_group_by_name
 from users_management.models import *
 
+from account.decorators import unauthenticated_user
+
 
 def index(request):
 
@@ -64,15 +66,18 @@ def create_account(request):
     return redirect("account:index")
 
 
+@unauthenticated_user
 def login_user(request):
     username = request.POST["username"].strip().upper().replace("_", "")
     password = request.POST["password"].strip()
-
-    user = authenticate(username=username, password=password)
-
+    user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
-        return redirect("dashboard:overall")
+        memberships_num = Membership.objects.filter(user=user).all().count()
+        if memberships_num > 1:
+            return redirect("dashboard:overall") 
+        else:
+            return redirect("all_staff:general-board") 
     else:
         print("\\n\nINVALID CREDENTIALS\n\n")
     

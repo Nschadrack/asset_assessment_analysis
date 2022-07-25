@@ -1,10 +1,10 @@
-{% extends "base_all_staff_layout.html" %}
+{% extends "base_layout.html" %}
 {% load static %}
 {% load custom_template_filters %}
 {% block main_data_load %}
     <div id="car_title_header_and_new_btn">
         <p id="car_title_header_and_new_btn_p">{{ requet.request_type|upper }} REQUEST DETAILS</p>
-        <a href="{% url 'requests_management:requests-list' %}" id="price_back_to_car_list">Back to requests list</a>
+        <a href="{% url 'requests_management:requests-admin-list' %}" id="price_back_to_car_list">Back to requests list</a>
     </div>
     <div id="car_body_data">				
         <div id="car_prices">

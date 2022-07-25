@@ -20,6 +20,37 @@ function showNewGroupCarRegiseterForm(e){
     car_title_header_button_clicked.style.display="none";
     car_title_header_paragraph.style.display="none";
 }
+function showUserRegistrationForm(e){
+    var user_login_form = document.getElementById("login-form");
+    var user_register_form = document.getElementById("registration-form");
 
+    user_login_form.style.display="none";
+    user_register_form.style.display = "block";
+}
+
+function toggleOtherAssetSection(e){
+    var other_assets_section = document.getElementById("other-assets-section");
+    var style = window.getComputedStyle(other_assets_section);
+    var displayCss = style.getPropertyValue("display")
+    console.log(displayCss);
+    // console.log(other_assets_section.style.display);
+    
+}
+
+function toggleNetworkApplicationAssetSection(e){
+    var user_login_form = document.getElementById("login-form");
+    var user_register_form = document.getElementById("registration-form");
+
+    user_login_form.style.display="none";
+    user_register_form.style.display = "block";
+}
+
+function toggleUsersManagementAssetSection(e){
+    var user_login_form = document.getElementById("login-form");
+    var user_register_form = document.getElementById("registration-form");
+
+    user_login_form.style.display="none";
+    user_register_form.style.display = "block";
+}
 
 

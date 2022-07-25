@@ -18,23 +18,32 @@
 		</div>
 		<div id="aside_navigations">
 			<a href="{% url 'dashboard:overall' %}">Dashboard</a>
-			<a href="{% url 'assets_management:computers-list' %}">Computers</a>
-			<a href="{% url 'assets_management:printers-list' %}">Printers</a>
-			<a href="{% url 'assets_management:scanners-list' %}">Scanners</a>
-			<a href="{% url 'assets_management:screens-list' %}">Screens</a>
-			<a href="{% url 'assets_management:biometrics-list' %}">Biometric devices</a>
-			<a href="{% url 'assets_management:avaya-list' %}">Avaya</a>
-			<a href="{% url 'assets_management:note-counters-list' %}">Note counters</a>
-			<a href="{% url 'assets_management:atms-list' %}">ATMs</a>
-			<a href="{% url 'assets_management:generators-list' %}">Generators</a>
-			<a href="{% url 'assets_management:switches-list' %}">Switches</a>
-			<a href="{% url 'assets_management:routers-list' %}">Routers</a>
-			<a href="{% url 'assets_management:firewalls-list' %}">Firewalls</a>
-			<a href="{% url 'assets_management:nodes-list' %}">Physical servers</a>
-			<a href="{% url 'assets_management:applications-list' %}">System hosted & applications</a>
-			<a href="{% url 'users_management:users-list' %}">Users</a>
-			<a href="{% url 'users_management:groups-list' %}">Groups</a>
-			<a href="{% url 'requests_management:requests-list' %}">Requests</a>
+			<button onclick="toggleOtherAssetSection()">Other Assets</button>
+			<section id="other-assets-section">
+				<a href="{% url 'assets_management:computers-list' %}">Computers</a>
+				<a href="{% url 'assets_management:printers-list' %}">Printers</a>
+				<a href="{% url 'assets_management:scanners-list' %}">Scanners</a>
+				<a href="{% url 'assets_management:screens-list' %}">Screens</a>
+				<a href="{% url 'assets_management:biometrics-list' %}">Biometric devices</a>
+				<a href="{% url 'assets_management:avaya-list' %}">Avaya</a>
+				<a href="{% url 'assets_management:note-counters-list' %}">Note counters</a>
+				<a href="{% url 'assets_management:atms-list' %}">ATMs</a>
+				<a href="{% url 'assets_management:generators-list' %}">Generators</a>
+			</section>
+			<button>Network & Applications Assets</button>
+			<section id="network-applications-assets-section">			
+				<a href="{% url 'assets_management:switches-list' %}">Switches</a>
+				<a href="{% url 'assets_management:routers-list' %}">Routers</a>
+				<a href="{% url 'assets_management:firewalls-list' %}">Firewalls</a>
+				<a href="{% url 'assets_management:nodes-list' %}">Physical servers</a>
+				<a href="{% url 'assets_management:applications-list' %}">System hosted & applications</a>
+			</section>
+			<button>Users Management</button>
+			<section id="users-management-section">
+				<a href="{% url 'users_management:users-list' %}">Users</a>
+				<a href="{% url 'users_management:groups-list' %}">Groups</a>
+			</section>
+			<a href="{% url 'requests_management:requests-admin-list' %}">Requests</a>
 			<a href="{% url 'account:logout_user' %}">Sign out</a>
 			<a href="#">Notifications <span class="aside-navigation-spans">0</span></a>
 			<a href="#">Settings</a>
