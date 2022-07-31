@@ -5,7 +5,7 @@
     <div id="car_body_data">				
         <div id="car_prices">
             <div id="current_price_list" class="table-data">
-                <h4>List of computers I used</h4>
+                <h4>List of avayas I used</h4>
                 {% if assignments_num > 0 %}						
                     <form>
                         <select>
@@ -36,36 +36,28 @@
                     </form>
                     <table class="table-data">
                         <thead>
-                            <th>USER ID</th>
-                            <th>FIRST NAME</th>
-                            <th>LAST NAME</th>
-                            <th>CONTACT INFO</td>
-                            <th>DEPARTMENT/LOCATION</th>
+                            <th>MODEL</th>
+                            <th>TAG NUMBER</td>
+                            <th>DEPARTMENT</th>
                             <th>EXACT LOCATION</th>
-                            <th>APPROVAL STATUS</th>
                             <th>RETURNED</th>
-                            <th>RECORDED DATE</th>
                             <th>RECEIVED DATE</th>
                             <th>RETURNED DATE</th>
                             <th>MOVED FROM HEAD OFFICE</th>
                             <th>STATUS</th>
                         </thead>
                         <tbody>
-                            {% for assign in computer_users %}
+                            {% for assign in avaya_users %}
                                 <tr>
-                                    <td>{{ assign.assignee.username }}</td>
-                                    <td>{{ assign.assignee.first_name|upper }}</td>
-                                    <td>{{ assign.assignee.last_name|upper }}</td>
-                                    <td>{{ assign.assignee.phone_number }}</td>
+                                    <td>{{ assign.bio_avaya_note_gen.model|upper }}</td>
+                                    <td>{{ assign.bio_avaya_note_gen.tag_number|upper  }}</td>
                                     <td>{{ assign.branch|upper }}</td>
                                     <td>{{ assign.exact_location|upper }}</td>
-                                    <td>{{ assign.approval_status|title }}</td>
                                     {% if assign.returned %}
                                         <td>YES</td>
                                     {% else %}
                                         <td>NO</td>
                                     {% endif %}
-                                    <td>{{ assign.date_assigned|date:"d-m-Y H:i" }}</td>
                                     <td>{{ assign.date_approved|date:"d-m-Y H:i" }}</td>
                                     <td>{{ assign.returned_date|date:"d-m-Y H:i" }}</td>
                                     {% if assign.external_movement_required %}
@@ -79,7 +71,7 @@
                         </tbody>
                     </table>
                 {% else %}
-                    <p>No computer assigned to you yet</p>
+                    <p>No avaya assigned to you yet</p>
                 {% endif %}						
             </div>				
         </div>

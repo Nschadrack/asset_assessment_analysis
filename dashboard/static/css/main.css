@@ -61,7 +61,7 @@ body{
 	float: left;
 	width: 19%;
 	height: 100vh;
-	background-color: var(--darkRed);
+	background-color: var(--darkRedHover);
 	color: var(--aside_fg);
 	margin: 0px;
 	padding: 0px;
@@ -115,7 +115,7 @@ body{
 #sfjourney_aside_logo p{
 	width: 78%;
 	color: var(--darkRed);
-	font-size: 12px;
+	font-size: 0.9rem;
 	padding-left: 10px;
 	font-weight: bold;
 }
@@ -143,6 +143,9 @@ body{
 	background-color: var(--aside_bg);
 	display: none;
 }
+#aside_navigations section a{
+	padding-left: 30px;
+}
 #aside_navigations button {
 	width: 100%;
 	padding: 12px;
@@ -159,8 +162,11 @@ body{
 	background-color: var(--darkRedHover);
 	outline: none;
 }
+#aside_navigations button:hover{
+	background-color: var(--aside_fg_hover_a); 
+}
 #aside_navigations a:hover{
-	background-color: var(--darkRedHover); 
+	background-color: var(--aside_fg_hover_a); 
 	color: inherit;
 }
 .aside-navigation-spans{
@@ -752,14 +758,14 @@ main:hover{
 }
 .section-two{
 	background-color: var(--darkRed);
-	height: 90vh;
+	height: 100vh;
 	width: 100vw;
 	padding-left: 100px;
 	padding-top: 20px;
 }
 .onboarding-forms{
 	float: left;
-	width: 30%;
+	width: 35%;
 	padding: 20px 20px;
 	border-radius: 10px;
 }
@@ -772,11 +778,12 @@ main:hover{
 	cursor: pointer;
 }
 .register-form{
-	margin-left: 30%;
+	margin-right: 5%;
 	display: none;
+	float: right;
 }
 .onboarding-forms .form-group{
-	padding: 10px;
+	padding: 5px;
 }
 .form-group-control-input{
 	border-radius: 10px;

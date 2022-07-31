@@ -28,29 +28,38 @@ function showUserRegistrationForm(e){
     user_register_form.style.display = "block";
 }
 
-function toggleOtherAssetSection(e){
-    var other_assets_section = document.getElementById("other-assets-section");
-    var style = window.getComputedStyle(other_assets_section);
+function toggleAssetRegistrySection(e){
+    var assets_registry_section = document.getElementById("assets-registry-section");
+    var style = window.getComputedStyle(assets_registry_section);
     var displayCss = style.getPropertyValue("display")
-    console.log(displayCss);
-    // console.log(other_assets_section.style.display);
+    if (displayCss === "none"){
+        assets_registry_section.style.display = "block";
+    }else{
+        assets_registry_section.style.display = "none";
+    }
     
 }
 
-function toggleNetworkApplicationAssetSection(e){
-    var user_login_form = document.getElementById("login-form");
-    var user_register_form = document.getElementById("registration-form");
-
-    user_login_form.style.display="none";
-    user_register_form.style.display = "block";
+function toggleAssetsConsolidationSection(e){
+    var assets_consolidation_section = document.getElementById("assets-consolidation-section");
+    var style = window.getComputedStyle(assets_consolidation_section);
+    var displayCss = style.getPropertyValue("display")
+    if (displayCss === "none"){
+        assets_consolidation_section.style.display = "block";
+    }else{
+        assets_consolidation_section.style.display = "none";
+    }
 }
 
 function toggleUsersManagementAssetSection(e){
-    var user_login_form = document.getElementById("login-form");
-    var user_register_form = document.getElementById("registration-form");
-
-    user_login_form.style.display="none";
-    user_register_form.style.display = "block";
+    var users_management_section = document.getElementById("users-management-section");
+    var style = window.getComputedStyle(users_management_section);
+    var displayCss = style.getPropertyValue("display")
+    if (displayCss === "none"){
+        users_management_section.style.display = "block";
+    }else{
+        users_management_section.style.display = "none";
+    }
 }
 
 

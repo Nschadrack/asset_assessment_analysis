@@ -42,7 +42,7 @@ class RequestDetail(LoginRequiredMixin, View):
             assign.date_approved = datetime.now()
             assign.save()
             requet.save()
-            return redirect("dashboard:overall")
+            return redirect("requests_management:requests-list")
         elif approve_or_reject == "reject":
             return render(request, "requests_management/rejection-note.html")
         else:

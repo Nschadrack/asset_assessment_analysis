@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-g@8)(2(6#m#i$^t9fd12i4(y^5q)^v$y(s9mg1xs8z(e83hbv^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '10.43.4.177']
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -96,11 +96,11 @@ AUTH_USER_MODEL = 'users_management.User'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'final_project_a3',
+        'NAME': 'assets_management',
         'USER': 'Nschadrack',
         'HOST': 'localhost',
         'PASSWORD': 'schadrack1@',
-        'PORT': 5434
+        'PORT': 5432
     }
 }
 

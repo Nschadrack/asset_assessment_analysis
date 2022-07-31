@@ -8,7 +8,7 @@ def unauthenticated_user(view_func):
         if current_user.is_authenticated:
             print(f"\n\nIN THE authenticated_user: {current_user}\n\n")
             memberships_num = Membership.objects.filter(user=current_user).all().count()
-            if memberships_num > 0:
+            if memberships_num > 1:
                 return redirect("dashboard:overall") 
             else:
                 return redirect("all_staff:general-board") 

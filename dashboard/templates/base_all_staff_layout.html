@@ -18,10 +18,9 @@
 		</div>
 		<div id="aside_navigations">
 			<a href="{% url 'all_staff:user-computers' %}">Computers Assigned To Me</a>
-			{% comment %} <a href="{% url 'all_staff:screens-list' %}">Screens Assinged To Me</a>
-			<a href="{% url 'all_staff:biometrics-list' %}">Biometric devices Assinged To Me</a>
-			<a href="{% url 'all_staff:avaya-list' %}">Avaya Assinged To Me</a> {% endcomment %}
-			<a href="{% url 'users_management:users-list' %}">Users</a>
+			<a href="{% url 'all_staff:user-screens' %}">Screens Assinged To Me</a>
+			<a href="{% url 'all_staff:user-bios' %}">Biometric devices Assinged To Me</a>
+			<a href="{% url 'all_staff:user-avaya' %}">Avaya Assinged To Me</a>
 			<a href="{% url 'requests_management:requests-list' %}">Requests Assigned To Me</a>
 			<a href="{% url 'account:logout_user' %}">Sign out</a>
 			<a href="#">Notifications <span class="aside-navigation-spans">0</span></a>

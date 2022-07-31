@@ -18,8 +18,8 @@
 		</div>
 		<div id="aside_navigations">
 			<a href="{% url 'dashboard:overall' %}">Dashboard</a>
-			<button onclick="toggleOtherAssetSection()">Other Assets</button>
-			<section id="other-assets-section">
+			<button onclick="toggleAssetRegistrySection()">Assets Registry</button>
+			<section id="assets-registry-section">
 				<a href="{% url 'assets_management:computers-list' %}">Computers</a>
 				<a href="{% url 'assets_management:printers-list' %}">Printers</a>
 				<a href="{% url 'assets_management:scanners-list' %}">Scanners</a>
@@ -29,16 +29,21 @@
 				<a href="{% url 'assets_management:note-counters-list' %}">Note counters</a>
 				<a href="{% url 'assets_management:atms-list' %}">ATMs</a>
 				<a href="{% url 'assets_management:generators-list' %}">Generators</a>
-			</section>
-			<button>Network & Applications Assets</button>
-			<section id="network-applications-assets-section">			
 				<a href="{% url 'assets_management:switches-list' %}">Switches</a>
 				<a href="{% url 'assets_management:routers-list' %}">Routers</a>
 				<a href="{% url 'assets_management:firewalls-list' %}">Firewalls</a>
 				<a href="{% url 'assets_management:nodes-list' %}">Physical servers</a>
 				<a href="{% url 'assets_management:applications-list' %}">System hosted & applications</a>
 			</section>
-			<button>Users Management</button>
+			<button onclick="toggleAssetsConsolidationSection()">Assets Consolidation</button>
+			<section id="assets-consolidation-section">			
+				<a href="{% url 'assets_management:switches-list' %}">Switches</a>
+				<a href="{% url 'assets_management:routers-list' %}">Routers</a>
+				<a href="{% url 'assets_management:firewalls-list' %}">Firewalls</a>
+				<a href="{% url 'assets_management:nodes-list' %}">Physical servers</a>
+				<a href="{% url 'assets_management:applications-list' %}">System hosted & applications</a>
+			</section>
+			<button onclick="toggleUsersManagementAssetSection()">Users Management</button>
 			<section id="users-management-section">
 				<a href="{% url 'users_management:users-list' %}">Users</a>
 				<a href="{% url 'users_management:groups-list' %}">Groups</a>

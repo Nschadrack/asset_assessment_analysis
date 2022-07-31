@@ -42,7 +42,11 @@ class ComputerLapDeskTopSerializer(serializers.ModelSerializer):
         fields = return_model_fields(ComputerLapDeskTop)
 
     def create(self, validated_data):
-        return ComputerLapDeskTop.objects.create(**validated_data)
+        assignments = validated_data["computer_assignments"]
+        validated_data.pop("computer_assignments")
+        computer = ComputerLapDeskTop.objects.create(**validated_data)
+        computer.computer_assignments.set(assignments)
+        return computer
         
     
     def update(self, instance, validated_data):
@@ -80,7 +84,11 @@ class PrinterScannerSerializer(serializers.ModelSerializer):
         fields = return_model_fields(PrinterScanner)
     
     def create(self, validated_data):
-        return PrinterScanner.objects.create(**validated_data)
+        assignments = validated_data["printer_scanner_assignments"]
+        validated_data.pop("printer_scanner_assignments")
+        printer = PrinterScanner.objects.create(**validated_data)
+        printer.printer_scanner_assignments.set(assignments)
+        return printer
    
     def update(self, instance, validated_data):
         common_attr = BuildCommonAttributeInstance(instance=instance, validated_data=validated_data)
@@ -104,7 +112,11 @@ class ScreenSerializer(serializers.ModelSerializer):
         fields = return_model_fields(Screen)
     
     def create(self, validated_data):
-        return Screen.objects.create(**validated_data)
+        assignments = validated_data["screen_assignments"]
+        validated_data.pop("screen_assignments")
+        screen = Screen.objects.create(**validated_data)
+        screen.screen_assignments.set(assignments)
+        return screen
 
     def update(self, instance, validated_data):
         common_attr = BuildCommonAttributeInstance(instance=instance, validated_data=validated_data)
@@ -125,8 +137,12 @@ class BioVayaNoteCounterGeneratorSerializer(serializers.ModelSerializer):
         fields = return_model_fields(BioVayaNoteCounterGenerator)
     
     def create(self, validated_data):
-        return BioVayaNoteCounterGenerator.objects.create(**validated_data)
-    
+        assignments = validated_data["bio_avaya_note_gen_assignments"]
+        validated_data.pop("bio_avaya_note_gen_assignments")
+        bio = BioVayaNoteCounterGenerator.objects.create(**validated_data)
+        bio.bio_avaya_note_gen_assignments.set(assignments)
+        return bio
+
     def update(self, instance, validated_data):
         common_attr = BuildCommonAttributeInstance(instance=instance, validated_data=validated_data)
         instance = common_attr.build_instance()
@@ -145,8 +161,12 @@ class AtmSerializer(serializers.ModelSerializer):
         fields = return_model_fields(Atm)
     
     def create(self, validated_data):
-        return Atm.objects.create(**validated_data)
-    
+        assignments = validated_data["atm_assignments"]
+        validated_data.pop("atm_assignments")
+        atm = Atm.objects.create(**validated_data)
+        atm.atm_assignments.set(assignments)
+        return atm
+
     def update(self, instance, validated_data):
         common_attr = BuildCommonAttributeInstance(instance=instance, validated_data=validated_data)
         instance = common_attr.build_instance()
@@ -170,8 +190,12 @@ class SwitchRouterFirewallSerializer(serializers.ModelSerializer):
         fields = return_model_fields(SwitchRouterFirewall)
 
     def create(self, validated_data):
-        return SwitchRouterFirewall.objects.create(**validated_data)
-    
+        assignments = validated_data["switch_router_frewall_assignments"]
+        validated_data.pop("switch_router_frewall_assignments")
+        router = SwitchRouterFirewall.objects.create(**validated_data)
+        router.switch_router_frewall_assignments.set(assignments)
+        return router
+
     def update(self, instance, validated_data):
         common_attr = BuildCommonAttributeInstance(instance=instance, validated_data=validated_data)
         instance = common_attr.build_instance()
@@ -195,7 +219,11 @@ class PhysicalNodeSerializer(serializers.ModelSerializer):
         fields = return_model_fields(PhysicalNode)
     
     def create(self, validated_data):
-        return PhysicalNode.objects.create(**validated_data)
+        assignments = validated_data["node_assignments"]
+        validated_data.pop("node_assignments")
+        node = PhysicalNode.objects.create(**validated_data)
+        node.node_assignments.set(assignments)
+        return node
     
     def update(self, instance, validated_data):
         common_attr = BuildCommonAttributeInstance(instance=instance, validated_data=validated_data)
@@ -220,8 +248,12 @@ class SystemHostedApplicationSerializer(serializers.ModelSerializer):
         fields = return_model_fields(SystemHostedApplication)
     
     def create(self,  validated_data):
-        return SystemHostedApplication.objects.create(**validated_data)
-    
+        assignments = validated_data["application_assignments"]
+        validated_data.pop("application_assignments")
+        application = SystemHostedApplication.objects.create(**validated_data)
+        application.application_assignments.set(assignments)
+        return application
+
     def update(self, instance, validated_data):
         instance.serial_number = validated_data.get('serial_number', instance.serial_number)
         instance.model = validated_data.get('model', instance.model)
