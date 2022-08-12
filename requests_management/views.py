@@ -40,6 +40,62 @@ class RequestDetail(LoginRequiredMixin, View):
             requet.status = "Approved"
             assign.approval_status = "Approved"
             assign.date_approved = datetime.now()
+            if assign.computer is not None:
+                assign.computer.current_location = assign.branch
+                assign.computer.currect_exact_loc = assign.exact_location 
+                assign.computer.in_store = False 
+                assign.computer.which_store = "NOT-IN-STORE"
+                assign.computer.in_use = True
+                assign.computer.save() 
+
+            elif assign.printer_scanner is not None:
+                assign.printer_scanner.current_location = assign.branch
+                assign.printer_scanner.currect_exact_loc = assign.exact_location 
+                assign.printer_scanner.in_store = False 
+                assign.printer_scanner.which_store = "NOT-IN-STORE"
+                assign.printer_scanner.in_use = True
+                assign.printer_scanner.save() 
+
+            elif assign.screen is not None:
+                assign.screen.current_location = assign.branch
+                assign.screen.currect_exact_loc = assign.exact_location 
+                assign.screen.in_store = False 
+                assign.screen.which_store = "NOT-IN-STORE"
+                assign.screen.in_use = True
+                assign.screen.save() 
+            
+            elif assign.bio_avaya_note_gen is not None:
+                assign.bio_avaya_note_gen.current_location = assign.branch
+                assign.bio_avaya_note_gen.currect_exact_loc = assign.exact_location 
+                assign.bio_avaya_note_gen.in_store = False 
+                assign.bio_avaya_note_gen.which_store = "NOT-IN-STORE"
+                assign.bio_avaya_note_gen.in_use = True
+                assign.bio_avaya_note_gen.save() 
+
+            elif assign.atm is not None:
+                assign.atm.current_location = assign.branch
+                assign.atm.currect_exact_loc = assign.exact_location 
+                assign.atm.in_store = False 
+                assign.atm.which_store = "NOT-IN-STORE"
+                assign.atm.in_use = True
+                assign.atm.save() 
+            
+            elif assign.switch_router_firewall is not None:
+                assign.switch_router_firewall.current_location = assign.branch
+                assign.switch_router_firewall.currect_exact_loc = assign.exact_location 
+                assign.switch_router_firewall.in_store = False 
+                assign.switch_router_firewall.which_store = "NOT-IN-STORE"
+                assign.switch_router_firewall.in_use = True
+                assign.switch_router_firewall.save()
+            
+            elif assign.node is not None:
+                assign.node.current_location = assign.branch
+                assign.node.currect_exact_loc = assign.exact_location 
+                assign.node.in_store = False 
+                assign.node.which_store = "NOT-IN-STORE"
+                assign.node.in_use = True
+                assign.node.save()
+
             assign.save()
             requet.save()
             return redirect("requests_management:requests-list")

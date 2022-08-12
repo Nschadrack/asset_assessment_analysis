@@ -27,4 +27,5 @@ urlpatterns = [
     path('users_management/', include('users_management.urls', namespace='users_management')),
     path('assets_consolidation', include('assets_movement.urls', namespace='assets_movement')),
     path('requests_management/', include('requests_management.urls', namespace='requests_management')),
+    path('maintenance_log/', include('maintenance.urls', namespace='maintenance')),
 ]

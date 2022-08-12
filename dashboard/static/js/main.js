@@ -62,4 +62,24 @@ function toggleUsersManagementAssetSection(e){
     }
 }
 
+function showSparepartsWindows(e){
+    var sparepartaddButton = document.getElementById("add-sparepart-button");
+    var sparepartWindow = document.getElementById("spareparts_div");
+    sparepartWindow.style.display = "block";
+}
+function hideSparepartsWindows(e){
+    var sparepartaddButton = document.getElementById("add-sparepart-button");
+    var sparepartWindow = document.getElementById("spareparts_div");
+    sparepartWindow.style.display = "none";
+}
+
+function fillSparepartSelectBox(e){
+    var spareparts = document.getElementById("spareparts");
+    var selectedSparepart = document.getElementById("partnumber").value;
+    var quantity_used = document.getElementById("quantity_used").value;
+
+    spareparts.style.display = "block";
+    spareparts.innerHTML += `<option value="${selectedSparepart} | ${quantity_used}" selected>${selectedSparepart} | ${quantity_used}</option>`;    
+}
+
 

@@ -11,10 +11,10 @@ class CommonAsset(models.Model):
      by other models
     """
     STORES = (
-        ('PROCUREMENT', 'Procurement'),
+        ('PROCUREMENT', 'PROCUREMENT'),
         ('IT', 'IT'),
-        ('MUHANGA-DR', 'Muhanga DR'),
-        ('NOT-IN-STORE', 'Not in store')
+        ('MUHANGA-DR', 'MUHANGA DRR'),
+        ('NOT-IN-STORE', 'NOT IN STORE')
     )
     STATUES = (
         ('WORKING-GOOD', 'WORKING GOOD'),
@@ -46,6 +46,8 @@ class CommonAsset(models.Model):
     in_use = models.BooleanField(verbose_name='In use', default=False, db_column='in_use')
     still_functions = models.BooleanField(verbose_name='Still functions', db_column='still_functions', default=True)
     status = models.CharField(verbose_name='Working status', max_length=15, db_column='status', choices=STATUES)
+    current_location = models.CharField("Current Location", max_length=40, null=True, blank=True, db_column="current_location")
+    currect_exact_loc = models.CharField("Current exact location", max_length=50, blank=True, null=True, db_column="current_exact_loc")
     
 
     class Meta:

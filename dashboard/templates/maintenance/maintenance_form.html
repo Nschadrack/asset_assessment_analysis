@@ -1,0 +1,160 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">
+            {% if category == "ATM_MAINTENANCE" %}
+            # {{ asset.hostname }}: Maintenance Log
+            {% endif %}
+        </p>
+        {% if category == "ATM_MAINTENANCE" %}
+            <a href="{% url 'assets_management:atm-detail' asset.asset_id %}" id="price_back_to_car_list">Back to ATM details</a>
+        {% endif %}
+    </div>
+    <div id="car_body_data">
+        <div id="computer_update_form_div">
+            <form id="car_new_form" method="post" action="">
+                {% csrf_token %}
+                <fieldset>
+                    <div class="form-group">
+                        <input type="hidden"  value={{category}} name="maintenance_asset_category" required/>
+                    </div>
+                    <legend>Recording a new maintenance log in the system</legend>	
+                    <div class="form-group">
+                        <label style="text-align: left; font-weight: bold;">Maintenance Category</label>
+                        <select required name="maintenance_type">                 
+                                <option value="PREVENTIVE_MAINTENANCE">PREVENTIVE MAINTENANCE</option>
+                                <option value="UNEXPECTEDMAINTENANCE">UNEXPECTED MAINTENANCE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <table class="table-data">
+                            <thead>
+                                <th colspan="6" style="padding: 5px;">Maintentance Type(Tick Appropriate)</th>
+                                <th>--------</th>
+                                <th colspan="8" style="padding: 5px;">Areas Serviced (Tick as Applicable)</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: left"><input type="checkbox" id="repair" name="ticket_type" value="Repair"></td>
+                                    <td style="text-align: left"><label for="repair">Repair</label></td>  
+                                    <td style="text-align: left"><input type="checkbox" id="pm" name="ticket_type" value="PM"></td>
+                                    <td style="text-align: left"><label for="pm">PM</label></td> 
+                                    <td style="text-align: left"><input type="checkbox" id="repair_pm" name="ticket_type" value="Repair & PM"></td>
+                                    <td style="text-align: left"><label for="repair_pm">Repair & PM</label></td>   
+                                    <td style="text-align: left"></td>
+                                    <td style="text-align: left"><input type="checkbox" id="cash_dispenser" name="areas_serviced" value="Cash Dispenser"></td>
+                                    <td style="text-align: left"><label for="cash_dispenser">Cash Dispenser</label></td>  
+                                    <td style="text-align: left"><input type="checkbox" id="card_reader" name="areas_serviced" value="Card reader"></td>
+                                    <td style="text-align: left"><label for="card_reader">Card reader</label></td> 
+                                    <td style="text-align: left"><input type="checkbox" id="epp" name="areas_serviced" value="EPP"></td>
+                                    <td style="text-align: left"><label for="epp">EPP</label></td> 
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left"><input type="checkbox" id="installation" name="ticket_type" value="Installation"></td>
+                                    <td style="text-align: left"><label for="installation">Installation</label></td>  
+                                    <td style="text-align: left"><input type="checkbox" id="software" name="ticket_type" value="Software"></td>
+                                    <td style="text-align: left"><label for="software">Software</label></td> 
+                                    <td style="text-align: left"><input type="checkbox" id="others_ticket" name="ticket_type" value="Others"></td>
+                                    <td style="text-align: left"><label for="others_ticket">Others</label></td>  
+                                     <td style="text-align: left"></td>
+                                    <td style="text-align: left"><input type="checkbox" id="receipt_printer" name="areas_serviced" value="Receipt printer"></td>
+                                    <td style="text-align: left"><label for="receipt_printer">Receipt printer</label></td>  
+                                    <td style="text-align: left"><input type="checkbox" id="power_supply" name="areas_serviced" value="Power Supply"></td>
+                                    <td style="text-align: left"><label for="power_supply">Power Supply</label></td> 
+                                    <td style="text-align: left"><input type="checkbox" id="cassettes" name="areas_serviced" value="Cassettes"></td>
+                                    <td style="text-align: left"><label for="cassettes">Cassettes</label></td>
+                                    <td style="text-align: left"><input type="checkbox" id="others_areas_serviced" name="areas_serviced" value="Others"></td>
+                                    <td style="text-align: left"><label for="others_areas_serviced">Others</label></td>  
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <table class="table-data">
+                            <thead>
+                                <th colspan="4" style="text-align: center; padding: 5px;">Environment Check(Tick Appropriate)</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: left"><input type="checkbox" id="env_adaquate_power" name="environment_check" value="Adaquate power source"></td>
+                                    <td style="text-align: left"><label for="env_adaquate_power">Adaquate power source</label></td>  
+                                    <td style="text-align: left"><input type="checkbox" id="env_ups" name="environment_check" value="UPS installed and working properly"></td>
+                                    <td style="text-align: left"><label for="env_ups">UPS installed and working properly</label></td>                                  
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left"><input type="checkbox" id="env_air_condition" name="environment_check" value="Air condition installed and working properly"></td>
+                                    <td style="text-align: left"><label for="env_air_condition">Air condition installed and working properly</label></td>  
+                                    <td style="text-align: left"><input type="checkbox" id="env_clean_room" name="environment_check" value="Clean ATM room"></td>
+                                    <td style="text-align: left"><label for="env_clean_room">Clean ATM room</label></td>                            
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left"><input type="checkbox" id="env_adaquate_supply_receipt" name="environment_check" value="Adequate supply of receipt & journal"></td>
+                                    <td style="text-align: left"><label for="env_adaquate_supply_receipt">Adequate supply of receipt & journal</label></td>  
+                                    <td style="text-align: left"><input type="checkbox" id="env_others" name="environment_check" value="Others"></td>
+                                    <td style="text-align: left"><label for="env_others">Others</label></td>                            
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" onclick="showSparepartsWindows();"
+                        style="padding: 10px 30px; border: none; border-radius: 5px; outline: none; background-color: #222831; color: white; font-weight: bold;">Add spareparts</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="spareparts">Spareparts Added</label>
+                        <select name="spareparts" id="spareparts" multiple>+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Maintenance Start Date</label>
+                        <input type="date" name="start_date" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Maintenance End Date</label>
+                        <input type="date" name="end_date" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Maintenance Description</label>
+                        <textarea rows="5" cols="10" name="additional_note"></textarea>
+                    </div>
+                    <input type="submit" value="Save new record"/>
+                </fieldset>						
+            </form>
+            <div id="spareparts_div" style="width: 100vw; height: 100vh;">
+                <form style="background-color: rgb(116, 24, 4); width: 40%; height: 50%; 
+                margin-left: auto; margin-right: auto; margin-top: 40px; 
+                border-radius: 10px; text-align: left; opacity: 1;
+                padding: 30px 20px; color: rgba(244,244,244, 0.8);">
+                    <div class="form-group">
+                        <label for="partnumber">CHOOSE SPAREPART(search with part number/serial number/name)</label><br/>
+                        <input list="partnumbers" name="partnumber" id="partnumber" required
+                        style="border-radius: 5px; padding: 5px 10px; outline: none; border: none; width: 98%;"/>
+                        <datalist id="partnumbers">
+                            {% for partnum in part_numbers %}
+                                <option value="{{partnum.serial_number}} | {{ partnum.sparepart_name|upper }}">
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="form-group" style="margin-top: -10px;">
+                        <label for="quantity_used">QUANTITY USED</label><br/>
+                        <input type="number" min="1" name="quantity_used" id="quantity_used" required
+                        style="border-radius: 5px; padding: 5px 10px; outline: none; border: none;"/>
+                    </div>
+                    <div class="form-group" style="margin-top: -10px;">
+                        <button type="button" style="border-radius: 5px; padding: 10px 20px; font-size: 14px;
+                        outline: none; border: none; background-color: #222831; color: white;"
+                        id="add-sparepart-button" onclick="fillSparepartSelectBox();">
+                            Confirm sparepart 
+                        </button>
+                          <button type="button" style="border-radius: 5px; padding: 10px 20px; font-size: 14px;
+                        outline: none; border: none; background-color: #55f; color: white;"
+                        onclick="hideSparepartsWindows();">
+                            close window 
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

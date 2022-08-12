@@ -43,9 +43,12 @@ class ComputerLapDeskTopSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         assignments = validated_data["computer_assignments"]
+        computer_logs = validated_data["computer_logs"]
         validated_data.pop("computer_assignments")
+        validated_data.pop("computer_logs")
         computer = ComputerLapDeskTop.objects.create(**validated_data)
         computer.computer_assignments.set(assignments)
+        computer.computer_logs_set(computer_logs)
         return computer
         
     
@@ -85,9 +88,12 @@ class PrinterScannerSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         assignments = validated_data["printer_scanner_assignments"]
+        printer_logs = validated_data["printer_scanner_logs"]
+        validated_data.pop("printer_scanner_logs")
         validated_data.pop("printer_scanner_assignments")
         printer = PrinterScanner.objects.create(**validated_data)
         printer.printer_scanner_assignments.set(assignments)
+        printer.printer_scanner_logs.set(printer_logs)
         return printer
    
     def update(self, instance, validated_data):
@@ -138,9 +144,12 @@ class BioVayaNoteCounterGeneratorSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         assignments = validated_data["bio_avaya_note_gen_assignments"]
+        note_counter_logs = validated_data["note_counter_logs"]
+        validated_data.pop("note_counter_logs")
         validated_data.pop("bio_avaya_note_gen_assignments")
         bio = BioVayaNoteCounterGenerator.objects.create(**validated_data)
         bio.bio_avaya_note_gen_assignments.set(assignments)
+        bio.note_counter_logs.set(note_counter_logs)
         return bio
 
     def update(self, instance, validated_data):
@@ -162,9 +171,12 @@ class AtmSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         assignments = validated_data["atm_assignments"]
+        atm_logs = validated_data["atm_logs"]
         validated_data.pop("atm_assignments")
+        validated_data.pop("atm_logs")
         atm = Atm.objects.create(**validated_data)
         atm.atm_assignments.set(assignments)
+        atm.atm_logs.set(atm_logs)
         return atm
 
     def update(self, instance, validated_data):

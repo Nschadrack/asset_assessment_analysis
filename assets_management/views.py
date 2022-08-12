@@ -161,9 +161,12 @@ class PrinterDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         printer = self.get_object(pk)
+        printer_users = AssetAssignment.objects.filter(printer_scanner=printer, approval_status="Approved")
         if printer:
             context = {
                 "printer": printer,
+                "printer_users": printer_users,
+                "assignments_num": len(printer_users),
                 "CATEGORY_TYPES": PrinterScanner.PRINTER_CATEGORY_TYPES,
                 "CONNECTION_TYPES": PrinterScanner.CONNECTION_TYPES,
                 "STORES": PrinterScanner.STORES,
@@ -248,9 +251,12 @@ class ScannerDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         scanner = self.get_object(pk)
+        scanner_users = AssetAssignment.objects.filter(printer_scanner=scanner, approval_status="Approved")
         if scanner:
             context = {
                 "scanner": scanner,
+                "assignments_num": len(scanner_users),
+                "scanner_users": scanner_users,
                 "CATEGORY_TYPES": PrinterScanner.PRINTER_CATEGORY_TYPES,
                 "CONNECTION_TYPES": PrinterScanner.CONNECTION_TYPES,
                 "STORES": PrinterScanner.STORES,
@@ -277,7 +283,7 @@ class ScannerDetail(LoginRequiredMixin, View):
     def post(self, request, pk, update_or_delete="update", format=None):
         scanner = self.get_object(pk)
         if scanner:
-            serializer = scannerScannerSerializer(data=request.POST, instance=scanner, context={'request': request})
+            serializer = PrinterScannerSerializer(data=request.POST, instance=scanner, context={'request': request})
             if serializer.is_valid():
                 serializer.save()
             else:
@@ -332,9 +338,12 @@ class ScreenDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         screen = self.get_object(pk)
+        screen_users = AssetAssignment.objects.filter(screen=screen, approval_status="Approved")
         if screen:
             context = {
                 "screen": screen,
+                "screen_users": screen_users,
+                "assignments_num": len(screen_users),
                 "STORES": Screen.STORES,
                 "STATUES": Screen.STATUES,
                 "CATEGORIES": Screen.CATEGORIES
@@ -415,9 +424,12 @@ class BiometricDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         bio = self.get_object(pk)
+        bio_users = AssetAssignment.objects.filter(bio_avaya_note_gen=bio, approval_status="Approved")
         if bio:
             context = {
                 "bio": bio,
+                "bio_users": bio_users,
+                "assignments_num": len(bio_users),
                 "STORES": BioVayaNoteCounterGenerator.STORES,
                 "STATUES": BioVayaNoteCounterGenerator.STATUES,
             }
@@ -496,9 +508,12 @@ class AvayaDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         avaya = self.get_object(pk)
+        avaya_users = AssetAssignment.objects.filter(bio_avaya_note_gen=avaya, approval_status="Approved")
         if avaya:
             context = {
                 "avaya": avaya,
+                "avaya_users": avaya_users,
+                "assignments_num": len(avaya_users),
                 "STORES": BioVayaNoteCounterGenerator.STORES,
                 "STATUES": BioVayaNoteCounterGenerator.STATUES,
             }
@@ -577,9 +592,12 @@ class NoteCounterDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         note_counter = self.get_object(pk)
+        note_counter_users = AssetAssignment.objects.filter(bio_avaya_note_gen=note_counter, approval_status="Approved")
         if note_counter:
             context = {
                 "note_counter": note_counter,
+                "note_counter_users": note_counter_users,
+                "assignments_num": len(note_counter_users),
                 "STORES": BioVayaNoteCounterGenerator.STORES,
                 "STATUES": BioVayaNoteCounterGenerator.STATUES,
             }
@@ -659,9 +677,12 @@ class GeneratorDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         generator = self.get_object(pk)
+        generator_users = AssetAssignment.objects.filter(bio_avaya_note_gen=generator, approval_status="Approved")
         if generator:
             context = {
                 "generator": generator,
+                "generator_users": generator_users,
+                "assignments_num": len(generator_users),
                 "STORES": BioVayaNoteCounterGenerator.STORES,
                 "STATUES": BioVayaNoteCounterGenerator.STATUES,
             }
@@ -746,9 +767,12 @@ class AtmDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         atm = self.get_object(pk)
+        atm_users = AssetAssignment.objects.filter(atm=atm, approval_status="Approved")
         if atm:
             context = {
                 "atm": atm,
+                "atm_users": atm_users,
+                "assignments_num": len(atm_users),
                 "STORES": Atm.STORES,
                 "STATUES": Atm.STATUES,
             }
@@ -834,9 +858,12 @@ class SwitchDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         switch = self.get_object(pk)
+        switch_users = AssetAssignment.objects.filter(switch_router_firewall=switch, approval_status="Approved")
         if switch:
             context = {
                 "switch": switch,
+                "switch_users": switch_users,
+                "assignments_num": len(switch_users),
                 "STORES": SwitchRouterFirewall.STORES,
                 "STATUES": SwitchRouterFirewall.STATUES,
             }
@@ -921,9 +948,12 @@ class RouterDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         router = self.get_object(pk)
+        router_users = AssetAssignment.objects.filter(switch_router_firewall=router, approval_status="Approved")
         if router:
             context = {
                 "router": router,
+                "router_users": router_users,
+                "assignments_num": len(router_users),
                 "STORES": SwitchRouterFirewall.STORES,
                 "STATUES": SwitchRouterFirewall.STATUES,
             }
@@ -1009,9 +1039,12 @@ class FirewallDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         firewall = self.get_object(pk)
+        firewall_users = AssetAssignment.objects.filter(switch_router_firewall=firewall, approval_status="Approved")
         if firewall:
             context = {
                 "firewall": firewall,
+                "firewall_users": firewall_users,
+                "assignments_num": len(firewall_users),
                 "STORES": SwitchRouterFirewall.STORES,
                 "STATUES": SwitchRouterFirewall.STATUES,
             }
@@ -1096,9 +1129,11 @@ class PhysicalNodeDetail(LoginRequiredMixin, View):
 
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         node = self.get_object(pk)
+        note_users = AssetAssignment.objects.filter(node=node, approval_status="Approved")
         if node:
             context = {
                 "node": node,
+                "note_users": note_users,
                 "STORES": PhysicalNode.STORES,
                 "STATUES": PhysicalNode.STATUES,
             }

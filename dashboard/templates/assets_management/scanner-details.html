@@ -19,7 +19,7 @@
                     {% if scanner.in_store %}
                         <p><strong>Location: </strong>{{ scanner.which_store|replace|upper }} Stock</p>
                     {% else %}
-                        <p><strong>Currently: </strong>{{ scanner.which_store|replace|upper }}
+                        <p><strong>Location: </strong>{{ scanner.current_location }} - {{ scanner.currect_exact_loc }}
                     {% endif %}
                     <p><strong>Recorded date: </strong>{{ scanner.recorded_date }}</p>
                 </div>
@@ -41,138 +41,144 @@
                     <p><strong>Status: </strong>{{ scanner.status|replace|upper }}</p>
                 </div>
             </div>
-            <div id="current_price_list" class="current_price_price_archive_price">
-                <h4>List of all current prices assigned to this car</h4>
-                <button id="view_price_archive_button" onclick='showGroupPriceArchive("block")'>show price archives</button>
-                <form>
-                    <select>
-                        <option value="all services" selected>All services</option>
-                        <option value="wedding services">Wedding services</option>
-                        <option value="wedding services">Wedding services</option>
-                        <option value="wedding services">Wedding services</option>
-                        <option value="wedding services">Wedding services</option>
-                    </select>
-                    <select>
-                        <option value="From" selected disabled>From</option>
-                        <option value="Gasabo">Gasabo</option>
-                        <option value="Rusizi">Rusizi</option>
-                    </select>
-                    <select>
-                        <option value="To" selected disabled>To</option>
-                        <option value="Gasabo">Gasabo</option>
-                        <option value="Rusizi">Rusizi</option>
-                    </select>
-                    <select>
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="all">All records</option>
-                    </select>
-                    <input type="submit" value="view"/>
-                </form>						
-                <table>
-                    <thead>
-                        <th>Code</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Price</th>
-                        <th>Service</th>
-                        <th>Recorded date</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>12</td>
-                            <td>Gasabo</td>
-                            <td>Rusizi</td>
-                            <td>30000 Rwf</td>
-                            <td>Wedding service</td>
-                            <td>20-08-2020</td>
-                            <td><a href="#">Delete this price</a></td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>Gasabo</td>
-                            <td>Rusizi</td>
-                            <td>30000 Rwf</td>
-                            <td>Wedding service</td>
-                            <td>20-08-2020</td>
-                            <td><a href="#">Delete this price</a></td>
-                        </tr>
-                    </tbody>
-                </table>						
+            <div id="current_price_list" class="table-data">
+                <h4>List of locations where scanner was assigned</h4>
+                <a  href="{% url 'assets_movement:printer-assign' scanner.asset_id %}" id="view_price_archive_button">+ scanner assignment</a>
+                {% if assignments_num > 0 %}						
+                    <form>
+                        <select>
+                            <option value="all services" selected>All services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                        </select>
+                        <select>
+                            <option value="From" selected disabled>From</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="To" selected disabled>To</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="all">All records</option>
+                        </select>
+                        <input type="submit" value="view"/>
+                    </form>
+                    <table class="table-data">
+                        <thead>
+                            <th>USER ID</th>
+                            <th>APPROVER FIRST NAME</th>
+                            <th>APPROVER LAST NAME</th>
+                            <th>APPROVER CONTACT INFO</td>
+                            <th>DEPARTMENT/LOCATION</th>
+                            <th>EXACT LOCATION</th>
+                            <th>APPROVAL STATUS</th>
+                            <th>RETURNED</th>
+                            <th>RECORDED DATE</th>
+                            <th>RECEIVED DATE</th>
+                            <th>RETURNED DATE</th>
+                            <th>MOVED FROM HEAD OFFICE</th>
+                            <th>STATUS</th>
+                        </thead>
+                        <tbody>
+                            {% for assign in scanner_users %}
+                                <tr>
+                                    <td>{{ assign.approver.username }}</td>
+                                    <td>{{ assign.approver.first_name|upper }}</td>
+                                    <td>{{ assign.approver.last_name|upper }}</td>
+                                    <td>{{ assign.approver.phone_number }}</td>
+                                    <td>{{ assign.branch|upper }}</td>
+                                    <td>{{ assign.exact_location|upper }}</td>
+                                    <td>{{ assign.approval_status|title }}</td>
+                                    {% if assign.returned %}
+                                        <td>YES</td>
+                                    {% else %}
+                                        <td>NO</td>
+                                    {% endif %}
+                                    <td>{{ assign.date_assigned|date:"d-m-Y H:i" }}</td>
+                                    <td>{{ assign.date_approved|date:"d-m-Y H:i" }}</td>
+                                    <td>{{ assign.returned_date|date:"d-m-Y H:i" }}</td>
+                                    {% if assign.external_movement_required %}
+                                        <td>YES</td>
+                                    {% else %}
+                                        <td>NO</td>
+                                    {% endif %}
+                                    <td>{{ assign.status|title }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>This scanner has never been assigned to any location</p>
+                {% endif %}						
             </div>
-            <div id="price_archive_list" class="current_price_price_archive_price">
-                <h4>List of all prices which were assigned to this car before (price archive)</h4>
-                <button id="hide_price_archives" onclick="showGroupPriceArchive('none')">Hide price archives</button>
-                <form>
-                    <select>
-                        <option value="all services" selected>All services</option>
-                        <option value="wedding services">Wedding services</option>
-                        <option value="wedding services">Wedding services</option>
-                        <option value="wedding services">Wedding services</option>
-                        <option value="wedding services">Wedding services</option>
-                    </select>
-                    <select>
-                        <option value="From" selected disabled>From</option>
-                        <option value="Gasabo">Gasabo</option>
-                        <option value="Rusizi">Rusizi</option>
-                    </select>
-                    <select>
-                        <option value="To" selected disabled>To</option>
-                        <option value="Gasabo">Gasabo</option>
-                        <option value="Rusizi">Rusizi</option>
-                    </select>
-                    <select>
-                        <option value="last used date" selected disabled>Last date used</option>
-                        <option value="Gasabo">20-10-2020</option>
-                        <option value="Gasabo">12-08-2020</option>
-                        <option value="Gasabo">05-07-2020</option>
-                    </select>
-                    <select>
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="all">All records</option>
-                    </select>
-                    <input type="submit" value="view"/>
-                </form>
-                <table>
-                    <thead>
-                        <th>Code</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Price</th>
-                        <th>Service</th>
-                        <th>Recorded date</th>
-                        <th>Last date used</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>12</td>
-                            <td>Gasabo</td>
-                            <td>Rusizi</td>
-                            <td>30000 Rwf</td>
-                            <td>Wedding service</td>
-                            <td>20-08-2020</td>
-                            <td>20-11-2020</td>
-                            <td><a href="#">Reuse this price</a></td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>Gasabo</td>
-                            <td>Rusizi</td>
-                            <td>30000 Rwf</td>
-                            <td>Wedding service</td>
-                            <td>20-08-2020</td>
-                            <td>20-11-2020</td>
-                            <td><a href="#">Reuse this price</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div id="price_archive_list" class="table-data">
+                {% comment %} <h4>{{ group.name }} group has {{group_permissions_num}} {% if group_permissions_num > 1 %} permissions{% else %} permission{% endif %} </h4> {% endcomment %}
+                <h4>Maintenance history on this scanner</h4>
+                <a href="#" id="hide_price_archives">+ new maintenance record</a>
+                {% comment %} {% if group_permissions_num > 0 %} {% endcomment %}
+                    <form>
+                        <select>
+                            <option value="all services" selected>All services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                            <option value="wedding services">Wedding services</option>
+                        </select>
+                        <select>
+                            <option value="From" selected disabled>From</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="To" selected disabled>To</option>
+                            <option value="Gasabo">Gasabo</option>
+                            <option value="Rusizi">Rusizi</option>
+                        </select>
+                        <select>
+                            <option value="last used date" selected disabled>Last date used</option>
+                            <option value="Gasabo">20-10-2020</option>
+                            <option value="Gasabo">12-08-2020</option>
+                            <option value="Gasabo">05-07-2020</option>
+                        </select>
+                        <select>
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="all">All records</option>
+                        </select>
+                        <input type="submit" value="view"/>
+                    </form>
+                    <table class="table-data">
+                        <thead>
+                            <th>#ID</th>
+                            <th>CODENAME</th>
+                            <th>PERMISSION NAME</th>
+                            <th>DATE ADDED</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            {% comment %} {% for perm in group_permissions %} {% endcomment %}
+                                <tr>
+                                    <td>CODENAME</td>
+                                    <td>CODENAME</td>
+                                    <td>CODENAME</td>
+                                    <td>CODENAME</td>
+                                    <td><a href="#" class="delete_button">remove</a></td>
+                                </tr>
+                            {% comment %} {% endfor %} {% endcomment %}
+                        </tbody>
+                    </table>
+                {% comment %} {% endif %} {% endcomment %}
             </div>					
         </div>
     </div>

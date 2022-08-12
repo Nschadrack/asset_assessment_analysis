@@ -28,7 +28,7 @@
                     {% if computer.in_store %}
                         <p><strong>Location: </strong>{{ computer.which_store|replace|upper }} Stock</p>
                     {% else %}
-                        <p><strong>Currently: </strong>{{ computer.which_store|replace|upper }}
+                        <p><strong>Location: </strong>{{ computer.current_location }} - {{ computer.currect_exact_loc }}
                     {% endif %}
                     <p><strong>Symantic installed: </strong>{% if computer.symantic_installed %}YES{% else %}NO{% endif %}</p> 
                 </div>

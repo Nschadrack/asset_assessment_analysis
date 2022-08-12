@@ -318,7 +318,7 @@ body{
 	display: block;
 }
 #computer_update_form_div div {
-	width: 45%;
+	width: 100%;
 	height: auto;
 	overflow: auto;
 	margin: 15px auto;
@@ -327,7 +327,7 @@ body{
 	float: right;
 }
 #car_new_form_div div{
-	width:45%;
+	width:auto;
 	height: auto;
 	overflow: auto;
 	margin: 15px auto;
@@ -339,7 +339,7 @@ body{
 	border-radius: 10px;
 }
 #car_new_form{
-	width: 52%;
+	width: 80%;
 	height: auto;
 	overflow: auto;
 	margin: 15px auto;
@@ -384,6 +384,9 @@ body{
 	margin-bottom: 0px;
 	font-size: 14px;
 }
+#car_new_form_div label, #computer_update_form_div label{
+	font-weight: bold;
+}
 #car_new_form .form-group{
 	margin-bottom: 0px;
 	width: 100%;
@@ -403,6 +406,7 @@ body{
 	margin-top: 15px;
 	margin-left: 10px;
 }
+
 #cancel_operation{
 	width: 40%;
 	padding: 8px;
@@ -836,6 +840,25 @@ main:hover{
 	margin-top: 30px;
 	font-style: italic;
 }
+
+/* Maintenance page*/
+#spareparts_div{
+	padding: 10px;
+	border: 1px solid var(--aside-navigation-span-bg);
+	display: none;
+	position: fixed;
+	top: -15px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	text-align: center;
+	z-index: 70;
+	background-color: rgba(244, 244, 244, 0.6);
+}
+#spareparts{
+	display: none;
+}
+
 
 
 
