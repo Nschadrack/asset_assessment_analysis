@@ -76,10 +76,8 @@ function hideSparepartsWindows(e){
 function fillSparepartSelectBox(e){
     var spareparts = document.getElementById("spareparts");
     var selectedSparepart = document.getElementById("partnumber").value;
-    var quantity_used = document.getElementById("quantity_used").value;
-
     spareparts.style.display = "block";
-    spareparts.innerHTML += `<option value="${selectedSparepart} | ${quantity_used}" selected>${selectedSparepart} | ${quantity_used}</option>`;    
+    spareparts.innerHTML += `<option value="${selectedSparepart}" selected>${selectedSparepart}</option>`;    
 }
 
 

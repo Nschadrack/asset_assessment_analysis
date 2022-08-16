@@ -233,7 +233,7 @@ body{
 .table-data thead th{
 	background-color: var(--aside_bg);
 	color: var(--aside_fg);
-	font-size: 12px;
+	font-size: 10px;
 	text-align: left;
 }
 .table-data th,.table-data td, .table-data table{
@@ -242,7 +242,7 @@ body{
 }
 .table-data table th, .table-data table td{
 	padding: 10px;
-	font-size: 12px;
+	font-size: 11px;
 	white-space: nowrap;
 	text-align: left;
 }

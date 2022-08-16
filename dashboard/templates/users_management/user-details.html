@@ -28,7 +28,7 @@
             <div id="current_price_list" class="table-data">
                 <h4>{{ user.first_name|upper}} {{ user.last_name|upper }} is a member of {% if user_groups_num > 1 %}these groups{% else %} this group{% endif %} </h4>
                 <button id="view_price_archive_button" onclick='showGroupPriceArchive("block")'>show price archives</button>
-                <form>
+                {% comment %} <form>
                     <select>
                         <option value="all services" selected>All services</option>
                         <option value="wedding services">Wedding services</option>
@@ -54,7 +54,7 @@
                         <option value="all">All records</option>
                     </select>
                     <input type="submit" value="view"/>
-                </form>
+                </form> {% endcomment %}
                 {% if user_groups_num > 0 %}						
                     <table class="table-data">
                         <thead>
@@ -74,77 +74,6 @@
                         </tbody>
                     </table>
                 {% endif %}						
-            </div>
-            <div id="price_archive_list">
-                <h4>List of all prices which were assigned to this car before (price archive)</h4>
-                <button id="hide_price_archives" onclick="showGroupPriceArchive('none')">Hide price archives</button>
-                <form>
-                    <select>
-                        <option value="all services" selected>All services</option>
-                        <option value="wedding services">Wedding services</option>
-                        <option value="wedding services">Wedding services</option>
-                        <option value="wedding services">Wedding services</option>
-                        <option value="wedding services">Wedding services</option>
-                    </select>
-                    <select>
-                        <option value="From" selected disabled>From</option>
-                        <option value="Gasabo">Gasabo</option>
-                        <option value="Rusizi">Rusizi</option>
-                    </select>
-                    <select>
-                        <option value="To" selected disabled>To</option>
-                        <option value="Gasabo">Gasabo</option>
-                        <option value="Rusizi">Rusizi</option>
-                    </select>
-                    <select>
-                        <option value="last used date" selected disabled>Last date used</option>
-                        <option value="Gasabo">20-10-2020</option>
-                        <option value="Gasabo">12-08-2020</option>
-                        <option value="Gasabo">05-07-2020</option>
-                    </select>
-                    <select>
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                        <option value="all">All records</option>
-                    </select>
-                    <input type="submit" value="view"/>
-                </form>
-                <table>
-                    <thead>
-                        <th>Code</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Price</th>
-                        <th>Service</th>
-                        <th>Recorded date</th>
-                        <th>Last date used</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>12</td>
-                            <td>Gasabo</td>
-                            <td>Rusizi</td>
-                            <td>30000 Rwf</td>
-                            <td>Wedding service</td>
-                            <td>20-08-2020</td>
-                            <td>20-11-2020</td>
-                            <td><a href="#">Reuse this price</a></td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>Gasabo</td>
-                            <td>Rusizi</td>
-                            <td>30000 Rwf</td>
-                            <td>Wedding service</td>
-                            <td>20-08-2020</td>
-                            <td>20-11-2020</td>
-                            <td><a href="#">Reuse this price</a></td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>					
         </div>
     </div>

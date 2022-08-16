@@ -122,7 +122,7 @@
                 </fieldset>						
             </form>
             <div id="spareparts_div" style="width: 100vw; height: 100vh;">
-                <form style="background-color: rgb(116, 24, 4); width: 40%; height: 50%; 
+                <form style="background-color: rgb(116, 24, 4); width: 40%; height: 40%; 
                 margin-left: auto; margin-right: auto; margin-top: 40px; 
                 border-radius: 10px; text-align: left; opacity: 1;
                 padding: 30px 20px; color: rgba(244,244,244, 0.8);">
@@ -135,11 +135,6 @@
                                 <option value="{{partnum.serial_number}} | {{ partnum.sparepart_name|upper }}">
                             {% endfor %}
                         </datalist>
-                    </div>
-                    <div class="form-group" style="margin-top: -10px;">
-                        <label for="quantity_used">QUANTITY USED</label><br/>
-                        <input type="number" min="1" name="quantity_used" id="quantity_used" required
-                        style="border-radius: 5px; padding: 5px 10px; outline: none; border: none;"/>
                     </div>
                     <div class="form-group" style="margin-top: -10px;">
                         <button type="button" style="border-radius: 5px; padding: 10px 20px; font-size: 14px;

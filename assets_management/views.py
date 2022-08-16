@@ -10,6 +10,7 @@ from .serializers import (ComputerLapDeskTopSerializer, PrinterScannerSerializer
                           SwitchRouterFirewallSerializer, PhysicalNodeSerializer, SystemHostedApplicationSerializer)
 
 from assets_movement.models import AssetAssignment
+from maintenance.models import MaintenanceLog
 
 from .utils import *
 
@@ -65,8 +66,11 @@ class ComputerDetail(LoginRequiredMixin, View):
         computer = self.get_object(pk)
         if computer:
             computer_users = AssetAssignment.objects.filter(computer=computer, approval_status="Approved")
+            maintenance_logs = MaintenanceLog.objects.filter(computer=computer)
             context = {
                 "computer": computer,
+                "maintenance_logs": maintenance_logs,
+                "maintenance_logs_num": len(maintenance_logs),
                 "computer_users":computer_users,
                 "assignments_num": len(computer_users),
                 "COMPUTER_CATEGORIES": ComputerLapDeskTop.CATEGORIES,
@@ -162,9 +166,12 @@ class PrinterDetail(LoginRequiredMixin, View):
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         printer = self.get_object(pk)
         printer_users = AssetAssignment.objects.filter(printer_scanner=printer, approval_status="Approved")
+        maintenance_logs = MaintenanceLog.objects.filter(printer_scanner=printer)
         if printer:
             context = {
                 "printer": printer,
+                "maintenance_logs": maintenance_logs,
+                "maintenance_logs_num": len(maintenance_logs),
                 "printer_users": printer_users,
                 "assignments_num": len(printer_users),
                 "CATEGORY_TYPES": PrinterScanner.PRINTER_CATEGORY_TYPES,
@@ -252,9 +259,12 @@ class ScannerDetail(LoginRequiredMixin, View):
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         scanner = self.get_object(pk)
         scanner_users = AssetAssignment.objects.filter(printer_scanner=scanner, approval_status="Approved")
+        maintenance_logs = MaintenanceLog.objects.filter(printer_scanner=scanner)
         if scanner:
             context = {
                 "scanner": scanner,
+                "maintenance_logs": maintenance_logs,
+                "maintenance_logs_num": len(maintenance_logs),
                 "assignments_num": len(scanner_users),
                 "scanner_users": scanner_users,
                 "CATEGORY_TYPES": PrinterScanner.PRINTER_CATEGORY_TYPES,
@@ -593,9 +603,12 @@ class NoteCounterDetail(LoginRequiredMixin, View):
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         note_counter = self.get_object(pk)
         note_counter_users = AssetAssignment.objects.filter(bio_avaya_note_gen=note_counter, approval_status="Approved")
+        maintenance_logs = MaintenanceLog.objects.filter(note_counter=note_counter)
         if note_counter:
             context = {
                 "note_counter": note_counter,
+                "maintenance_logs":maintenance_logs,
+                "maintenance_logs_num": len(maintenance_logs),
                 "note_counter_users": note_counter_users,
                 "assignments_num": len(note_counter_users),
                 "STORES": BioVayaNoteCounterGenerator.STORES,
@@ -768,11 +781,14 @@ class AtmDetail(LoginRequiredMixin, View):
     def get(self, request, pk, update_or_delete=None, *args, **kwargs):
         atm = self.get_object(pk)
         atm_users = AssetAssignment.objects.filter(atm=atm, approval_status="Approved")
+        maintenance_logs = MaintenanceLog.objects.filter(atm=atm)
         if atm:
             context = {
                 "atm": atm,
                 "atm_users": atm_users,
+                "maintenance_logs": maintenance_logs,
                 "assignments_num": len(atm_users),
+                "maintenance_logs_num": len(maintenance_logs),
                 "STORES": Atm.STORES,
                 "STATUES": Atm.STATUES,
             }

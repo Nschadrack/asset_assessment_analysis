@@ -45,7 +45,7 @@
                 <h4>List of locations where scanner was assigned</h4>
                 <a  href="{% url 'assets_movement:printer-assign' scanner.asset_id %}" id="view_price_archive_button">+ scanner assignment</a>
                 {% if assignments_num > 0 %}						
-                    <form>
+                    {% comment %} <form>
                         <select>
                             <option value="all services" selected>All services</option>
                             <option value="wedding services">Wedding services</option>
@@ -71,7 +71,7 @@
                             <option value="all">All records</option>
                         </select>
                         <input type="submit" value="view"/>
-                    </form>
+                    </form> {% endcomment %}
                     <table class="table-data">
                         <thead>
                             <th>USER ID</th>
@@ -123,9 +123,8 @@
             <div id="price_archive_list" class="table-data">
                 {% comment %} <h4>{{ group.name }} group has {{group_permissions_num}} {% if group_permissions_num > 1 %} permissions{% else %} permission{% endif %} </h4> {% endcomment %}
                 <h4>Maintenance history on this scanner</h4>
-                <a href="#" id="hide_price_archives">+ new maintenance record</a>
-                {% comment %} {% if group_permissions_num > 0 %} {% endcomment %}
-                    <form>
+                <a href="{% url 'maintenance:maintenance-list' scanner.asset_id 'SCANNER_MAINTENANCE' %}" id="hide_price_archives">+ new maintenance record</a>
+                    {% comment %} <form>
                         <select>
                             <option value="all services" selected>All services</option>
                             <option value="wedding services">Wedding services</option>
@@ -157,28 +156,39 @@
                             <option value="all">All records</option>
                         </select>
                         <input type="submit" value="view"/>
-                    </form>
-                    <table class="table-data">
-                        <thead>
-                            <th>#ID</th>
-                            <th>CODENAME</th>
-                            <th>PERMISSION NAME</th>
-                            <th>DATE ADDED</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
-                            {% comment %} {% for perm in group_permissions %} {% endcomment %}
-                                <tr>
-                                    <td>CODENAME</td>
-                                    <td>CODENAME</td>
-                                    <td>CODENAME</td>
-                                    <td>CODENAME</td>
-                                    <td><a href="#" class="delete_button">remove</a></td>
-                                </tr>
-                            {% comment %} {% endfor %} {% endcomment %}
-                        </tbody>
-                    </table>
-                {% comment %} {% endif %} {% endcomment %}
+                    </form> {% endcomment %}
+                    {% if maintenance_logs_num > 0 %}
+                        <table class="table-data">
+                            <thead>
+                                <th>MAINTENANCE CATEGORY</th>
+                                <th>START DATE</th>
+                                <th>END DATE</th>
+                                <th>MAINTENANCE COST</td>
+                                <th>SPAREPARTS USED</th>
+                                <th>TICKET TYPE</th>
+                                <th>AREAS SERVICED</th>
+                                <th>ENVIRONMENT CHECKS</th>
+                                <th>ACTIONS</th>
+                            </thead>
+                            <tbody>
+                                {% for maintenance_log in maintenance_logs %}
+                                    <tr>
+                                        <td>{{ maintenance_log.maintenance_type }}</td>
+                                        <td>{{ maintenance_log.start_date|date:'d-m-Y' }}</td>
+                                        <td>{{ maintenance_log.end_date|date:'d-m-Y' }}</td>
+                                        <td>{{ maintenance_log.maintenance_cost }} Rwf</td>
+                                        <td>{{ maintenance_log.spareparts_quantity_used }}</td>
+                                        <td>{{ maintenance_log.ticket_type|upper }}</td>
+                                        <td>{{ maintenance_log.areas_serviced|upper }}</td>
+                                        <td>{{ maintenance_log.environment_check|upper }}</td>
+                                        <td><a href="{% url 'maintenance:maintenance-detail' maintenance_log.pk %}" class="view_button">view details</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>This scanner has no maintenance log history</p>
+                    {% endif %}
             </div>					
         </div>
     </div>

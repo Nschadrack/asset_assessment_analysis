@@ -1,0 +1,75 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        <p id="car_title_header_and_new_btn_p">List of Spareparts</p>
+        <button id="car_title_header_and_new_btn_button">+ new sparepart</button>
+    </div>
+    <div id="car_body_data">
+        <div id="car_table_data" class="table-data">
+            <table>
+                <thead>
+                    <th>SPAREPART CATEGORY</th>
+                    <th>SERIAL/PART NUMBER</th>
+                    <th>SPAREPART NAME</th>
+                    <th>UNIT PRICE</th>
+                    <th>DELIVERY DATE</th>
+                    <th>STATUS</th>
+                    {% comment %} <th colspan="1">ACTIONS</th> {% endcomment %}
+                </thead>
+                <tbody>
+                    {% for sparepart in spareparts %}
+                        <tr>
+                            <td>{{ sparepart.sparepart_category }}</td>
+                            <td>{{ sparepart.serial_number|upper }}</td>
+                            <td>{{ sparepart.sparepart_name|upper }}</td>
+                            <td>{{ sparepart.unit_price }}</td>
+                            <td>{{ sparepart.delivery_date|date:'d-m-Y'}}</td>
+                            {% if sparepart.was_used %}
+                                <td>Used</td>
+                            {% else %}
+                                <td>Available</td>
+                            {% endif %}                          
+                            {% comment %} <td><a href="#" class="delete_button">delete</a></td> {% endcomment %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>           
+        </div>
+        <div id="car_new_form_div">
+            <form id="car_new_form" method="post" action="">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Registering a new sparepart in the system</legend>	
+                    <div class="form-group">
+                        <label for="partnumber">SPAREPART CATEGORY</label><br/>
+                        <input list="partnumbers" name="sparepart_category" id="partnumber" required/>
+                        <datalist id="partnumbers">
+                            {% for partnum, _ in SPAREPARTS_CATEGORIES %}
+                                <option value="{{partnum}}">
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label>SERIAL NUMBER/PARTNUMBER</label>
+                        <input type="text" maxlength="40" name="serial_number" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>SPAREPART NAME</label>
+                        <input type="text"  maxlength="50" name="sparepart_name" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>UNIT PRICE</label>
+                        <input type="number" min="0" name="unit_price" step="0.01" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>DELIVERY DATE</label>
+                        <input type="date"  name="delivery_date" required/>
+                    </div>
+                    <input type="submit" value="Save new sparepart"/>
+                </fieldset>						
+            </form>
+        </div>
+    </div>
+{% endblock %}

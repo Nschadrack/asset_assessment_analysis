@@ -1,0 +1,59 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_title_header_and_new_btn">
+        {% comment %} <p id="car_title_header_and_new_btn_p">ATM:  {{ atm.hostname|upper }}</p> {% endcomment %}
+        {% comment %} <a href="{% url 'assets_management:atms-list' %}" id="price_back_to_car_list">Back to ATMs list</a> {% endcomment %}
+    </div>
+    <div id="car_body_data">				
+        <div id="car_prices">
+            <div id="car_viewed_for_prices" class="car_viewed_for_services_prices">
+                <h4>Maintenance Log Details</h4>
+                <div>
+                    <p><strong>Maintenace Type: </strong>{{ maintenance_log.maintenance_asset_category|upper }}</p>
+                    <p><strong>Maintenance Category: </strong>{{ maintenance_log.maintenance_type }}</p>
+                    <p><strong>Maintenance Ticket Type: </strong>{{ maintenance_log.ticket_type|upper }}</p>
+                    <p><strong>Maintenance Start Date: </strong>{{ maintenance_log.start_date|date:'d-m-Y' }}</p>
+                </div>
+                <div>
+                    <p><strong>Maintenace Environment checks: </strong>{{ maintenance_log.environment_check|upper }}</p>
+                    <p><strong>Maintenance Areas Serviced: </strong>{{ maintenance_log.areas_serviced|upper }}</p>
+                    <p><strong>Maintenance Cost: </strong>{{ maintenance_log.maintenance_cost }} Rwf</p>
+                    <p><strong>Maintenance End Date: </strong>{{ maintenance_log.end_date|date:'d-m-Y' }}</p>
+                </div>
+                <div>
+                    <p><strong>Maintenace Spareparts Used: </strong>{{ maintenance_log.spareparts_quantity_used }}</p>
+                    <p><strong>Maintenance Description: </strong>{{ maintenance_log.additional_note }}</p>
+                </div>
+            </div>
+            <div id="price_archive_list" class="table-data">
+                <h4>Maintenance Log Spareparts Used List</h4>
+                    {% if maintenance_logs_spareparts_num > 0 %}
+                        <table class="table-data">
+                            <thead>
+                                <th>SPAREPART CATEGORY</th>
+                                <th>SERIAL/PART NUMBER</th>
+                                <th>SPAREPART NAME</th>
+                                <th>PRICE</td>
+                                <th>DELIVERY DATE</th>
+                            </thead>
+                            <tbody>
+                                {% for sparepart in spareparts %}
+                                    <tr>
+                                        <td>{{ sparepart.sparepart_category }}</td>
+                                        <td>{{ sparepart.serial_number|upper }}</td>
+                                        <td>{{ sparepart.sparepart_name|upper }}</td>
+                                        <td>{{ sparepart.unit_price|upper }} Rwf</td>
+                                        <td>{{ sparepart.delivery_date|date:'d-m-Y' }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>This Maintenance log has no spareparts used</p>
+                    {% endif %}
+            </div>					
+        </div>
+    </div>
+{% endblock %}

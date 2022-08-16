@@ -12,7 +12,7 @@
                 <h4>{{ group.name }} group has {{group_members_num}} {% if group_members_num > 1 %} members{% else %} member{% endif %} </h4>
                 <a  href="{% url 'users_management:membership'  group.group_id %}" id="view_price_archive_button">+ new group member</a>
                 {% if group_members_num > 0 %}						
-                    <form>
+                    {% comment %} <form>
                         <select>
                             <option value="all services" selected>All services</option>
                             <option value="wedding services">Wedding services</option>
@@ -38,7 +38,7 @@
                             <option value="all">All records</option>
                         </select>
                         <input type="submit" value="view"/>
-                    </form>
+                    </form> {% endcomment %}
                     <table class="table-data">
                         <thead>
                             <th>USERNAME</th>
@@ -82,7 +82,7 @@
                 <h4>{{ group.name }} group has {{group_permissions_num}} {% if group_permissions_num > 1 %} permissions{% else %} permission{% endif %} </h4>
                 <a href="{% url 'users_management:group-permissions' group.group_id %}" id="hide_price_archives">+ new group permission</a>
                 {% if group_permissions_num > 0 %}
-                    <form>
+                    {% comment %} <form>
                         <select>
                             <option value="all services" selected>All services</option>
                             <option value="wedding services">Wedding services</option>
@@ -114,7 +114,7 @@
                             <option value="all">All records</option>
                         </select>
                         <input type="submit" value="view"/>
-                    </form>
+                    </form> {% endcomment %}
                     <table class="table-data">
                         <thead>
                             <th>#ID</th>
