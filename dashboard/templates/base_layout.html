@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
 	<script src="{% static 'js/main.js' %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" 
+	integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" 
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 
     <title>Safe journey - company - dashboard</title>
   </head>
@@ -58,7 +62,8 @@
 	</div>
 	<div id="main_load">
 		<div id="main_load_header">
-			<p>main load header</p>
+			<button onclick="toggleNavigations()"><img src="{% static 'images/icon.png' %}" width="20" height="20"/></button>
+			<p>Welcome, {{ request.user.first_name|capfirst }} {{ request.user.last_name|lower|capfirst }}</p>
 		</div>
 		<div id="main_load_data">
 			{% block main_data_load %}

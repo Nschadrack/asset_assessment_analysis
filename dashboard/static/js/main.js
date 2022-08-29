@@ -79,5 +79,23 @@ function fillSparepartSelectBox(e){
     spareparts.style.display = "block";
     spareparts.innerHTML += `<option value="${selectedSparepart}" selected>${selectedSparepart}</option>`;    
 }
+function toggleNavigations(e){
+    var navigationDiv = document.getElementById("aside_navigation");
+    var mainLoadDiv = document.getElementById("main_load");
+    var mainLoadHeader = document.getElementById("main_load_header");
+    var styleNav = window.getComputedStyle(navigationDiv);
+    var displayCssNav = styleNav.getPropertyValue("display")
 
+    if (displayCssNav === "none"){
+        navigationDiv.style.display = "block";
+        navigationDiv.style.width = "19%";
+        mainLoadDiv.style.width = "81%";
+        mainLoadHeader.style.left = "19%";
+    }else{
+        navigationDiv.style.display = "none";
+        mainLoadDiv.style.width = "100%";
+        mainLoadHeader.style.left = "0px";
+    }
+
+}
 

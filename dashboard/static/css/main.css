@@ -85,10 +85,22 @@ body{
 	margin:0px;
 	margin-top: 0px;
 	padding: 5px 15px;
-	/* position: absolute; */
+	position: fixed;
+	z-index: 100;
 	top: 0px;
 	right: 0px;
 	left: 19%;
+	color: var(--aside_bg_hover_a);
+	font-family: 'Times New Roman', Times, serif;
+}
+#main_load_header button{
+	float: left;
+}
+#main_load_header p{
+	float: left;
+	margin-left: 30%;
+	font-size: 18px;
+	margin-top: 0px;
 }
 #main_load_data{
 	width: 100%;
@@ -859,6 +871,68 @@ main:hover{
 	display: none;
 }
 
+
+/* Styling dashboard page */
+.dashboard-main{
+	overflow: hidden;
+	margin: 0px;
+}
+.short-statistics{
+	width: 100%;
+	border-bottom: 1px solid var(--aside_fg_hover_a);
+	background-color: rgb(202, 86, 112);
+	padding-top: 2px;
+	padding-right: 25px;
+	padding-bottom: 20px;
+	overflow: hidden;
+	border-radius: 5px;
+	margin-top: 30px;
+}
+.short-statistics h2{
+	margin-left: 30px;
+	font-weight: bold;
+	font-size: 18px;
+	font-family: 'Times New Roman', Times, serif;
+}
+.card{
+	width: 22%;
+	height: 30%;
+	float: left;
+	margin-left: 30px;
+	margin-bottom: 10px;
+	/* border: 1px solid var(--aside_bg); */
+	padding: 0px;
+	border-radius: 10px;
+	background-color: rgb(197, 124, 60);
+	color: var(--aside_bg);
+	font-weight: normal;
+}
+.card .card-title{
+	height: 16%;
+	padding: 0px;
+	border-bottom: 1px solid var(--aside_bg);
+	padding: 0px 10px;
+}
+.card .card-title h3{
+	font-size: 12px;
+	font-family: 'Times New Roman', Times, serif;
+}
+.card .card-body{
+	height: 84%;
+	padding: 0px;
+	padding: 0px 10px;
+	line-height: 0.7;
+}
+.card .card-body p{
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 14px;
+}
+.graphs-container{
+	width: 80vw;
+	height: 60vh; 
+	position: relative; 
+	margin-bottom: 20px;
+ } 
 
 
 
