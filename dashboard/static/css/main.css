@@ -194,6 +194,7 @@ body{
 /* styling company cars massive cars(group) */
 #car_title_header_and_new_btn{
 	height: 5%;	
+	margin-top: 50px;
 }
 
 #car_title_header_and_new_btn p{
@@ -313,7 +314,24 @@ body{
 	background-color: var(--darkGreen);
 	color: var(--aside_bg_hover_a);
 }
-
+.generate-report{
+	background-color: chocolate;
+	border: none;
+	border-radius: 3px;
+	padding: 10px;
+	color: var(--aside_bg);
+	font-weight: bold;
+	text-decoration: none;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -30px;
+	display: block;
+	width: 200px;
+	text-align: center;
+	
+}
 /* styling new form car */
 #car_new_form_div{
 	height: 98%;
@@ -877,16 +895,18 @@ main:hover{
 	overflow: hidden;
 	margin: 0px;
 }
+#content-report{
+		margin-top: 50px;
+}
 .short-statistics{
 	width: 100%;
-	border-bottom: 1px solid var(--aside_fg_hover_a);
-	background-color: rgb(202, 86, 112);
+	/* border-bottom: 1px solid var(--aside_fg_hover_a); */
+	background-color: ruby;
 	padding-top: 2px;
 	padding-right: 25px;
 	padding-bottom: 20px;
 	overflow: hidden;
 	border-radius: 5px;
-	margin-top: 30px;
 }
 .short-statistics h2{
 	margin-left: 30px;
@@ -900,17 +920,17 @@ main:hover{
 	float: left;
 	margin-left: 30px;
 	margin-bottom: 10px;
-	/* border: 1px solid var(--aside_bg); */
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
 	padding: 0px;
 	border-radius: 10px;
-	background-color: rgb(197, 124, 60);
+	background-color: #e0d5e0;
 	color: var(--aside_bg);
 	font-weight: normal;
 }
 .card .card-title{
 	height: 16%;
 	padding: 0px;
-	border-bottom: 1px solid var(--aside_bg);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	padding: 0px 10px;
 }
 .card .card-title h3{

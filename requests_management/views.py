@@ -46,6 +46,7 @@ class RequestDetail(LoginRequiredMixin, View):
                 assign.computer.in_store = False 
                 assign.computer.which_store = "NOT-IN-STORE"
                 assign.computer.in_use = True
+                assign.computer.usage_start_date = datetime.now()
                 assign.computer.save() 
 
             elif assign.printer_scanner is not None:
@@ -54,6 +55,7 @@ class RequestDetail(LoginRequiredMixin, View):
                 assign.printer_scanner.in_store = False 
                 assign.printer_scanner.which_store = "NOT-IN-STORE"
                 assign.printer_scanner.in_use = True
+                assign.printer_scanner.usage_start_date = datetime.now()
                 assign.printer_scanner.save() 
 
             elif assign.screen is not None:
@@ -62,6 +64,7 @@ class RequestDetail(LoginRequiredMixin, View):
                 assign.screen.in_store = False 
                 assign.screen.which_store = "NOT-IN-STORE"
                 assign.screen.in_use = True
+                assign.screen.usage_start_date = datetime.now()
                 assign.screen.save() 
             
             elif assign.bio_avaya_note_gen is not None:
@@ -70,6 +73,7 @@ class RequestDetail(LoginRequiredMixin, View):
                 assign.bio_avaya_note_gen.in_store = False 
                 assign.bio_avaya_note_gen.which_store = "NOT-IN-STORE"
                 assign.bio_avaya_note_gen.in_use = True
+                assign.bio_avaya_note_gen.usage_start_date = datetime.now()
                 assign.bio_avaya_note_gen.save() 
 
             elif assign.atm is not None:
@@ -78,6 +82,7 @@ class RequestDetail(LoginRequiredMixin, View):
                 assign.atm.in_store = False 
                 assign.atm.which_store = "NOT-IN-STORE"
                 assign.atm.in_use = True
+                assign.atm.usage_start_date = datetime.now()
                 assign.atm.save() 
             
             elif assign.switch_router_firewall is not None:
@@ -86,6 +91,7 @@ class RequestDetail(LoginRequiredMixin, View):
                 assign.switch_router_firewall.in_store = False 
                 assign.switch_router_firewall.which_store = "NOT-IN-STORE"
                 assign.switch_router_firewall.in_use = True
+                assign.switch_router_firewall.usage_start_date = datetime.now()
                 assign.switch_router_firewall.save()
             
             elif assign.node is not None:
@@ -94,6 +100,7 @@ class RequestDetail(LoginRequiredMixin, View):
                 assign.node.in_store = False 
                 assign.node.which_store = "NOT-IN-STORE"
                 assign.node.in_use = True
+                assign.node.usage_start_date = datetime.now()
                 assign.node.save()
 
             assign.save()

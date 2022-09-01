@@ -1,0 +1,59 @@
+{% extends 'base_report.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_body_data">
+        <div id="car_table_data" class="table-data" style="overflow:hidden;">
+            <h3 style="margin-left: 20%;">List of scanners</h3><br/>
+            <table>
+                <thead>
+                    <th>MODEL</th>
+                    <th>SCANNER CATEGORY</th>
+                    <th>SERIAL NUMBER</th>
+                    <th>TAG NUMBER</th>
+                    <th>CONNECTION WAY</th>
+                    <th>HOST IP</th>
+                    <th>WORKING STATUS</th>
+                    <th>SCANNER VERSION</th>
+                    <th>DATE ENTERED THE BANK</th>
+                    <th>RECORDED DATE</th>
+                    <th>PURCHASE PRICE</th>
+                    <th>LIFETIME</th>
+                    <th>USAGE START DATE</th>
+                </thead>
+                <tbody>
+                    {% for scanner in scanners %}
+                        <tr>
+                            <td>{{ scanner.model|upper }}</td>
+                            {% if scanner.category_type.upper == "OTHER" %}
+                                <td>{{ scanner.other_type_name }}</td>
+                            {% else %}
+                                <td>{{ scanner.category_type|replace|upper }}</td>
+                            {% endif %}
+                            <td>{{ scanner.serial_number|upper }}</td>
+                            <td>{{ scanner.tag_number|upper }}</td>
+                            <td>{{ scanner.connection_type|upper }}</td>
+                            {% if scanner.connection_type.upper == "NETWORK" %}
+                                <td>{{ scanner.host_ip }}</td>
+                            {% else %}
+                                <td> </td>
+                            {% endif %}
+                            <td>{{ scanner.status|replace|upper }}</td>
+                            {% if scanner.version %}
+                                <td>{{ scanner.version|upper }}</td>
+                            {% else %}
+                                <td> </td>
+                            {% endif %}
+                            <td>{{ scanner.entry_date_in_bank }}</td>
+                            <td>{{ scanner.recorded_date }}</td>    
+                            <td>{{ scanner.purchase_price }} Rwf</td>
+                            <td>{{ scanner.lifetime_formated }}</td>
+                            <td>{{ scanner.usage_start_date }}</td>                       
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+{% endblock %}

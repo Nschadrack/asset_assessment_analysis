@@ -99,3 +99,35 @@ function toggleNavigations(e){
 
 }
 
+function generateReport() {
+//   var pdf = new jsPDF('p', 'pt', 'letter');
+var pdf = new jsPDF();
+//   var reportContent = document.getElementById("content-report")
+//   pdf.canvas.height = 72 * 11;
+//   pdf.canvas.width = 72 * 8.5;
+
+//   pdf.autoTable(reportContent);
+  /*content-report */
+  pdf.autoTable({ html: '#content-report' })
+  pdf.save('table.pdf')
+
+//   pdf.save('test.pdf');
+}
+
+// function generateReport()
+//   {
+//     var reportContent = document.getElementById("content-report");
+//     html2canvas(reportContent,{
+//     onrendered:function(canvas){
+//     var pdf = new jsPDF('p', 'pt', 'letter');
+//     pdf.canvas.height = 72 * 11;
+//     pdf.canvas.width = 72 * 8.5;
+//     pdf.fromHTML(reportContent);
+
+//     pdf.save('test.pdf');
+//    }
+
+//    });
+
+//   }
+

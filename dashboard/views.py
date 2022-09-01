@@ -1,13 +1,25 @@
 from json import dumps
+import os 
+import pdfkit
+from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 from django.contrib.auth.decorators import login_required
 from assets_management.models import *
-from maintenance.models import SparePart
+from maintenance.models import SparePart, MaintenanceLog
 from assets_movement.models import Branch, AssetAssignment
 
+options = {
+    'page-size': 'A1',
+    'margin-top': '0.55in',
+    'margin-right': '0.05in',
+    'margin-bottom': '0.55in',
+    'margin-left': '0.05in',
+    'javascript-delay':'20000',
+}
+
 @login_required(login_url="account:index", redirect_field_name="redirect_to")
-def dashboard(request):
+def dashboard(request, report=None):
     laptops = ComputerLapDeskTop.objects.filter(still_functions=True, category="LAPTOP").count()
     desktops = ComputerLapDeskTop.objects.filter(still_functions=True, category="DESKTOP").count()
     printers = PrinterScanner.objects.filter(still_functions=True, category="PRINTER").count()
@@ -32,6 +44,12 @@ def dashboard(request):
     printers_scanners_status_list = PrinterScanner.objects.all()
     atms_status_list = Atm.objects.all()
     note_counters_status_list = BioVayaNoteCounterGenerator.objects.filter(category="NOTE-COUNTER")
+
+
+    # Maintenance log for assets
+    maintenance_logs = MaintenanceLog.objects.all()
+    atm_maintenance_logs = [ log for log in maintenance_logs if log.atm is not None ]
+
 
 
     computer_assignments = [ assign for assign in all_assignments if assign.computer is not None]
@@ -59,6 +77,10 @@ def dashboard(request):
     atm_status_dist = {}
     printers_scanners_status_dist = {}
     note_counters_status_dist = {}
+    atm_maintenance_cost_dist = {}
+
+    for maintenance_log in atm_maintenance_logs:
+        atm_maintenance_cost_dist[maintenance_log.atm.hostname] = atm_maintenance_cost_dist.get(maintenance_log.atm.hostname, 0) + maintenance_log.maintenance_cost
 
     for status in CommonAsset.STATUES:
         computers_status_dist[status[0]] = 0
@@ -278,6 +300,16 @@ def dashboard(request):
 					},
 				]
 	        }
+    atm_maintenance_cost_dist_data = {
+				"labels": list(atm_maintenance_cost_dist.keys()),
+				"datasets": [
+					{
+						"label": "Working status for ATM",
+						"data": [float(value) for value in list(atm_maintenance_cost_dist.values())],
+						"backgroundColor": "rgb(171, 98, 192)",
+					},
+				]
+	        }
 
     context = {
         "summary_statistics": summary_statistics,
@@ -289,9 +321,14 @@ def dashboard(request):
         "atmStatusDistData": dumps(atm_status_dist_data),
         "printerScannerStatusDistData": dumps(printers_scanners_status_data),
         "noteCounterStatusDistData": dumps(note_counters_status_dist_data),
+        "atmMaintenanceCostDistData": dumps(atm_maintenance_cost_dist_data)
         
     }
 
+    if report is not None:
+        filename = os.path.join("dashboard\\static\\reports\\dashboard.pdf")
+        pdfkit.from_url("http://localhost:8000/report/dashboard/", filename, verbose=True, options=options)
+        return FileResponse(open(filename, "rb"), content_type="application/pdf")
     return render(request, 'dashboard/dashboard.html', context)
 
 

@@ -1,0 +1,39 @@
+{% extends 'base_report.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_body_data">
+        <div id="car_table_data" class="table-data" style="overflow:hidden;">
+            <h3 style="margin-left: 20%;">List pf note counters</h3><br/>
+            <table>
+                <thead>
+                    <th>MODEL</th>
+                    <th>SERIAL NUMBER</th>
+                    <th>TAG NUMBER</th>
+                    <th>WORKING STATUS</th>
+                    <th>DATE ENTERED THE BANK</th>
+                    <th>RECORDED DATE</th>
+                    <th>PURCHASE PRICE</th>
+                    <th>LIFETIME</th>
+                    <th>USAGE START DATE</th>
+                </thead>
+                <tbody>
+                    {% for note_counter in note_counters %}
+                        <tr>
+                            <td>{{ note_counter.model|upper }}</td>
+                            <td>{{ note_counter.serial_number|upper }}</td>
+                            <td>{{ note_counter.tag_number|upper }}</td>
+                            <td>{{ note_counter.status|replace|upper }}</td>
+                            <td>{{ note_counter.entry_date_in_bank }}</td>
+                            <td>{{ note_counter.recorded_date }}</td>   
+                            <td>{{ note_counter.purchase_price }} Rwf</td>
+                            <td>{{ note_counter.lifetime_formated }}</td>
+                            <td>{{ note_counter.usage_start_date }}</td>                       
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+{% endblock %}

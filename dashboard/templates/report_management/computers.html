@@ -1,0 +1,54 @@
+{% extends 'base_report.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_body_data">
+        <div id="car_table_data" class="table-data" style="overflow:hidden;">
+            <h3 style="margin-left: 20%;">List of computers</h3><br/>
+            <table>
+                <thead>
+                    <th>ITEM</th>
+                    <th>MODEL</th>
+                    <th>COMPUTER NAME</th>
+                    <th>SERIAL NUMBER</th>
+                    <th>TAG NUMBER</th>
+                    <th>STORAGE TYPE</th>
+                    <th>HARD DISK</th>
+                    <th>SSD</th>
+                    <th>MEMORY(RAM)</th>
+                    <th>PROCESSOR SPEED</th>
+                    <th>PROCESSOR NAME</th>
+                    <th>WORKING STATUS</th>
+                    <th>BANK ENTRANCE DATE</th>
+                    <th>RECORDED DATE</th>
+                    <th>PURCHASE PRICE</th>
+                    <th>LIFETIME</th>
+                    <th>USAGE START DATE</th>
+                </thead>
+                <tbody>
+                    {% for computer in computers %}
+                        <tr>
+                            <td>{{ computer.category|upper }}</td>
+                            <td>{{ computer.model|upper }}</td>
+                            <td>{{ computer.hostname|upper }}</td>
+                            <td>{{ computer.serial_number|upper }}</td>
+                            <td>{{ computer.tag_number|upper }}</td>
+                            <td>{{ computer.storage_type|upper }}</td>
+                            <td>{{ computer.harddisk_size }} {{ computer.harddisk_measure |upper }}</td>
+                            <td>{{ computer.ssd_size }} {{ computer.ssd_measure |upper }}</td>
+                            <td>{{ computer.memory_size }} {{ computer.memory_measure|upper }}</td>
+                            <td>{{ computer.process_speed }} {{ computer.processor_speed_measure }}
+                            <td>{{ computer.processor_name }}</td>
+                            <td>{{ computer.status|replace|upper }}</td>
+                            <td>{{ computer.entry_date_in_bank }}</td>
+                            <td>{{ computer.recorded_date }}</td>
+                            <td>{{ computer.purchase_price }} Rwf</td>
+                            <td>{{ computer.lifetime_formated }}</td>
+                            <td>{{ computer.usage_start_date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table> 
+        </div>
+    </div>
+{% endblock %}

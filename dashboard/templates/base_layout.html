@@ -10,9 +10,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" 
 	integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" 
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
-
-    <title>Safe journey - company - dashboard</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+	<script src="https://unpkg.com/jspdf-autotable@3.5.22/dist/jspdf.plugin.autotable.js"></script>
+    <title>Equity - Enterprise Asset Managment</title>
   </head>
   <body>
     <div id="aside_navigation">
@@ -40,14 +40,6 @@
 				<a href="{% url 'assets_management:applications-list' %}">System hosted & applications</a>
 				<a href="{% url 'maintenance:spareparts-list' %}">Spareparts</a>
 			</section>
-			<button onclick="toggleAssetsConsolidationSection()">Assets Consolidation</button>
-			<section id="assets-consolidation-section">			
-				<a href="{% url 'assets_management:switches-list' %}">Switches</a>
-				<a href="{% url 'assets_management:routers-list' %}">Routers</a>
-				<a href="{% url 'assets_management:firewalls-list' %}">Firewalls</a>
-				<a href="{% url 'assets_management:nodes-list' %}">Physical servers</a>
-				<a href="{% url 'assets_management:applications-list' %}">System hosted & applications</a>
-			</section>
 			<button onclick="toggleUsersManagementAssetSection()">Users Management</button>
 			<section id="users-management-section">
 				<a href="{% url 'users_management:users-list' %}">Users</a>
@@ -55,9 +47,8 @@
 			</section>
 			<a href="{% url 'requests_management:requests-admin-list' %}">Requests</a>
 			<a href="{% url 'account:logout_user' %}">Sign out</a>
-			<a href="#">Notifications <span class="aside-navigation-spans">0</span></a>
-			<a href="#">Settings</a>
-			<a href="#">Help & Support</a>
+			{% comment %} <a href="#">Notifications <span class="aside-navigation-spans">0</span></a> {% endcomment %}
+			{% comment %} <a href="#">Settings</a> {% endcomment %}
 		</div>
 	</div>
 	<div id="main_load">

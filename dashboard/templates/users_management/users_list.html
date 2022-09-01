@@ -18,7 +18,7 @@
                     <th>STATUS</th>
                     <th>SUPER USER</th>
                     <th>DATE JOINED</th>
-                    <th colspan="4">ACTIONS</th>
+                    <th colspan="3">ACTIONS</th>
                 </thead>
                 <tbody>
                     {% for user in users %}
@@ -40,9 +40,9 @@
                             {% endif %}
                             <td>{{ user.date_joined|date:"d-m-Y H:i"}}</td>
                             {% if user.is_active %}
-                                <td><a href="#" class="publish_button">Deactivate</a></td>
+                                {% comment %} <td><a href="#" class="publish_button">Deactivate</a></td> {% endcomment %}
                             {% else %}
-                                <td><a href="#" class="publish_button">Activate</a></td>
+                                {% comment %} <td><a href="#" class="publish_button">Activate</a></td> {% endcomment %}
                             {% endif %}                          
                             <td><a href="{% url 'users_management:user-detail' user.username %}" class="view_button">view details</a></td>
                             <td><a href="{% url 'users_management:user-detail-update' user.username 'update' %}" class="update_button">update</a></td>

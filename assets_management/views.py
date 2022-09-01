@@ -1,3 +1,6 @@
+import pdfkit
+import os
+from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.views import View
@@ -14,14 +17,19 @@ from maintenance.models import MaintenanceLog
 
 from .utils import *
 
-
-
+options = {
+    'page-size': 'A1',
+    'margin-top': '0.55in',
+    'margin-right': '0.05in',
+    'margin-bottom': '0.55in',
+    'margin-left': '0.05in',
+}
 
 class ComputersList(LoginRequiredMixin, View):
     login_url = "account:index"
     redirect_field_name = "redirect_to"
 
-    def get(self, request, *args,**kwargs):
+    def get(self, request, report=None, *args,**kwargs):
         computers = ComputerLapDeskTop.objects.all().order_by('-recorded_date')
         context = {
             "computers": computers,
@@ -33,8 +41,12 @@ class ComputersList(LoginRequiredMixin, View):
             "PROCESSOR_SPEED_MEASUREMENTS": ComputerLapDeskTop.PROCESSOR_SPEED_MEASUREMENTS,
             "STORES": ComputerLapDeskTop.STORES,
             "STATUES": ComputerLapDeskTop.STATUES 
-
         }
+        
+        if report == 'report':
+            filename = os.path.join("dashboard\\static\\reports\\computers.pdf")
+            pdfkit.from_url("http://localhost:8000/report/computers/", filename, verbose=True, options=options)
+            return FileResponse(open(filename, "rb"), content_type="application/pdf")
         return render(request, 'assets_management/computers-list.html', context)
 
     def post(self, request, *args, **kwargs):
@@ -123,7 +135,7 @@ class ComputerDetail(LoginRequiredMixin, View):
 class PrintersList(LoginRequiredMixin, View):
     login_url = "account:index"
     redirect_field_name = "redirect_to"
-    def get(self, request, *args, **kwargs):
+    def get(self, request, report=None, *args, **kwargs):
         printers = PrinterScanner.objects.filter(category='PRINTER').order_by('-recorded_date')
         context = {
             "printers": printers,
@@ -132,6 +144,10 @@ class PrintersList(LoginRequiredMixin, View):
             "STORES": PrinterScanner.STORES,
             "STATUES": PrinterScanner.STATUES
         }
+        if report == 'report':
+            filename = os.path.join("dashboard\\static\\reports\\printers.pdf")
+            pdfkit.from_url("http://localhost:8000/report/printers/", filename, verbose=True, options=options)
+            return FileResponse(open(filename, "rb"), content_type="application/pdf")
         return render(request, 'assets_management/printers-list.html', context)
     
     def post(self, request, *args, **kwargs):
@@ -218,7 +234,7 @@ class PrinterDetail(LoginRequiredMixin, View):
 class ScannersList(LoginRequiredMixin, View):
     login_url = "account:index"
     redirect_field_name = "redirect_to"
-    def get(self, request, *args, **kwargs):
+    def get(self, request, report=None, *args, **kwargs):
         scanners = PrinterScanner.objects.filter(category='SCANNER').order_by('-recorded_date')
         context = {
             "scanners": scanners,
@@ -227,6 +243,10 @@ class ScannersList(LoginRequiredMixin, View):
             "STORES": PrinterScanner.STORES,
             "STATUES": PrinterScanner.STATUES
         }
+        if report == 'report':
+            filename = os.path.join("dashboard\\static\\reports\\scanners.pdf")
+            pdfkit.from_url("http://localhost:8000/report/scanners/", filename, verbose=True, options=options)
+            return FileResponse(open(filename, "rb"), content_type="application/pdf")
         return render(request, 'assets_management/scanners-list.html', context)
     
     def post(self, request, *args, **kwargs):
@@ -566,13 +586,17 @@ class AvayaDetail(LoginRequiredMixin, View):
 class NoteCountersList(LoginRequiredMixin, View):
     login_url = "account:index"
     redirect_field_name = "redirect_to"
-    def get(self, request, *args, **kwargs):
+    def get(self, request, report=None, *args, **kwargs):
         note_counters = BioVayaNoteCounterGenerator.objects.filter(category="NOTE-COUNTER").order_by('-recorded_date')
         context = {
             "note_counters": note_counters,
             "STORES": BioVayaNoteCounterGenerator.STORES,
             "STATUES": BioVayaNoteCounterGenerator.STATUES,
         }
+        if report == 'report':
+            filename = os.path.join("dashboard\\static\\reports\\noteCounters.pdf")
+            pdfkit.from_url("http://localhost:8000/report/note-counters/", filename, verbose=True, options=options)
+            return FileResponse(open(filename, "rb"), content_type="application/pdf")
         return render(request, 'assets_management/note-counters-list.html', context)
 
     def post(self, request, *args, **kwargs):
@@ -738,13 +762,17 @@ class GeneratorDetail(LoginRequiredMixin, View):
 class AtmsList(LoginRequiredMixin, View):
     login_url = "account:index"
     redirect_field_name = "redirect_to"
-    def get(self, request, *args, **kwargs):
+    def get(self, request, report=None, *args, **kwargs):
         atms = Atm.objects.all().order_by('-recorded_date')
         context = {
             "atms": atms,
             "STORES": Atm.STORES,
             "STATUES": Atm.STATUES,
         }
+        if report == 'report':
+            filename = os.path.join("dashboard\\static\\reports\\atms.pdf")
+            pdfkit.from_url("http://localhost:8000/report/atms/", filename, verbose=True, options=options)
+            return FileResponse(open(filename, "rb"), content_type="application/pdf")
         return render(request, 'assets_management/atms-list.html', context)
 
     def post(self, request, *args, **kwargs):

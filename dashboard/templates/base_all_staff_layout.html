@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
 	<script src="{% static 'js/main.js' %}"></script>
 
-    <title>Safe journey - company - dashboard</title>
+    <title>Equity - Enterprise Asset Managment</title>
   </head>
   <body>
     <div id="aside_navigation">
@@ -23,14 +23,12 @@
 			<a href="{% url 'all_staff:user-avaya' %}">Avaya Assinged To Me</a>
 			<a href="{% url 'requests_management:requests-list' %}">Requests Assigned To Me</a>
 			<a href="{% url 'account:logout_user' %}">Sign out</a>
-			<a href="#">Notifications <span class="aside-navigation-spans">0</span></a>
-			<a href="#">Settings</a>
-			<a href="#">Help & Support</a>
 		</div>
 	</div>
 	<div id="main_load">
 		<div id="main_load_header">
-			<p>main load header</p>
+			<button onclick="toggleNavigations()"><img src="{% static 'images/icon.png' %}" width="20" height="20"/></button>
+			<p>Welcome, {{ request.user.first_name|capfirst }} {{ request.user.last_name|capfirst }}</p>
 		</div>
 		<div id="main_load_data">
 			{% block main_data_load %}

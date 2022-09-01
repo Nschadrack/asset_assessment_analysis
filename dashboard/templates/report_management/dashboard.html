@@ -1,0 +1,248 @@
+{% extends 'base_report.html' %}
+{% load static %}
+{% block main_data_load %}
+	<main class="dashboard-main" id="content-report">
+		<div class="short-statistics">
+			<h2>Overall Summary Statistics of Assets Which Still Function</h2>
+			{% for summary in summary_statistics %}
+				<div class="card">
+					<div class="card-title">
+						<h3>{{ summary.title|upper }}</h3>
+					</div>
+					<div class="card-body">
+						{% if summary.categories %}
+							{% for k, v in summary.categories.items %}
+								<p>{{ k }}:   {{ v }}</p>
+							{% endfor %}
+						{% endif %}
+						<p>Total:   {{ summary.total }}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<br/><br/>
+		<div class="graphs">
+			<div class="assets-distributions">
+				<div class="graphs-container">
+					<canvas id="computers_distribution_status"></canvas>
+				</div>
+				<div class="graphs-container">
+					<canvas id="computers_distribution"></canvas>
+				</div><br/><br/><br/>
+				<div class="graphs-container">
+					<canvas id="printers_scanners_status"></canvas>
+				<div>
+				<div class="graphs-container">
+					<canvas id="printers_scanners_distribution"></canvas>
+				</div><br/><br/><br/>
+				<div class="graphs-container">
+					<canvas id="atm_distribution_status"></canvas>
+				</div>
+				<div class="graphs-container">
+					<canvas id="atm_distribution"></canvas>
+				</div><br/><br/><br/>
+				<div class="graphs-container">
+					<canvas id="note_counter_status"></canvas>
+				</div>
+				<div class="graphs-container">
+					<canvas id="note_counter_distribution"></canvas>
+				</div>
+
+				<h3>Maintenance distribution cost for year 2022</h3>
+				<div class="graphs-container">
+					<canvas id="atm_maintenance_cost_distribution"></canvas>
+				</div>
+			</div>
+		</div>
+		<div class="recommendations">
+		</div>
+	</main>
+	<script>
+		let computersDistributionDataStatus = JSON.parse("{{ computersStatusDistData|escapejs }}");
+		let computersDistributionStatus = document.getElementById("computers_distribution_status").getContext("2d");
+		let barChartComputersDistributionStatus = new Chart(computersDistributionStatus, {
+			type: "doughnut",
+			data:computersDistributionDataStatus,
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text: 'Computers Status'
+					}
+				},
+				maintainAspectRatio: false,
+				scales: {
+					y:{
+						beginAtZero: true,
+					}
+				}
+			}
+		});
+		let computersDistributionData = JSON.parse("{{ computersDistributionData|escapejs }}");
+		let computersDistribution = document.getElementById("computers_distribution").getContext("2d");
+		let barChartComputersDistribution = new Chart(computersDistribution, {
+			type: "bar",
+			data:computersDistributionData,
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text: "The distribution of computers and laptops in branches"
+					}
+				},
+				maintainAspectRatio: false,
+				scales: {
+					y:{
+						beginAtZero: true,
+					}
+				}
+			}
+		});
+
+		let printerScannerDistributionData = JSON.parse("{{ printerScannerDistributionData|escapejs }}");
+		let printerScannerDistribution = document.getElementById("printers_scanners_distribution").getContext("2d");
+		let barChartPrinterScannerDistribution = new Chart(printerScannerDistribution, {
+			type: "bar",
+			data:printerScannerDistributionData,
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text: "The distribution of printers and scanners in branches"
+					}
+				},
+				maintainAspectRatio: false,
+				scales: {
+					y:{
+						beginAtZero: true,
+					}
+				}
+			}
+		});
+
+		let printerScannerStatusData = JSON.parse("{{ printerScannerStatusDistData|escapejs }}");
+		let printerScannerStatus = document.getElementById("printers_scanners_status").getContext("2d");
+		let barChartPrinterScannerStatus = new Chart(printerScannerStatus, {
+			type: "doughnut",
+			data:printerScannerStatusData,
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text: "Printers and scanners status"
+					}
+				},
+				maintainAspectRatio: false,
+				scales: {
+					y:{
+						beginAtZero: true,
+					}
+				}
+			}
+		});
+
+		let atmStatusData = JSON.parse("{{ atmStatusDistData|escapejs }}");
+		let atmStatus = document.getElementById("atm_distribution_status").getContext("2d");
+		let barChartAtmStatus = new Chart(atmStatus, {
+			type: "doughnut",
+			data:atmStatusData,
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text:  "ATMs Status"
+					}
+				},
+				maintainAspectRatio: false,
+				scales: {
+					y:{
+						beginAtZero: true,
+					}
+				}
+			}
+		});
+		let atmDistributionData = JSON.parse("{{ atmDistributionData|escapejs }}");
+		let atmDistribution = document.getElementById("atm_distribution").getContext("2d");
+		let barChartAtmDistribution = new Chart(atmDistribution, {
+			type: "bar",
+			data:atmDistributionData,
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text:  "The distribution of  ATMs to branch locations"
+					}
+				},
+				maintainAspectRatio: false,
+				scales: {
+					y:{
+						beginAtZero: true,
+					}
+				}
+			}
+		});
+
+		let noteCounterStatusData = JSON.parse("{{ noteCounterStatusDistData|escapejs }}");
+		let noteCounterStatus = document.getElementById("note_counter_status").getContext("2d");
+		let barChartNoteCounterStatus = new Chart(noteCounterStatus, {
+			type: "doughnut",
+			data:noteCounterStatusData,
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text:  "Note Counter Status"
+					}
+				},
+				maintainAspectRatio: false,
+				scales: {
+					y:{
+						beginAtZero: true,
+					}
+				}
+			}
+		});
+
+		let noteCounterDistributionData = JSON.parse("{{ noteCounterDistributionData|escapejs }}");
+		let noteCounterDistribution = document.getElementById("note_counter_distribution").getContext("2d");
+		let barChartANoteCounterDistribution = new Chart(noteCounterDistribution, {
+			type: "bar",
+			data:noteCounterDistributionData,
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text:  "The distribution of  Note counters to branch locations"
+					}
+				},
+				maintainAspectRatio: false,
+				scales: {
+					y:{
+						beginAtZero: true,
+					}
+				}
+			}
+		});
+		let maintenanceCostDistributionData = JSON.parse("{{ atmMaintenanceCostDistData|escapejs }}");
+		let atmMaintenanceDistribution = document.getElementById("atm_maintenance_cost_distribution").getContext("2d");
+		let barChartAtmMaintenanceDistribution = new Chart(atmMaintenanceDistribution, {
+			type: "bar",
+			data:maintenanceCostDistributionData,
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text:  "ATMs Maintenance cost distribution"
+					}
+				},
+				maintainAspectRatio: false,
+				scales: {
+					y:{
+						beginAtZero: true,
+					}
+				}
+			}
+		});
+	</script>
+
+{% endblock %}

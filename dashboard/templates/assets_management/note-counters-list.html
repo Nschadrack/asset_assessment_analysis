@@ -7,6 +7,7 @@
         <button id="car_title_header_and_new_btn_button">+ new note counter</button>
     </div>
     <div id="car_body_data">
+        <a href="{% url 'assets_management:note-counters-report' 'report' %}" class="generate-report">Generate PDF report</a>
         <div id="car_table_data" class="table-data">
             <table>
                 <thead>
@@ -16,7 +17,7 @@
                     <th>WORKING STATUS</th>
                     <th>DATE ENTERED THE BANK</th>
                     <th>RECORDED DATE</th>
-                    <th colspan="4">ACTIONS</th>
+                    <th colspan="3">ACTIONS</th>
                 </thead>
                 <tbody>
                     {% for note_counter in note_counters %}
@@ -27,7 +28,6 @@
                             <td>{{ note_counter.status|replace|upper }}</td>
                             <td>{{ note_counter.entry_date_in_bank }}</td>
                             <td>{{ note_counter.recorded_date }}</td>
-                            <td><a href="#" class="publish_button">publish</a></td>
                             <td><a href="{% url 'assets_management:note-counter-detail' note_counter.asset_id %}" class="view_button">view details</a></td>
                             <td><a href="{% url 'assets_management:note-counter-detail-update' note_counter.asset_id 'update' %}" class="update_button">update</a></td>
                             <td><a href="{% url 'assets_management:note-counter-detail-update' note_counter.asset_id 'confirm_delete' %}" class="delete_button">delete</a></td>

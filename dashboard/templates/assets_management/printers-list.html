@@ -7,6 +7,7 @@
         <button id="car_title_header_and_new_btn_button">+ new printer</button>
     </div>
     <div id="car_body_data">
+        <a href="{% url 'assets_management:printers-report' 'report' %}" class="generate-report">Generate PDF report</a>
         <div id="car_table_data" class="table-data">
             <table>
                 <thead>
@@ -20,7 +21,7 @@
                     <th>PRINTER VERSION</th>
                     <th>DATE ENTERED THE BANK</th>
                     <th>RECORDED DATE</th>
-                    <th colspan="4">ACTIONS</th>
+                    <th colspan="3">ACTIONS</th>
                 </thead>
                 <tbody>
                     {% for printer in printers %}
@@ -47,7 +48,6 @@
                             {% endif %}
                             <td>{{ printer.entry_date_in_bank }}</td>
                             <td>{{ printer.recorded_date }}</td>
-                            <td><a href="#" class="publish_button">publish</a></td>
                             <td><a href="{% url 'assets_management:printer-detail' printer.asset_id %}" class="view_button">view details</a></td>
                             <td><a href="{% url 'assets_management:printer-detail-update' printer.asset_id 'update' %}" class="update_button">update</a></td>
                             <td><a href="{% url 'assets_management:printer-detail-update' printer.asset_id 'confirm_delete' %}" class="delete_button">delete</a></td>

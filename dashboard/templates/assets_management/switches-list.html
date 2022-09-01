@@ -19,7 +19,7 @@
                     <th>HOST IP</th>
                     <th>DATE ENTERED THE BANK</th>
                     <th>RECORDED DATE</th>
-                    <th colspan="4">ACTIONS</th>
+                    <th colspan="3">ACTIONS</th>
                 </thead>
                 <tbody>
                     {% for switch in switches %}
@@ -33,7 +33,6 @@
                             <td>{{ switch.host_ip }}</td>
                             <td>{{ switch.entry_date_in_bank }}</td>
                             <td>{{ switch.recorded_date }}</td>
-                            <td><a href="#" class="publish_button">publish</a></td>
                             <td><a href="{% url 'assets_management:switch-detail' switch.asset_id %}" class="view_button">view details</a></td>
                             <td><a href="{% url 'assets_management:switch-detail-update' switch.asset_id 'update' %}" class="update_button">update</a></td>
                             <td><a href="{% url 'assets_management:switch-detail-update' switch.asset_id 'confirm_delete' %}" class="delete_button">delete</a></td>

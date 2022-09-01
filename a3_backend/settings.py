@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'account',
     'all_staff',
     'maintenance',
+    'report_management',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,45 @@
+{% extends 'base_report.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_body_data">
+        <div id="car_table_data" class="table-data" style="overflow:hidden;">
+            <h3 style="margin-left: 20%;">List of ATMs</h3><br/>
+            <table>
+                <thead>
+                    <th>MODEL</th>
+                    <th>SERIAL NUMBER</th>
+                    <th>ATM NAME</th>
+                    <th>TAG NUMBER</th>
+                    <th>WORKING STATUS</th>
+                    <th>OPERATING SYSTEM  INSTALLED</th>
+                    <th>HOST IP</th>
+                    <th>DATE ENTERED THE BANK</th>
+                    <th>RECORDED DATE</th>
+                    <th>PURCHASE PRICE</th>
+                    <th>LIFETIME</th>
+                    <th>USAGE START DATE</th>
+                </thead>
+                <tbody>
+                    {% for atm in atms %}
+                        <tr>
+                            <td>{{ atm.model|upper }}</td>
+                            <td>{{ atm.serial_number|upper }}</td>
+                            <td>{{ atm.hostname|upper }}</td>
+                            <td>{{ atm.tag_number|upper }}</td>
+                            <td>{{ atm.status|replace|upper }}</td>
+                            <td>{{ atm.os_installed|upper }}</td>
+                            <td>{{ atm.host_ip }}</td>
+                            <td>{{ atm.entry_date_in_bank }}</td>
+                            <td>{{ atm.recorded_date }}</td>    
+                            <td>{{ atm.purchase_price }} Rwf</td>
+                            <td>{{ atm.lifetime_formated }}</td>
+                            <td>{{ atm.usage_start_date }}</td>                      
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+{% endblock %}

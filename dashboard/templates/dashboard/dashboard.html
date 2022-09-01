@@ -1,9 +1,10 @@
 {% extends 'base_layout.html' %}
 {% load static %}
 {% block main_data_load %}
-	<main class="dashboard-main">
+	<main class="dashboard-main" id="content-report">
 		<div class="short-statistics">
 			<h2>Overall Summary Statistics of Assets Which Still Function</h2>
+			{% comment %} <a href="{% url 'dashboard:overall-report' 'report' %}">Export to PDF</a> {% endcomment %}
 			{% for summary in summary_statistics %}
 				<div class="card">
 					<div class="card-title">
@@ -46,6 +47,11 @@
 				</div>
 				<div class="graphs-container">
 					<canvas id="note_counter_distribution"></canvas>
+				</div>
+
+				<h3>Maintenance distribution cost for year 2022</h3>
+				<div class="graphs-container">
+					<canvas id="atm_maintenance_cost_distribution"></canvas>
 				</div>
 			</div>
 		</div>
@@ -208,6 +214,26 @@
 					title: {
 						display: true,
 						text:  "The distribution of  Note counters to branch locations"
+					}
+				},
+				maintainAspectRatio: false,
+				scales: {
+					y:{
+						beginAtZero: true,
+					}
+				}
+			}
+		});
+		let maintenanceCostDistributionData = JSON.parse("{{ atmMaintenanceCostDistData|escapejs }}");
+		let atmMaintenanceDistribution = document.getElementById("atm_maintenance_cost_distribution").getContext("2d");
+		let barChartAtmMaintenanceDistribution = new Chart(atmMaintenanceDistribution, {
+			type: "bar",
+			data:maintenanceCostDistributionData,
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text:  "ATMs Maintenance cost distribution"
 					}
 				},
 				maintainAspectRatio: false,

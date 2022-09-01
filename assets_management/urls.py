@@ -7,14 +7,17 @@ app_name = 'assets_management'
 
 urlpatterns = [ 
     path('computers/', ComputersList.as_view(), name='computers-list'),
+    path('computers/<str:report>/creator/', ComputersList.as_view(), name='computers-report'),
     path('computers/<int:pk>/', ComputerDetail.as_view(), name='computer-detail'),
     path('computers/<int:pk>/<str:update_or_delete>/',ComputerDetail.as_view(), name='computer-detail-update'),
 
     path('printers/', PrintersList.as_view(), name='printers-list'),
+    path('printers/<str:report>/creator/', PrintersList.as_view(), name='printers-report'),
     path('printers/<int:pk>/', PrinterDetail.as_view(), name='printer-detail'),
     path('printers/<int:pk>/<str:update_or_delete>/', PrinterDetail.as_view(), name='printer-detail-update'),
 
     path('scanners/', ScannersList.as_view(), name='scanners-list'),
+    path('scanners/<str:report>/creator/', ScannersList.as_view(), name='scanners-report'),
     path('scanners/<int:pk>/', ScannerDetail.as_view(), name='scanner-detail'),
     path('scanners/<int:pk>/<str:update_or_delete>/', ScannerDetail.as_view(), name='scanner-detail-update'),
 
@@ -31,6 +34,7 @@ urlpatterns = [
     path('avaya/<int:pk>/<str:update_or_delete>/', AvayaDetail.as_view(), name='avaya-detail-update'),
     
     path('note-counters/', NoteCountersList.as_view(), name='note-counters-list'),
+    path('note-counters/<str:report>/creator/', NoteCountersList.as_view(), name='note-counters-report'),
     path('note-counters/<int:pk>/', NoteCounterDetail.as_view(), name='note-counter-detail'),
     path('note-counters/<int:pk>/<str:update_or_delete>/', NoteCounterDetail.as_view(), name='note-counter-detail-update'),
 
@@ -39,6 +43,7 @@ urlpatterns = [
     path('generators/<int:pk>/<str:update_or_delete>/', GeneratorDetail.as_view(), name='generator-detail-update'),
 
     path('atms/', AtmsList.as_view(), name='atms-list'),
+    path('atms/<str:report>/creator/', AtmsList.as_view(), name='atms-report'),
     path('atms/<int:pk>/', AtmDetail.as_view(), name='atm-detail'),
     path('atms/<int:pk>/<str:update_or_delete>/', AtmDetail.as_view(), name='atm-detail-update'),
 

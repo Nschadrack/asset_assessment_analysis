@@ -1,0 +1,59 @@
+{% extends 'base_report.html' %}
+{% load static %}
+{% load custom_template_filters %}
+{% block main_data_load %}
+    <div id="car_body_data">
+        <div id="car_table_data" class="table-data" style="overflow:hidden;">
+            <h3 style="margin-left: 20%;">List of printers</h3><br/>
+            <table>
+                <thead>
+                    <th>MODEL</th>
+                    <th>PRINTER CATEGORY</th>
+                    <th>SERIAL NUMBER</th>
+                    <th>TAG NUMBER</th>
+                    <th>CONNECTION WAY</th>
+                    <th>HOST IP</th>
+                    <th>WORKING STATUS</th>
+                    <th>PRINTER VERSION</th>
+                    <th>DATE ENTERED THE BANK</th>
+                    <th>RECORDED DATE</th>
+                    <th>PURCHASE PRICE</th>
+                    <th>LIFETIME</th>
+                    <th>USAGE START DATE</th>
+                </thead>
+                <tbody>
+                    {% for printer in printers %}
+                        <tr>
+                            <td>{{ printer.model|upper }}</td>
+                            {% if printer.category_type.upper == "OTHER" %}
+                                <td>{{ printer.other_type_name }}</td>
+                            {% else %}
+                                <td>{{ printer.category_type|replace|upper }}</td>
+                            {% endif %}
+                            <td>{{ printer.serial_number|upper }}</td>
+                            <td>{{ printer.tag_number|upper }}</td>
+                            <td>{{ printer.connection_type|upper }}</td>
+                            {% if printer.connection_type.upper == "NETWORK" %}
+                                <td>{{ printer.host_ip }}</td>
+                            {% else %}
+                                <td> </td>
+                            {% endif %}
+                            <td>{{ printer.status|replace|upper }}</td>
+                            {% if printer.version %}
+                                <td>{{ printer.version|upper }}</td>
+                            {% else %}
+                                <td> </td>
+                            {% endif %}
+                            <td>{{ printer.entry_date_in_bank }}</td>
+                            <td>{{ printer.recorded_date }}</td>
+                            <td>{{ printer.purchase_price }} Rwf</td>
+                            <td>{{ printer.lifetime_formated }}</td>
+                            <td>{{ printer.usage_start_date }}</td> 
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+{% endblock %}
